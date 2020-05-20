@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.TeacherInfoMapper">
+    <resultMap id="teacherList" type="com.education.entity.TeacherInfo" autoMapping="true">
+        <association property="collegeInfo" javaType="com.education.entity.CollegeInfo">
+            <result property="id" column="id" jdbcType="BIGINT"/>
+            <result property="collegeName" column="college_name" jdbcType="VARCHAR"/>
+            <result property="collegeAddr" column="college_addr" jdbcType="VARCHAR"/>
+        </association>
+        <association property="facultyInfo" javaType="com.education.entity.FacultyInfo">
+            <result property="id" column="id" jdbcType="BIGINT"/>
+            <result property="facultyName" column="faculty_name" jdbcType="VARCHAR" />
+            <result property="collegeId" column="college_id" jdbcType="BIGINT"/>
+        </association>
+    </resultMap>
+
+    <select id="findTeacherInfoList" resultMap="teacherList" parameterType="com.education.entity.TeacherInfo">
+        SELECT
+        t.*,
+        c.college_name,
+        c.college_addr,
+        f.faculty_name,
+        f.college_id
+        FROM
+        teacher_info t
+        INNER JOIN college_info c ON t.college_id = c.id
+        INNER JOIN faculty_info f ON t.faculty_id = f.id
+        <where>
+            <if test="teacherNumber != null">t.teacher_number = #{teacherNumber} </if>
+            <if test="teacherName != null">and t.teacher_name like concat('%',#{teacherName},'%') </if>
+            <if test="teacherSex != null">and t.teacher_sex = #{teacherSex} </if>
+            <if test="portfolio != null">and t.portfolio = #{portfolio} </if>
+            <if test="teacherPhone != null">and t.teacher_phone = #{teacherPhone} </if>
+            <if test="collegeId != null">and t.college_id = #{collegeId} </if>
+            <if test="facultyId != null">and t.faculty_id = #{facultyId} </if>
+        </where>
+        ORDER BY
+        t.teacher_number ASC,
+        t.data_modified DESC
+    </select>
+
+</mapper>

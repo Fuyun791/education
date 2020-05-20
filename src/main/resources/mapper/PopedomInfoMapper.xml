@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.PopedomInfoMapper">
+
+    <select id="findPopedomList" resultType="com.education.entity.PopedomInfo">
+        SELECT
+            rp.role_id,
+            rp.popedom_status,
+            rp.work_authorize,
+            p.id,
+            p.popedom_name,
+            p.popedom_ename,
+            p.popedom_url,
+            p.popedom_icon,
+            p.sort,
+            p.popedom_parent,
+            p.popedom_child
+        FROM
+            role_popedom rp
+            LEFT JOIN popedom_info p ON rp.popedom_id = p.id
+        WHERE
+            role_id = #{roleId}
+            AND p.popedom_parent = #{popedomParent}
+    </select>
+
+</mapper>

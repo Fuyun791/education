@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.StudentInfoMapper">
+    <resultMap id="userList" type="com.education.entity.StudentInfo" autoMapping="true">
+        <association property="collegeInfo" javaType="com.education.entity.CollegeInfo">
+            <result property="id" column="id" jdbcType="BIGINT"/>
+            <result property="collegeName" column="college_name" jdbcType="VARCHAR"/>
+            <result property="collegeAddr" column="college_addr" jdbcType="VARCHAR"/>
+        </association>
+        <association property="specialtyInfo" javaType="com.education.entity.SpecialtyInfo">
+            <result property="id" column="id" jdbcType="BIGINT"/>
+            <result property="specialtyName" column="specialty_name" jdbcType="VARCHAR" />
+            <result property="facultyId" column="faculty_id" jdbcType="BIGINT"/>
+        </association>
+        <association property="facultyInfo" javaType="com.education.entity.FacultyInfo">
+            <result property="id" column="id" jdbcType="BIGINT"/>
+            <result property="facultyName" column="faculty_name" jdbcType="VARCHAR" />
+            <result property="collegeId" column="college_id" jdbcType="BIGINT"/>
+        </association>
+        <association property="classInfo" javaType="com.education.entity.ClassInfo">
+            <result property="id" column="id" jdbcType="BIGINT"/>
+            <result property="classNumber" column="class_number" jdbcType="VARCHAR" />
+            <result property="facultyId" column="faculty_id" jdbcType="BIGINT"/>
+        </association>
+    </resultMap>
+
+    <select id="findStudentInfoList" resultMap="userList" parameterType="com.education.entity.StudentInfo">
+        SELECT
+            s.*,
+            c.college_name,
+            c.college_addr,
+            si.specialty_name,
+            si.faculty_id,
+            f.faculty_name,
+            f.college_id,
+            ci.class_number,
+            ci.faculty_id
+        FROM
+            student_info s
+            INNER JOIN college_info c ON s.college_id = c.id
+            INNER JOIN specialty_info si ON s.specialty_id = si.id
+            INNER JOIN faculty_info f ON s.faculty_id = f.id
+            INNER JOIN class_info ci ON s.class_id = ci.id
+        <where>
+            <if test="studentNum != null">s.student_num = #{studentNum} </if>
+            <if test="studentName != null">and s.student_name like concat('%',#{studentName},'%') </if>
+            <if test="studentSex != null">and s.student_sex = #{studentSex} </if>
+            <if test="studentPhone != null">and s.student_phone = #{studentPhone} </if>
+            <if test="collegeId != null">and s.college_id = #{collegeId} </if>
+            <if test="specialtyId != null">and s.specialty_id = #{specialtyId} </if>
+            <if test="facultyId != null">and s.faculty_id = #{facultyId} </if>
+            <if test="classId != null">and s.class_id = #{classId}</if>
+        </where>
+        ORDER BY
+            s.student_num ASC,
+            s.data_modified DESC
+    </select>
+</mapper>

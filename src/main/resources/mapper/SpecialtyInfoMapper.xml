@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.SpecialtyInfoMapper">
+
+    <resultMap id="specialtyList" type="com.education.entity.SpecialtyInfo" autoMapping="true">
+        <association property="facultyInfo" javaType="com.education.entity.FacultyInfo">
+            <result property="facultyName" column="faculty_name" jdbcType="VARCHAR"/>
+            <result property="facultyNumber" column="faculty_number" jdbcType="INTEGER"/>
+            <result property="collegeId" column="college_id" jdbcType="BIGINT"/>
+            <result property="number" column="number" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+
+    <select id="findSpecialtyInfoList" resultMap="specialtyList">
+        SELECT
+            si.*,
+            fi.faculty_name,
+            fi.faculty_number,
+            fi.college_id,
+            fi.number
+        FROM
+            specialty_info si
+            INNER JOIN faculty_info fi ON si.faculty_id = fi.id
+        <where>
+            <if test="collegeId != null">fi.college_id = #{collegeId} </if>
+            <if test="specialty.specialtyId != null">and si.specialty_id = #{specialty.specialtyId} </if>
+            <if test="specialty.specialtyName != null">and si.specialty_name like concat('%',#{specialty.specialtyName},'%') </if>
+            <if test="specialty.facultyId != null">and si.faculty_id = #{specialty.facultyId} </if>
+        </where>
+        ORDER BY
+        si.specialty_id ASC,
+        si.data_modified DESC
+    </select>
+</mapper>

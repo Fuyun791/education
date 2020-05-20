@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.AdminInfoMapper">
+
+    <select id="getPopedomInfoListByRoleId" resultType="com.education.entity.PopedomInfo">
+        select p.popedom_name,p.popedom_url,p.id
+        from role_popedom rp left join popedom_info p on rp.popedom_id = p.id
+        where rp.role_id = #{roleId}
+    </select>
+
+</mapper>

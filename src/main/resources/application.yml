@@ -1,0 +1,74 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/education?serverTimezone=GMT%2B8&characterEncoding=UTF-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      stat-view-servlet:
+        enabled: true
+        login-username: cai
+        login-password: cai
+      initial-size: 5
+      max-active: 10
+      min-idle: 5
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      test-while-idle: true
+      validation-query: SELECT x
+      test-on-borrow: false
+      filters: stat,wall,slf4j
+      web-stat-filter:
+        enabled: true
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+      time-between-log-stats-millis:  300000
+  profiles:
+    active: dev
+  redis:
+    database: 2
+    host: 127.0.0.1
+    port: 6379
+    password:
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+server:
+  port: 8091
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.education.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.education.mapper: debug
+  config: classpath:logback-spring.xml
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+  mapper-locations: classpath:mapper/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: not_null
+
+
+security:
+  ignored:
+    urls: #安全路径白名单
+    - /swagger-ui.html
+    - /swagger-resources/**
+    - /swagger/**
+    - /**/v2/api-docs
+    - /**/*.js
+    - /**/*.css
+    - /**/*.png
+    - /**/*.ico
+    - /webjars/springfox-swagger-ui/**
+    - /druid/**
