@@ -15,52 +15,61 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ * 课程表
  * </p>
  *
  * @author dell
- * @since 2020-05-18
+ * @since 2020-05-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="TeacherInfo对象", description="")
-public class TeacherInfo implements Serializable {
+@ApiModel(value="CourseInfo对象", description="课程表")
+public class CourseInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private Integer teacherNumber;
+    @ApiModelProperty(value = "外键(course_name)课程详情", example = "0")
+    private Long courseNumber;
 
-    private String teacherName;
+    @ApiModelProperty(value = "外键(class_info)教室", example = "0")
+    private Long classId;
 
-    private String teacherSex;
+    @ApiModelProperty(value = "外键(course_time_info)课程时间", example = "0")
+    private Long timeCourse;
 
-    private String teacherPhone;
-
-    @ApiModelProperty(value = "教师职务")
-    private String portfolio;
-
-    @ApiModelProperty(value = "外键(院系表faculty_info)", example = "0")
-    private Long facultyId;
+    @ApiModelProperty(value = "外键(教师表teacher_info)", example = "0")
+    private Long teacherId;
 
     @ApiModelProperty(value = "外键(院校表college_info)", example = "0")
     private Long collegeId;
+
+    @ApiModelProperty(value = "外键(教师表)", example = "0")
+    private Long roomId;
 
     private LocalDateTime dataCreate;
 
     private LocalDateTime dataModified;
 
     @TableField(exist = false)
+    private CourseName courseName;
+
+//    @TableField(exist = false)
+//    private List<TeacherInfo> teacherInfo;
+
+    @TableField(exist = false)
     private CollegeInfo collegeInfo;
 
     @TableField(exist = false)
-    private FacultyInfo facultyInfo;
+    private ClassRoomInfo classRoomInfo;
 
     @TableField(exist = false)
-    private List<CourseInfo> courseInfo;
+    private List<CourseTimeInfo> courseTimeInfo;
 
+    @TableField(exist = false)
+    private List<ClassInfo> classInfo;
 
 }

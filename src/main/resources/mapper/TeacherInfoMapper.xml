@@ -14,6 +14,16 @@
         </association>
     </resultMap>
 
+    <!--用于courseInfo里的resultMap-->
+    <resultMap id="teacherInfo" type="com.education.entity.TeacherInfo">
+        <result property="teacherName" column="teacher_name" jdbcType="VARCHAR"/>
+        <result property="teacherNumber" column="teacher_number" jdbcType="INTEGER"/>
+        <result property="teacherPhone" column="teacher_phone" jdbcType="VARCHAR"/>
+        <result property="portfolio" column="portfolio" jdbcType="VARCHAR"/>
+        <result property="facultyId" column="faculty_id" jdbcType="BIGINT"/>
+        <result property="collegeId" column="college_id" jdbcType="BIGINT"/>
+    </resultMap>
+
     <select id="findTeacherInfoList" resultMap="teacherList" parameterType="com.education.entity.TeacherInfo">
         SELECT
         t.*,

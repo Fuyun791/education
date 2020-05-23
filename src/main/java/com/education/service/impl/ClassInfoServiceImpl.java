@@ -35,6 +35,12 @@ public class ClassInfoServiceImpl extends ServiceImpl<MyClassInfoMapper, ClassIn
     }
 
     @Override
+    public List<ClassInfo> findClassInfoList(ClassInfo classInfo, Integer collegeId, Integer pageStart, Integer pageSize) {
+        PageHelper.startPage(pageStart,pageSize);
+        return classInfoMapper.findClassInfoList(classInfo,collegeId);
+    }
+
+    @Override
     public int insertClassInfo(ClassInfo classInfo) {
         return classInfoMapper.insert(classInfo);
     }

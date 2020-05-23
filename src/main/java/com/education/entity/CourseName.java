@@ -1,7 +1,6 @@
 package com.education.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -13,42 +12,48 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 班级表
+ * 
  * </p>
  *
  * @author dell
- * @since 2020-05-16
+ * @since 2020-05-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="ClassInfo对象", description="班级表")
-public class ClassInfo implements Serializable {
+@ApiModel(value="CourseName对象", description="")
+public class CourseName implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "基于specialty_info里的专业号080901+班级01")
-    private String classNumber;
+    private Long courseNumber;
 
-    @ApiModelProperty(value = "外键（院系表）", example = "0")
-    private Long facultyId;
+    private String courseName;
 
-    @ApiModelProperty(value = "外键(专业表)", example = "0")
-    private Long specialtyId;
+    @ApiModelProperty(value = "课程简介")
+    private String courseContext;
 
-    private Integer count;
+    @ApiModelProperty(value = "0代表停课，1代表正常开课")
+    private Boolean courseStatus;
+
+    @ApiModelProperty(value = "开课专业")
+    private String field;
+
+    @ApiModelProperty(value = "学分", example = "0")
+    private Integer credit;
+
+    @ApiModelProperty(value = "学年", example = "0")
+    private Integer year;
+
+    @ApiModelProperty(value = "学期", example = "0")
+    private Integer semester;
 
     private LocalDateTime dataCreate;
 
     private LocalDateTime dataModified;
 
-    @TableField(exist = false)
-    private FacultyInfo facultyInfo;
-
-    @TableField(exist = false)
-    private SpecialtyInfo specialtyInfo;
 
 }

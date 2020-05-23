@@ -25,6 +25,16 @@ public interface IClassInfoService extends IService<ClassInfo> {
     List<ClassInfo> findClassInfo(ClassInfo classInfo, Integer pageStart, Integer pageSize);
 
     /**
+     * 返回classInfoList包含其院校
+     * @param classInfo
+     * @param collegeId
+     * @param pageStart
+     * @param pageSize
+     * @return
+     */
+    List<ClassInfo> findClassInfoList(ClassInfo classInfo, Integer collegeId, Integer pageStart, Integer pageSize);
+
+    /**
      * 添加 classInfo
      * @param classInfo
      * @return

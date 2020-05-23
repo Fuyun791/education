@@ -48,6 +48,17 @@ public class ClassInfoController {
         return RespBody.ok(pageInfo);
     }
 
+    @ApiOperation("查询班级包含院系")
+    @RequestMapping(value = "/list-class", method = RequestMethod.GET)
+    public RespBody findClassInfoList(ClassInfo classInfo,
+                                  @RequestParam(value = "collegeId")Integer collegeId,
+                                  @RequestParam(value = "pageStart",defaultValue = "1")Integer pageStart,
+                                  @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize){
+        List<ClassInfo> classInfoList = classInfoService.findClassInfoList(classInfo,collegeId, pageStart, pageSize);
+        PageInfo<ClassInfo> pageInfo = new PageInfo<>(classInfoList);
+        return RespBody.ok(pageInfo);
+    }
+
     @ApiOperation("添加班级")
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public RespBody insertClassInfo(ClassInfo classInfo) {

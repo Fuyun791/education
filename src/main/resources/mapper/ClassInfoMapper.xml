@@ -2,4 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.education.mapper.MyClassInfoMapper">
 
+    <resultMap id="classInfoList" type="com.education.entity.ClassInfo">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="classNumber" column="class_number" jdbcType="VARCHAR"/>
+        <result property="count" column="count" jdbcType="INTEGER"/>
+        <association property="facultyInfo" javaType="com.education.entity.FacultyInfo">
+            <result property="facultyName" column="faculty_name" jdbcType="VARCHAR"/>
+            <result property="facultyNumber" column="faculty_number" jdbcType="INTEGER"/>
+            <result property="collegeId" column="college_id" jdbcType="BIGINT"/>
+            <result property="number" column="number" jdbcType="INTEGER"/>
+        </association>
+        <association property="specialtyInfo" javaType="com.education.entity.SpecialtyInfo">
+            <result property="specialtyName" column="specialty_name" jdbcType="VARCHAR"/>
+            <result property="specialtyId" column="specialty_id" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <select id="findClassInfoList" resultMap="classInfoList">
+        SELECT
+            ci.id,
+            ci.class_number,
+            ci.count,
+            fi.faculty_name,
+            fi.faculty_number,
+            fi.college_id,
+            si.specialty_name,
+            si.specialty_id
+        FROM
+            class_info ci
+            INNER JOIN faculty_info fi ON ci.faculty_id = fi.id
+            INNER JOIN specialty_info si ON ci.specialty_id = si.id
+        <where>
+            <if test="collegeId != null">fi.college_id = #{collegeId}</if>
+            <if test="classInfo.classNumber != null">and ci.class_number like concat('%',#{classInfo.classNumber},'%') </if>
+            <if test="classInfo.facultyId != null">and ci.faculty_id = #{classInfo.facultyId}</if>
+            <if test="classInfo.specialtyId != null">and ci.specialty_id = #{classInfo.specialtyId}</if>
+        </where>
+        ORDER BY
+        ci.class_number ASC,
+        ci.data_modified DESC
+    </select>
 </mapper>
