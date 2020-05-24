@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.education.mapper.CourseInfoMapper">
-    <resultMap id="teacherCourseList" type="com.education.entity.TeacherInfo">
+    <resultMap id="teacherCourseInfo" type="com.education.entity.TeacherInfo">
         <result property="teacherName" column="teacher_name" jdbcType="VARCHAR"/>
         <result property="teacherNumber" column="teacher_number" jdbcType="INTEGER"/>
         <result property="teacherPhone" column="teacher_phone" jdbcType="VARCHAR"/>
         <result property="portfolio" column="portfolio" jdbcType="VARCHAR"/>
         <result property="facultyId" column="faculty_id" jdbcType="BIGINT"/>
         <result property="id" column="id" jdbcType="BIGINT"/>
+        <collection property="courseInfo" ofType="com.education.entity.CourseInfo" resultMap="courseList"/>
+    </resultMap>
+
+    <resultMap id="studentCourseInfo" type="com.education.entity.StudentInfo">
+        <result property="studentName" column="student_name" jdbcType="VARCHAR"/>
+        <result property="studentNum" column="student_num" jdbcType="INTEGER"/>
         <collection property="courseInfo" ofType="com.education.entity.CourseInfo" resultMap="courseList"/>
     </resultMap>
 
@@ -30,10 +36,10 @@
         <association property="classRoomInfo" javaType="com.education.entity.ClassRoomInfo">
             <result property="roomNumber" column="room_number" jdbcType="VARCHAR"/>
         </association>
-        <collection property="classInfo" ofType="com.education.entity.ClassInfo">
+        <association property="classInfo" javaType="com.education.entity.ClassInfo">
             <result property="classNumber" column="class_number" jdbcType="VARCHAR"/>
             <result property="count" column="count" jdbcType="INTEGER"/>
-        </collection>
+        </association>
         <collection property="courseTimeInfo" ofType="com.education.entity.CourseTimeInfo">
             <result property="courseId" column="course_id" jdbcType="BIGINT"/>
             <result property="weekly" column="weekly" jdbcType="VARCHAR"/>
@@ -41,7 +47,7 @@
         </collection>
     </resultMap>
 
-    <select id="findAllCourseInfoList" resultMap="teacherCourseList">
+    <select id="findAllCourseInfoList" resultMap="teacherCourseInfo">
         SELECT
             ci.course_number,
             ci.college_id,
@@ -57,7 +63,8 @@
             ti.teacher_name,
             ti.id,
             ti.teacher_number,
-            ti.teacher_phone
+            ti.teacher_phone,
+            cl.count
         FROM
             course_info ci
             INNER JOIN class_room_info cr ON ci.room_id = cr.id
@@ -67,9 +74,42 @@
             INNER JOIN course_name cn ON ci.course_number = cn.course_number
             INNER JOIN teacher_info ti ON ti.id = ci.teacher_id
         <where>
-            <if test="teacherId != null">ci.teacher_id = #{teacherId}</if>
+            <if test="teacherNumber != null">ti.teacher_number = #{teacherNumber} </if>
+            <if test="teacherName != null">and ti.teacher_name = #{teacherName} </if>
+            <if test="courseName != null">and cn.course_name = #{courseName} </if>
         </where>
         ORDER BY
             ci.course_number ASC
     </select>
+    <select id="findStudentCourseList" resultMap="studentCourseInfo">
+        SELECT
+            ci.course_number,
+            ci.teacher_id,
+            cr.room_number,
+            cl.class_number,
+            ct.weekly,
+            ct.dayly,
+            co.college_name,
+            cn.course_name,
+            si.student_num,
+            si.student_name
+        FROM
+            course_info ci
+            INNER JOIN class_room_info cr ON ci.room_id = cr.id
+            INNER JOIN class_info cl ON ci.class_id = cl.id
+            INNER JOIN course_time_info ct ON ci.time_course = ct.course_id
+            INNER JOIN college_info co ON ci.college_id = co.id
+            INNER JOIN course_name cn ON ci.course_number = cn.course_number
+            INNER JOIN student_course sc ON sc.course_id = ci.course_number
+            INNER JOIN student_info si ON si.student_num = sc.student_num
+        <where>
+            <if test="studentNum != null">sc.student_num = #{studentNum} </if>
+            <if test="courseName != null">and sc.student_name = #{studentName} </if>
+            <if test="courseName != null">and cn.course_name = #{courseName} </if>
+        </where>
+        ORDER BY
+            ci.course_number ASC
+    </select>
+
+
 </mapper>

@@ -70,6 +70,6 @@ public class CourseInfo implements Serializable {
     private List<CourseTimeInfo> courseTimeInfo;
 
     @TableField(exist = false)
-    private List<ClassInfo> classInfo;
+    private ClassInfo classInfo;
 
 }

@@ -1,5 +1,6 @@
 package com.education.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.education.entity.CourseInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.education.entity.CourseTimeInfo;
@@ -28,12 +29,21 @@ public interface ICourseInfoService extends IService<CourseInfo> {
 
     /**
      * 返回与课程有关的所有信息
-     * @param courseInfo
-     * @param pageStart
-     * @param pageSize
+     * @param teacherNumber
+     * @param teacherName
+     * @param courseName
      * @return
      */
-    List<TeacherInfo> findCourseInfoList(CourseInfo courseInfo, Integer pageStart, Integer pageSize);
+    JSONObject findCourseInfoList(Integer teacherNumber,String teacherName,String courseName);
+
+    /**
+     * 返回学生课表
+     * @param studentNum
+     * @param studentName
+     * @param courseName
+     * @return
+     */
+    JSONObject findStudentCourseList(Integer studentNum, String studentName,String courseName);
 
     /**
      * 添加 courseInfo

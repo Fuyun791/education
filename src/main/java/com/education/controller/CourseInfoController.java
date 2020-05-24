@@ -1,5 +1,7 @@
 package com.education.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.education.entity.CourseTimeInfo;
 import com.education.entity.RespBody;
 
 import com.education.entity.CourseInfo;
@@ -50,12 +52,20 @@ public class CourseInfoController {
 
     @ApiOperation("查询与课程有关的所有信息,教师课表")
     @RequestMapping(value = "/list-course", method = RequestMethod.GET)
-    public RespBody findCourseInfoList(CourseInfo courseInfo,
-                                   @RequestParam(value = "pageStart",defaultValue = "1")Integer pageStart,
-                                   @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize){
-        List<TeacherInfo> courseInfoList = courseInfoService.findCourseInfoList(courseInfo, pageStart, pageSize);
-        PageInfo<TeacherInfo> pageInfo = new PageInfo<>(courseInfoList);
-        return RespBody.ok(pageInfo);
+    public RespBody findCourseInfoList(@RequestParam(value = "teacherNumber",required = false)Integer teacherNumber,
+                                       @RequestParam(value = "teacherName",required = false)String teacherName,
+                                       @RequestParam(value = "courseName",required = false)String courseNaem){
+        JSONObject result = courseInfoService.findCourseInfoList(teacherNumber,teacherName,courseNaem);
+        return RespBody.ok(result);
+    }
+
+    @ApiOperation("查询学生课表")
+    @RequestMapping(value = "/list-student-course", method = RequestMethod.GET)
+    public RespBody findStudentCourseList(@RequestParam(value = "studentNum",required = false)Integer studentNum,
+                                       @RequestParam(value = "studentName",required = false)String studentName,
+                                       @RequestParam(value = "courseName",required = false)String courseNaem){
+        JSONObject result = courseInfoService.findStudentCourseList(studentNum,studentName,courseNaem);
+        return RespBody.ok(result);
     }
 
     @ApiOperation("添加课程")
