@@ -77,8 +77,6 @@ public class CourseInfoServiceImpl extends ServiceImpl<CourseInfoMapper, CourseI
             String[] split = time.getDayly().split("\\|");
             stringBuilder.append(course.getCourseName().getCourseName());
             stringBuilder.append("\n");
-            stringBuilder.append(course.getClassInfo().getClassNumber());
-            stringBuilder.append("\n");
             stringBuilder.append(course.getClassRoomInfo().getRoomNumber());
             stringBuilder.append("\n");
             stringBuilder.append(course.getCourseTimeInfo().get(0).getWeekly());

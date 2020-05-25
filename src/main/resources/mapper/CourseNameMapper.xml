@@ -1,13 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.education.mapper.CourseNameMapper">
-    <resultMap id="courseName" type="com.education.entity.CourseName">
+
+    <resultMap id="courseNameList" type="com.education.entity.CourseName">
         <result property="courseNumber" column="course_number" jdbcType="BIGINT"/>
         <result property="courseName" column="course_name" jdbcType="VARCHAR"/>
         <result property="courseContext" column="course_context" jdbcType="VARCHAR"/>
+        <result property="courseCount" column="course_count" jdbcType="INTEGER"/>
         <result property="courseStatus" column="course_status" jdbcType="TINYINT"/>
-        <result property="year" column="year" jdbcType="INTEGER"/>
+        <result property="year" column="year" jdbcType="VARCHAR"/>
         <result property="semester" column="semester" jdbcType="INTEGER"/>
+        <result property="credit" column="credit" jdbcType="INTEGER"/>
+        <association property="classRoomInfo" javaType="com.education.entity.ClassRoomInfo">
+            <result property="roomNumber" column="room_number" jdbcType="VARCHAR"/>
+        </association>
+        <collection property="courseTimeInfo" ofType="com.education.entity.CourseTimeInfo">
+            <result property="courseId" column="course_id" jdbcType="BIGINT"/>
+            <result property="weekly" column="weekly" jdbcType="VARCHAR"/>
+            <result property="dayly" column="dayly" jdbcType="VARCHAR"/>
+        </collection>
     </resultMap>
+
+    <select id="findCourseInfoList" resultMap="courseNameList">
+        SELECT
+            cn.course_name,
+            cn.course_number,
+            cn.course_context,
+            cn.course_count,
+            cn.`year`,
+            cn.semester,
+            cn.credit,
+            ct.course_id,
+            ct.weekly,
+            ct.dayly,
+            cr.room_number
+        FROM
+            course_name cn
+            INNER JOIN course_info ci ON cn.course_number = ci.course_number
+            INNER JOIN course_time_info ct ON ci.time_course = ct.course_id
+            INNER JOIN class_room_info cr ON ci.room_id = cr.id
+            INNER JOIN teacher_info ti ON ci.teacher_id = ti.id
+        <where>
+            <if test="teacherNumber != null">ti.teacher_number = #{teacherNumber} </if>
+            <if test="course.year != null">and cn.`year` = #{course.year} </if>
+            <if test="course.semester != null">and cn.semester = #{course.semester} </if>
+        </where>
+    </select>
 
 </mapper>

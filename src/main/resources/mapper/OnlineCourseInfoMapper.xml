@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.OnlineCourseInfoMapper">
+    <resultMap id="onlineCourse" type="com.education.entity.OnlineCourseInfo" autoMapping="true">
+        <association property="onlineCourseChecked" javaType="com.education.entity.OnlineCourseChecked">
+            <result property="people" column="people" jdbcType="BIGINT"/>
+            <result property="checkedData" column="checked_data" jdbcType="TIMESTAMP"/>
+            <result property="checkedResult" column="checked_result" jdbcType="TINYINT"/>
+            <result property="checkedStatus" column="checked_status" jdbcType="TINYINT"/>
+        </association>
+    </resultMap>
+
+    <select id="findOnlineCourseList" resultMap="onlineCourse">
+        SELECT
+            ci.*,
+            cc.people,
+            cc.checked_data,
+            cc.checked_status,
+            cc.checked_result
+        FROM
+            online_course_info ci
+            INNER JOIN online_course_checked cc ON ci.id = cc.online_course_id
+        <where>
+            <if test="teacherId != null">ci.teacher_id = #{teacherId} </if>
+            <if test="collegeId != null">and ci.college_id = #{collegeId} </if>
+            <if test="checkedStatus != null">and cc.checked_status = #{checkedStatus} </if>
+            <if test="checkedResult != null">and cc.checked_result = #{checkedResult} </if>
+        </where>
+        ORDER BY
+            ci.data_modified DESC
+    </select>
+</mapper>

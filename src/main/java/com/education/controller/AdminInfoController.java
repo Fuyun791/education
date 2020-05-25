@@ -1,10 +1,13 @@
 package com.education.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.education.entity.RespBody;
 
 import com.education.entity.AdminInfo;
+import com.education.entity.TeacherInfo;
 import com.education.service.IAdminInfoService;
 
+import com.education.service.ITeacherInfoService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,9 +40,12 @@ public class AdminInfoController {
      */
     private final IAdminInfoService adminInfoService;
 
+    private final ITeacherInfoService teacherInfoService;
+
     @Autowired
-    public AdminInfoController(IAdminInfoService adminInfoService) {
+    public AdminInfoController(IAdminInfoService adminInfoService, ITeacherInfoService teacherInfoService) {
         this.adminInfoService = adminInfoService;
+        this.teacherInfoService = teacherInfoService;
     }
 
     @ApiOperation("查询权限用户")
@@ -56,6 +62,14 @@ public class AdminInfoController {
     @RequestMapping(value = "/findByAdminId", method = RequestMethod.GET)
     public RespBody findByAdminId(Long adminId) {
         return RespBody.ok(adminInfoService.findAdminAndPopedomInfoById(adminId));
+    }
+
+    @ApiOperation("根据教师id返回teacherInfo")
+    @RequestMapping(value = "/findTeacherInfo", method = RequestMethod.GET)
+    public RespBody findByTeacherId(@RequestParam("teacherPhone") String teacherPhone) {
+        QueryWrapper<TeacherInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("teacher_phone",teacherPhone);
+        return RespBody.ok(teacherInfoService.getOne(queryWrapper));
     }
 
     @ApiOperation("添加权限用户")

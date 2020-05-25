@@ -1,6 +1,8 @@
 package com.education.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.education.entity.CourseInfo;
+import com.education.mapper.CourseInfoMapper;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,6 +34,11 @@ public class CourseNameServiceImpl extends ServiceImpl<CourseNameMapper, CourseN
         QueryWrapper<CourseName> queryWrapper=new QueryWrapper<>(courseName);
         PageHelper.startPage(pageStart,pageSize);
         return courseNameMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<CourseName> findCourseInfoList(CourseName courseName, Integer teacherNumber, Integer pageStart, Integer pageSize) {
+        return courseNameMapper.findCourseInfoList(courseName,teacherNumber);
     }
 
     @Override

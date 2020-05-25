@@ -1,9 +1,12 @@
 package com.education.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -36,6 +39,8 @@ public class CourseName implements Serializable {
     @ApiModelProperty(value = "课程简介")
     private String courseContext;
 
+    private Integer courseCount;
+
     @ApiModelProperty(value = "0代表停课，1代表正常开课")
     private Boolean courseStatus;
 
@@ -45,8 +50,8 @@ public class CourseName implements Serializable {
     @ApiModelProperty(value = "学分", example = "0")
     private Integer credit;
 
-    @ApiModelProperty(value = "学年", example = "0")
-    private Integer year;
+    @ApiModelProperty(value = "学年")
+    private String year;
 
     @ApiModelProperty(value = "学期", example = "0")
     private Integer semester;
@@ -54,6 +59,12 @@ public class CourseName implements Serializable {
     private LocalDateTime dataCreate;
 
     private LocalDateTime dataModified;
+
+    @TableField(exist = false)
+    private ClassRoomInfo classRoomInfo;
+
+    @TableField(exist = false)
+    private List<CourseTimeInfo> courseTimeInfo;
 
 
 }

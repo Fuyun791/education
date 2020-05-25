@@ -20,7 +20,6 @@
     <resultMap id="courseList" type="com.education.entity.CourseInfo">
         <result property="courseNumber" column="course_number" jdbcType="BIGINT"/>
         <result property="collegeId" column="college_id" jdbcType="BIGINT"/>
-        <result property="classId" column="class_id" jdbcType="BIGINT"/>
         <result property="timeCourse" column="time_course" jdbcType="BIGINT"/>
         <result property="roomId" column="room_id" jdbcType="BIGINT"/>
         <association property="courseName" javaType="com.education.entity.CourseName">
@@ -35,10 +34,6 @@
         </association>
         <association property="classRoomInfo" javaType="com.education.entity.ClassRoomInfo">
             <result property="roomNumber" column="room_number" jdbcType="VARCHAR"/>
-        </association>
-        <association property="classInfo" javaType="com.education.entity.ClassInfo">
-            <result property="classNumber" column="class_number" jdbcType="VARCHAR"/>
-            <result property="count" column="count" jdbcType="INTEGER"/>
         </association>
         <collection property="courseTimeInfo" ofType="com.education.entity.CourseTimeInfo">
             <result property="courseId" column="course_id" jdbcType="BIGINT"/>
@@ -55,7 +50,6 @@
             ci.time_course,
             ci.room_id,
             cr.room_number,
-            cl.class_number,
             ct.weekly,
             ct.dayly,
             co.college_name,
@@ -63,12 +57,10 @@
             ti.teacher_name,
             ti.id,
             ti.teacher_number,
-            ti.teacher_phone,
-            cl.count
+            ti.teacher_phone
         FROM
             course_info ci
             INNER JOIN class_room_info cr ON ci.room_id = cr.id
-            INNER JOIN class_info cl ON ci.class_id = cl.id
             INNER JOIN course_time_info ct ON ci.time_course = ct.course_id
             INNER JOIN college_info co ON ci.college_id = co.id
             INNER JOIN course_name cn ON ci.course_number = cn.course_number

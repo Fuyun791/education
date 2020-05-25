@@ -35,9 +35,6 @@ public class CourseInfo implements Serializable {
     @ApiModelProperty(value = "外键(course_name)课程详情", example = "0")
     private Long courseNumber;
 
-    @ApiModelProperty(value = "外键(class_info)教室", example = "0")
-    private Long classId;
-
     @ApiModelProperty(value = "外键(course_time_info)课程时间", example = "0")
     private Long timeCourse;
 
@@ -68,8 +65,5 @@ public class CourseInfo implements Serializable {
 
     @TableField(exist = false)
     private List<CourseTimeInfo> courseTimeInfo;
-
-    @TableField(exist = false)
-    private ClassInfo classInfo;
 
 }

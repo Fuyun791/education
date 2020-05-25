@@ -1,5 +1,6 @@
 package com.education.controller;
 
+import com.education.entity.CourseInfo;
 import com.education.entity.RespBody;
 
 import com.education.entity.CourseName;
@@ -45,6 +46,16 @@ public class CourseNameController {
         List<CourseName> courseNameList = courseNameService.findCourseName(courseName, pageStart, pageSize);
         PageInfo<CourseName> pageInfo = new PageInfo<>(courseNameList);
         return RespBody.ok(pageInfo);
+    }
+
+    @ApiOperation("查询老师的课程")
+    @RequestMapping(value = "/list-teacher-course", method = RequestMethod.GET)
+    public RespBody findCourseNameList(CourseName courseName,
+                                   @RequestParam(value = "teacherNumber") Integer teacherNumber,
+                                   @RequestParam(value = "pageStart",defaultValue = "1")Integer pageStart,
+                                   @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize){
+        List<CourseName> courseNameList = courseNameService.findCourseInfoList(courseName, teacherNumber, pageStart, pageSize);
+        return RespBody.ok(courseNameList);
     }
 
     @ApiOperation("添加课程名")
