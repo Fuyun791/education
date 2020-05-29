@@ -1,6 +1,8 @@
 package com.education.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.education.entity.OnlineCourseChecked;
+import com.education.mapper.OnlineCourseCheckedMapper;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,6 +13,8 @@ import com.education.mapper.OnlineCourseInfoMapper;
 import com.education.service.IOnlineCourseInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -26,6 +30,9 @@ public class OnlineCourseInfoServiceImpl extends ServiceImpl<OnlineCourseInfoMap
     @Autowired
     private OnlineCourseInfoMapper onlineCourseInfoMapper;
 
+    @Autowired
+    private OnlineCourseCheckedMapper onlineCourseCheckedMapper;
+
     @Override
     public List<OnlineCourseInfo> findOnlineCourseInfo(OnlineCourseInfo onlineCourseInfo, Integer pageStart, Integer pageSize) {
         //这里根据具体的条件进行扩充
@@ -35,13 +42,19 @@ public class OnlineCourseInfoServiceImpl extends ServiceImpl<OnlineCourseInfoMap
     }
 
     @Override
-    public List<OnlineCourseInfo> findOnlineCourseList(Integer teacherId, Long collegeId, Integer checkedStatus, Boolean checkedResult) {
-        return onlineCourseInfoMapper.findOnlineCourseList(teacherId,collegeId,checkedStatus,checkedResult);
+    public List<OnlineCourseInfo> findOnlineCourseList(Integer teacherId,Boolean isShare, Long collegeId, Integer checkedStatus, Boolean checkedResult,Integer pageStart, Integer pageSize) {
+        PageHelper.startPage(pageStart,pageSize);
+        return onlineCourseInfoMapper.findOnlineCourseList(teacherId,isShare,collegeId,checkedStatus,checkedResult);
     }
 
+    @Transactional(rollbackFor = Exception.class,isolation = Isolation.REPEATABLE_READ)
     @Override
     public int insertOnlineCourseInfo(OnlineCourseInfo onlineCourseInfo) {
-        return onlineCourseInfoMapper.insert(onlineCourseInfo);
+        onlineCourseInfoMapper.insert(onlineCourseInfo);
+        OnlineCourseChecked onlineCourseChecked = new OnlineCourseChecked();
+        onlineCourseChecked.setOnlineCourseId(onlineCourseInfo.getId());
+        onlineCourseCheckedMapper.insert(onlineCourseChecked);
+        return onlineCourseCheckedMapper.insert(onlineCourseChecked);
     }
 
     @Override

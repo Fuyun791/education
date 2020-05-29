@@ -49,3 +49,4 @@ security:
     - /**/*.ico
     - /webjars/springfox-swagger-ui/**
     - /druid/**
+    - /education/common/**

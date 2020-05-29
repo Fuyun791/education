@@ -21,12 +21,14 @@ public interface OnlineCourseInfoMapper extends BaseMapper<OnlineCourseInfo> {
     /**
      * 返回在线课程的相应状态
      * @param teacherId
+     * @param isShare
      * @param collegeId
      * @param checkedStatus
      * @param checkedResult
      * @return
      */
     List<OnlineCourseInfo> findOnlineCourseList(@Param("teacherId") Integer teacherId,
+                                                @Param("isShare") Boolean isShare,
                                                 @Param("collegeId") Long collegeId,
                                                 @Param("checkedStatus") Integer checkedStatus, @Param("checkedResult") Boolean checkedResult);
 

@@ -1,10 +1,12 @@
 package com.education.controller;
 
+import com.education.entity.OnlineEpisodes;
 import com.education.entity.RespBody;
 
 import com.education.entity.OnlineCourseInfo;
 import com.education.service.IOnlineCourseInfoService;
 
+import com.education.service.IOnlineEpisodesService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -32,9 +35,12 @@ public class OnlineCourseInfoController {
 
     private final IOnlineCourseInfoService onlineCourseInfoService;
 
+    private final IOnlineEpisodesService onlineEpisodesService;
+
     @Autowired
-    public OnlineCourseInfoController(IOnlineCourseInfoService onlineCourseInfoService) {
+    public OnlineCourseInfoController(IOnlineCourseInfoService onlineCourseInfoService, IOnlineEpisodesService onlineEpisodesService) {
         this.onlineCourseInfoService = onlineCourseInfoService;
+        this.onlineEpisodesService = onlineEpisodesService;
     }
 
     @ApiOperation("查询在线课程")
@@ -49,17 +55,30 @@ public class OnlineCourseInfoController {
 
     @ApiOperation("根据相应状态查询在线课程")
     @RequestMapping(value = "/list-online-course", method = RequestMethod.GET)
-    public RespBody findOnlineCourseList(@RequestParam("teacherId") Integer teacherId,
+    public RespBody findOnlineCourseList(@RequestParam(value = "teacherId",required = false) Integer teacherId,
+                                         @RequestParam(value = "isShare",required = false) Boolean isShare,
                                          @RequestParam("collegeId") Long collegeId,
                                          @RequestParam(value = "checkedStatus", required = false) Integer checkedStatus,
-                                         @RequestParam(value = "checkedResult", required = false) Boolean checkedResult) {
-        List<OnlineCourseInfo> onlineCourseInfoList = onlineCourseInfoService.findOnlineCourseList(teacherId,collegeId,checkedStatus,checkedResult);
+                                         @RequestParam(value = "checkedResult", required = false) Boolean checkedResult,
+                                         @RequestParam(value = "pageStart", defaultValue = "1")Integer pageState,
+                                         @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize) {
+        List<OnlineCourseInfo> onlineCourseInfoList = onlineCourseInfoService.findOnlineCourseList(teacherId,isShare,collegeId,checkedStatus,checkedResult,pageState,pageSize);
+        PageInfo<OnlineCourseInfo> pageInfo = new PageInfo<>(onlineCourseInfoList);
+        return RespBody.ok(pageInfo);
+    }
+
+    @ApiOperation("根据课程id返回其章节")
+    @RequestMapping(value = "/list-episodes-hour", method = RequestMethod.GET)
+    public RespBody findEpisodesByCourseId(@RequestParam(value = "onlineCourseId")Long onlineCourseId) {
+        List<OnlineEpisodes> onlineCourseInfoList = onlineEpisodesService.findEpisodesByCourseId(onlineCourseId);
         return RespBody.ok(onlineCourseInfoList);
     }
 
     @ApiOperation("添加在线课程")
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public RespBody insertOnlineCourseInfo(OnlineCourseInfo onlineCourseInfo) {
+        onlineCourseInfo.setDataCreate(LocalDateTime.now());
+        onlineCourseInfo.setDataModified(LocalDateTime.now());
         int result = onlineCourseInfoService.insertOnlineCourseInfo(onlineCourseInfo);
         if (result == 1) {
             return RespBody.ok();
@@ -70,6 +89,7 @@ public class OnlineCourseInfoController {
     @ApiOperation("修改在线课程")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public RespBody updateOnlineCourseInfo(OnlineCourseInfo onlineCourseInfo) {
+        onlineCourseInfo.setDataModified(LocalDateTime.now());
         int result = onlineCourseInfoService.updateOnlineCourseInfo(onlineCourseInfo);
         if (result == 1) {
             return RespBody.ok();

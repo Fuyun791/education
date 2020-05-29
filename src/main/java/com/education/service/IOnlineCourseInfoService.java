@@ -33,7 +33,7 @@ public interface IOnlineCourseInfoService extends IService<OnlineCourseInfo> {
      * @param checkedResult
      * @return
      */
-    List<OnlineCourseInfo> findOnlineCourseList(Integer teacherId, Long collegeId, Integer checkedStatus, Boolean checkedResult);
+    List<OnlineCourseInfo> findOnlineCourseList(Integer teacherId,Boolean isShare, Long collegeId, Integer checkedStatus, Boolean checkedResult,Integer pageStart, Integer pageSize);
 
     /**
      * 添加 onlineCourseInfo

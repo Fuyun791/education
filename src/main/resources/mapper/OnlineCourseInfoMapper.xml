@@ -21,8 +21,10 @@
             online_course_info ci
             INNER JOIN online_course_checked cc ON ci.id = cc.online_course_id
         <where>
-            <if test="teacherId != null">ci.teacher_id = #{teacherId} </if>
-            <if test="collegeId != null">and ci.college_id = #{collegeId} </if>
+            (
+            <if test="isShare != null">ci.is_share = #{isShare} or </if>
+            <if test="collegeId != null">ci.college_id = #{collegeId} )</if>
+            <if test="teacherId != null">and ci.teacher_id = #{teacherId} </if>
             <if test="checkedStatus != null">and cc.checked_status = #{checkedStatus} </if>
             <if test="checkedResult != null">and cc.checked_result = #{checkedResult} </if>
         </where>

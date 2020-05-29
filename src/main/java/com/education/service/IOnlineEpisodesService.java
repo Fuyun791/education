@@ -25,6 +25,13 @@ public interface IOnlineEpisodesService extends IService<OnlineEpisodes> {
     List<OnlineEpisodes> findOnlineEpisodes(OnlineEpisodes onlineEpisodes, Integer pageStart, Integer pageSize);
 
     /**
+     * 根据在线课程Id返回其章节
+     * @param onlineCourseId
+     * @return
+     */
+    List<OnlineEpisodes> findEpisodesByCourseId(Long onlineCourseId);
+
+    /**
      * 添加 onlineEpisodes
      * @param onlineEpisodes
      * @return

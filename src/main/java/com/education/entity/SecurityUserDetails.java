@@ -22,7 +22,9 @@ public class SecurityUserDetails extends AdminInfo implements UserDetails {
         if (user != null) {
             this.setAdminNumber(user.getAdminNumber());
             /* this.setAdminName(user.getAdminName()); */
+            this.setRoleId(user.getRoleId());
             this.setPassword(user.getPassword());
+            this.setCollegeId(user.getCollegeId());
             this.popedomInfoList = popedomInfoList;
         }
     }

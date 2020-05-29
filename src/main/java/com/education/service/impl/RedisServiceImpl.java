@@ -6,6 +6,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -46,4 +49,20 @@ public class RedisServiceImpl implements IRedisService {
     public String getAndSet(String key, String value) {
         return stringRedisTemplate.opsForValue().getAndSet(key, value);
     }
+
+    @Override
+    public Long rightPush(String key, String value) {
+        return stringRedisTemplate.opsForList().rightPush(key, value);
+    }
+
+    @Override
+    public List<String> range(String key, Integer start, Integer length) {
+        return stringRedisTemplate.opsForList().range(key,start,length);
+    }
+
+    @Override
+    public Long listSize(String key) {
+        return stringRedisTemplate.opsForList().size(key);
+    }
+
 }

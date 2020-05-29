@@ -29,16 +29,16 @@ public class OnlineCourseChecked implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "外键online_course_info")
+    @ApiModelProperty(value = "外键online_course_info", example = "0")
     private Long onlineCourseId;
 
-    @ApiModelProperty(value = "外键(后台管理员身份的人)")
+    @ApiModelProperty(value = "外键(后台管理员身份的人)", example = "0")
     private Long people;
 
     @ApiModelProperty(value = "审批时间")
     private LocalDateTime checkedData;
 
-    @ApiModelProperty(value = "0待审核，1审核中")
+    @ApiModelProperty(value = "0待审核，1审核中", example = "0")
     private Integer checkedStatus;
 
     @ApiModelProperty(value = "0审核通过，1审核不通过")

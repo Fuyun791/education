@@ -35,6 +35,11 @@ public class OnlineEpisodesServiceImpl extends ServiceImpl<OnlineEpisodesMapper,
     }
 
     @Override
+    public List<OnlineEpisodes> findEpisodesByCourseId(Long onlineCourseId) {
+        return onlineEpisodesMapper.findEpisodesByCourseId(onlineCourseId);
+    }
+
+    @Override
     public int insertOnlineEpisodes(OnlineEpisodes onlineEpisodes) {
         return onlineEpisodesMapper.insert(onlineEpisodes);
     }

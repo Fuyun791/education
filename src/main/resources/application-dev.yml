@@ -22,3 +22,6 @@ spring:
         enabled: true
         exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
       time-between-log-stats-millis:  300000
+
+web:
+  upload-path: D:/sad/qm_uniapp/img

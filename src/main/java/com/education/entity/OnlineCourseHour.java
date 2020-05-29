@@ -37,11 +37,15 @@ public class OnlineCourseHour implements Serializable {
     @ApiModelProperty(value = "这个课时做什么")
     private String courseHourBrief;
 
+    private Integer sort;
+
     @ApiModelProperty(value = "课时类型，1文字，2ppt，3.视频", example = "0")
     private Integer isType;
 
     @ApiModelProperty(value = "资源路径")
     private String directory;
+
+    private String hourTime;
 
     private LocalDateTime dataCreate;
 

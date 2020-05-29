@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.education.mapper.OnlineEpisodesMapper">
+    <resultMap id="episodesList" type="com.education.entity.OnlineEpisodes">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="onlineCourseId" column="online_course_id" jdbcType="BIGINT"/>
+        <result property="episodesName" column="episodes_name" jdbcType="VARCHAR"/>
+        <result property="episodesBrief" column="episodes_brief" jdbcType="VARCHAR"/>
+        <result property="sort" column="episodes_sort" jdbcType="TINYINT"/>
+        <collection property="onlineCourseHourList" ofType="com.education.entity.OnlineCourseHour">
+            <result property="id" column="hour_id" jdbcType="BIGINT"/>
+            <result property="onlineEpisodesId" column="online_episodes_id" jdbcType="BIGINT"/>
+            <result property="courseHourName" column="course_hour_name" jdbcType="VARCHAR"/>
+            <result property="courseHourBrief" column="course_hour_brief" jdbcType="VARCHAR"/>
+            <result property="sort" column="hour_sort" jdbcType="TINYINT"/>
+            <result property="isType" column="is_type" jdbcType="TINYINT"/>
+            <result property="hourTime" column="hour_time" jdbcType="VARCHAR"/>
+            <result property="directory" column="directory" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
 
+    <select id="findEpisodesByCourseId" resultMap="episodesList">
+        SELECT
+            oe.online_course_id,
+            oe.episodes_name,
+            oe.episodes_brief,
+            oe.sort as episodes_sort,
+            ch.online_episodes_id,
+            ch.course_hour_name,
+            ch.course_hour_brief,
+            ch.sort as hour_sort,
+            ch.is_type,
+            ch.`directory`,
+            ch.hour_time,
+            oe.id,
+            ch.id as hour_id
+        FROM
+            online_episodes oe left join online_course_hour ch on oe.id = ch.online_episodes_id
+        where oe.online_course_id = #{onlineCourseId}
+    </select>
 </mapper>

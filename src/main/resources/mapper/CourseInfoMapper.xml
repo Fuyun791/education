@@ -46,7 +46,6 @@
         SELECT
             ci.course_number,
             ci.college_id,
-            ci.class_id,
             ci.time_course,
             ci.room_id,
             cr.room_number,

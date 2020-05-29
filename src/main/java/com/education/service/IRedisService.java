@@ -1,5 +1,6 @@
 package com.education.service;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -56,4 +57,28 @@ public interface IRedisService {
      */
     String getAndSet(String key, String value);
 
+    /**
+     * 使用list类型添加
+    * @param key
+     * @param value
+     * @return
+     */
+    Long rightPush(String key, String value);
+
+
+    /**
+     * 根据start,length返回List
+     * @param key
+     * @param start
+     * @param length
+     * @return
+     */
+    List<String> range(String key, Integer start, Integer length);
+
+    /**
+     * 返回List长度
+     * @param key
+     * @return
+     */
+    Long listSize(String key);
 }
