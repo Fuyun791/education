@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.ExamInfoMapper">
+
+    <resultMap id="examInfoList" type="com.education.entity.ExamInfo">
+        <result property="id" column="id" jdbcType="BIGINT" />
+        <result  property="examName" column="exam_name" jdbcType="VARCHAR"/>
+        <result  property="startExam" column="start_exam" jdbcType="VARCHAR"/>
+        <result  property="endExam" column="end_exam" jdbcType="VARCHAR"/>
+        <association property="classRoomInfo" javaType="com.education.entity.ClassRoomInfo">
+            <result property="roomNumber" column="room_number" jdbcType="VARCHAR" />
+        </association>
+        <association property="teacherInfo" javaType="com.education.entity.TeacherInfo">
+            <result property="teacherName" column="teacher_name" jdbcType="VARCHAR" />
+            <result property="teacherNumber" column="teacher_number" jdbcType="INTEGER" />
+        </association>
+        <association property="studentInfo" javaType="com.education.entity.StudentInfo">
+            <result property="studentName" column="student_name" jdbcType="VARCHAR" />
+            <result property="studentNum" column="student_num" jdbcType="INTEGER" />
+        </association>
+    </resultMap>
+
+    <select id="findExamSubjectPlanList" resultMap="examInfoList">
+        select exam_info.exam_name,exam_info.start_exam,exam_info.end_exam,class_room_info.room_number,teacher_info.teacher_name
+        from (exam_info inner join class_room_info on exam_info.room_id = class_room_info.id)
+        inner join teacher_info on exam_info.proctor_id = teacher_info.id
+        <where>
+            <if test="examName != null">exam_info.exam_name like concat('%',#{examName},'%') </if>
+        </where>
+    </select>
+
+    <select id="findExamClassRoomPlanList" resultMap="examInfoList">
+        select exam_info.exam_name,exam_info.start_exam,exam_info.end_exam,class_room_info.room_number,teacher_info.teacher_name
+        from (exam_info inner join class_room_info on exam_info.room_id = class_room_info.id)
+        inner join teacher_info on exam_info.proctor_id = teacher_info.id
+        <where>
+            <if test="roomNumber != null">class_room_info.room_number like concat('%',#{roomNumber},'%') </if>
+        </where>
+    </select>
+
+    <select id="findExamTeacherPlanList" resultMap="examInfoList">
+        select
+        exam_info.exam_name,
+        exam_info.start_exam,
+        exam_info.end_exam,
+        class_room_info.room_number,
+        teacher_info.teacher_name,
+        teacher_info.teacher_number
+        from
+        exam_info
+        inner join class_room_info on exam_info.room_id = class_room_info.id
+        inner join teacher_info on exam_info.proctor_id = teacher_info.id
+        inner join course_info on exam_info.course_id = course_info.id
+        inner join course_name on course_info.course_number = course_name.course_number
+        <where>
+            <if test="teacherNumber != null">teacher_info.teacher_number = #{teacherNumber} </if>
+            <if test="teacherName != null">and teacher_info.teacher_name like concat('%',#{teacherName},'%') </if>
+            <if test="year != null ">and course_name.year = #{year}</if>
+            <if test="semester != null ">and course_name.semester = #{semester}</if>
+        </where>
+    </select>
+
+    <select id="findExamStudentPlanList" resultMap="examInfoList">
+        select
+        student_info.student_num,
+        student_info.student_name,
+        exam_info.exam_name,
+        exam_info.start_exam,
+        exam_info.end_exam,
+        class_room_info.room_number
+        from
+        student_exam
+        inner join exam_info on student_exam.course_id = exam_info.course_id
+        inner join student_info on student_exam.student_id = student_info.id
+        inner join class_room_info on exam_info.room_id = class_room_info.id
+        <where>
+            <if test="studentNum != null">student_info.student_Num = #{studentNum} </if>
+            <if test="studentName != null">and student_info.student_name like concat('%',#{studentName},'%') </if>
+        </where>
+    </select>
+
+</mapper>
