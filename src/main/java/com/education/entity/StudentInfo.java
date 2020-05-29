@@ -75,5 +75,4 @@ public class StudentInfo implements Serializable {
     @TableField(exist = false)
     private List<CourseInfo> courseInfo;
 
-
 }

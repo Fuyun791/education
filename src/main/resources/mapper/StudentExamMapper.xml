@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.StudentExamMapper">
+
+    <resultMap id="StudentExamResult" type="com.education.entity.StudentExam">
+        <result property="score" column="score" jdbcType="INTEGER" />
+        <association property="studentInfo" javaType="com.education.entity.StudentInfo">
+            <result property="studentNum" column="student_num" jdbcType="INTEGER" />
+            <result property="studentName" column="student_Name" jdbcType="VARCHAR" />
+            <result property="studentSex" column="student_sex" jdbcType="VARCHAR" />
+        </association>
+        <association property="examInfo" javaType="com.education.entity.ExamInfo">
+            <result property="examName" column="exam_name" jdbcType="VARCHAR" />
+        </association>
+        <association property="courseName" javaType="com.education.entity.CourseName">
+            <result property="credit" column="credit" javaType="INTEGER" />
+        </association>
+    </resultMap>
+
+    <select id="findStudentExamResultList" resultMap="StudentExamResult">
+        select
+        student_exam.score,
+        student_info.student_num,
+        student_info.student_name,
+        student_info.student_sex,
+        exam_info.exam_name
+        from
+        exam_info
+        inner join student_exam on exam_info.course_id = student_exam.course_id
+        inner join student_info on student_exam.student_id = student_info.id
+        <where>
+            <if test="studentNum != null">student_info.student_num = #{studentNum} </if>
+            <if test="studentName != null">and student_info.student_name like concat('%',#{studentName},'%') </if>
+        </where>
+    </select>
+
+    <select id="findStudentExamResultList2" resultMap="StudentExamResult">
+        select
+        student_exam.score,
+        student_info.student_num,
+        student_info.student_name,
+        student_info.student_sex,
+        exam_info.exam_name,
+        course_name.credit
+        from
+        exam_info
+        inner join student_exam on exam_info.course_id = student_exam.course_id
+        inner join student_info on student_exam.student_id = student_info.id
+        inner join course_info on exam_info.course_id = course_info.id
+        inner join course_name on course_info.course_number = course_name.course_number
+        <where>
+            <if test="studentNum != null">student_info.student_num = #{studentNum} </if>
+            <if test="studentName != null">and student_info.student_name like concat('%',#{studentName},'%') </if>
+        </where>
+    </select>
+</mapper>
