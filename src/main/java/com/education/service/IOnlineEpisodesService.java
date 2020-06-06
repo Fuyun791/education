@@ -29,7 +29,7 @@ public interface IOnlineEpisodesService extends IService<OnlineEpisodes> {
      * @param onlineCourseId
      * @return
      */
-    List<OnlineEpisodes> findEpisodesByCourseId(Long onlineCourseId);
+    List<OnlineEpisodes> findEpisodesByCourseId(Long onlineCourseId,Long collegeId);
 
     /**
      * 添加 onlineEpisodes

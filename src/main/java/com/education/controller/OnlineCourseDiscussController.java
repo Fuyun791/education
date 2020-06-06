@@ -49,8 +49,8 @@ public class OnlineCourseDiscussController {
 
     @ApiOperation("添加在线课程讨论")
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public RespBody insertOnlineCourseDiscuss(OnlineCourseDiscuss onlineCourseDiscuss) {
-        int result = onlineCourseDiscussService.insertOnlineCourseDiscuss(onlineCourseDiscuss);
+    public RespBody insertOnlineCourseDiscuss(OnlineCourseDiscuss onlineCourseDiscuss,@RequestParam("indexOf")Long indexOf) {
+        int result = onlineCourseDiscussService.insertOnlineCourseDiscuss(onlineCourseDiscuss,indexOf);
         if (result == 1) {
             return RespBody.ok();
         }

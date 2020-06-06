@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -41,7 +42,7 @@ public class OnlineCourseDiscuss implements Serializable {
     @ApiModelProperty(value = "0代表一级，不是0代表他的父评论", example = "0")
     private Long discussParent;
 
-    private Boolean discussChild;
+    private Boolean discussChild = false;
 
     @ApiModelProperty(value = "评论人，用admin_info里的id", example = "0")
     private Integer discussPerson;
@@ -50,16 +51,21 @@ public class OnlineCourseDiscuss implements Serializable {
     private String discussPersonName;
 
     @ApiModelProperty(value = "回复中，作为@的对象", example = "0")
-    private Long discussToPerson;
+    private Integer discussToPerson;
 
     @TableField(exist = false)
     private String discussToPersonName;
 
+    @TableField(exist = false)
+    private String discussPersonPic;
+
     @ApiModelProperty(value = "点赞数，只有一级有", example = "0")
     private Long star;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataCreate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataModified;
 
     @TableField(exist = false)

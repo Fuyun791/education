@@ -66,5 +66,8 @@ public class CourseName implements Serializable {
     @TableField(exist = false)
     private List<CourseTimeInfo> courseTimeInfo;
 
+    @TableField(exist = false)
+    private Long courseId;
+
 
 }

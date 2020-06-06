@@ -26,4 +26,6 @@ public interface OnlineCourseDiscussMapper extends BaseMapper<OnlineCourseDiscus
      */
     List<OnlineCourseDiscuss> findDiscussByCourseId(@Param("onlineCourseId")Long onlineCourseId,@Param("discussParent")Long discussParent);
 
+    int isExist(@Param("adminNumber")Integer adminNumber,@Param("adminName")String adminName);
+
 }

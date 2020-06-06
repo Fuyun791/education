@@ -23,6 +23,6 @@ public interface OnlineEpisodesMapper extends BaseMapper<OnlineEpisodes> {
      * @param onlineCourseId
      * @return
      */
-    List<OnlineEpisodes> findEpisodesByCourseId(@Param("onlineCourseId")Long onlineCourseId);
+    List<OnlineEpisodes> findEpisodesByCourseId(@Param("onlineCourseId")Long onlineCourseId,@Param("collegeId")Long collegeId);
 
 }

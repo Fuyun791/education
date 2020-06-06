@@ -63,8 +63,10 @@ public class TeacherInfo implements Serializable {
     private List<CourseInfo> courseInfo;
 
     //我加的
+    @TableField(exist = false)
     private Integer year;
 
+    @TableField(exist = false)
     private Integer semester;
 
 }

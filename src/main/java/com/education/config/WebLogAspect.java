@@ -37,9 +37,9 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class WebLogAspect {
 
-    private Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
-    private static final ThreadLocal<Date> beginTimeThreadLocal = new NamedThreadLocal<Date>("ThreadLocal start time");
+    private static final ThreadLocal<Date> BEGIN_TIME_THREAD_LOCAL = new NamedThreadLocal<Date>("ThreadLocal start time");
 
     private final IWebLogService webLogService;
 
@@ -63,7 +63,7 @@ public class WebLogAspect {
     @Before("webLog()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
         Date beginTime = new Date();
-        beginTimeThreadLocal.set(beginTime);
+        BEGIN_TIME_THREAD_LOCAL.set(beginTime);
     }
 
     @After("webLog()")
@@ -80,8 +80,8 @@ public class WebLogAspect {
                 ApiOperation log = method.getAnnotation(ApiOperation.class);
                 webLog.setDescription(log.value());
             }
-            Date startTime = beginTimeThreadLocal.get();
-            beginTimeThreadLocal.remove();
+            Date startTime = BEGIN_TIME_THREAD_LOCAL.get();
+            BEGIN_TIME_THREAD_LOCAL.remove();
             //  结束时间
             webLog.setRequestUrl(request.getRequestURL().toString());
             webLog.setRequestType(request.getMethod());

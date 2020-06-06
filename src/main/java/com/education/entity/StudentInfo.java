@@ -52,8 +52,6 @@ public class StudentInfo implements Serializable {
     @ApiModelProperty(value = "外键(班级表class_info)", example = "0")
     private Long classId;
 
-    private String studentPic;
-
     private String wechart;
 
     private LocalDateTime dataCreate;

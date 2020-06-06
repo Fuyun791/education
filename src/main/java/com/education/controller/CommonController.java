@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.education.entity.OnlineCourseDiscuss;
 import com.education.entity.OnlineCourseInfo;
+import com.education.entity.OnlineEpisodes;
 import com.education.entity.RespBody;
 import com.education.service.IOnlineCourseDiscussService;
 import com.education.service.IOnlineCourseInfoService;
@@ -45,7 +46,7 @@ public class CommonController {
     @RequestMapping(value = "/list-online-course", method = RequestMethod.GET)
     public RespBody findOnlineCourseList(@RequestParam(value = "teacherId",required = false) Integer teacherId,
                                          @RequestParam(value = "isShare",required = false) Boolean isShare,
-                                         @RequestParam("collegeId") Long collegeId,
+                                         @RequestParam(value = "collegeId",required = false) Long collegeId,
                                          @RequestParam(value = "checkedStatus", required = false) Integer checkedStatus,
                                          @RequestParam(value = "checkedResult", required = false) Boolean checkedResult,
                                          @RequestParam(value = "pageStart", defaultValue = "1")Integer pageState,
@@ -60,8 +61,25 @@ public class CommonController {
     public RespBody findOnlineCourseInfo(@RequestParam("onlineCourseId")Long onlineCourseId,
                                          @RequestParam(value = "pageStart",defaultValue = "1")Integer pageStart,
                                          @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize){
-        List<OnlineCourseDiscuss> onlineCourseDiscussList = onlineCourseDiscussService.findDiscussByCourseId(onlineCourseId,pageStart,pageSize);;
+        List<OnlineCourseDiscuss> onlineCourseDiscussList = onlineCourseDiscussService.findDiscussByCourseId(onlineCourseId,pageStart,pageSize);
         return RespBody.ok(onlineCourseDiscussList);
+    }
+
+    @ApiOperation("添加评论")
+    @RequestMapping(value = "/add-discuss", method = RequestMethod.POST)
+    public RespBody insertCourseDiscuss(OnlineCourseDiscuss onlineCourseDiscuss,@RequestParam(value = "indexOf",required = false) Long indexOf){
+        int result = onlineCourseDiscussService.insertOnlineCourseDiscuss(onlineCourseDiscuss,indexOf);
+        if (result == 1) {
+            return RespBody.ok();
+        }
+        return RespBody.error();
+    }
+
+    @ApiOperation("根据课程id返回其章节")
+    @RequestMapping(value = "/list-episodes-hour", method = RequestMethod.GET)
+    public RespBody findEpisodesByCourseId(@RequestParam(value = "onlineCourseId")Long onlineCourseId) {
+        List<OnlineEpisodes> onlineCourseInfoList = onlineEpisodesService.findEpisodesByCourseId(onlineCourseId,null);
+        return RespBody.ok(onlineCourseInfoList);
     }
 
 }

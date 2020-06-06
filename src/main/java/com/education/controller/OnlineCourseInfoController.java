@@ -10,6 +10,7 @@ import com.education.service.IOnlineEpisodesService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -69,8 +70,8 @@ public class OnlineCourseInfoController {
 
     @ApiOperation("根据课程id返回其章节")
     @RequestMapping(value = "/list-episodes-hour", method = RequestMethod.GET)
-    public RespBody findEpisodesByCourseId(@RequestParam(value = "onlineCourseId")Long onlineCourseId) {
-        List<OnlineEpisodes> onlineCourseInfoList = onlineEpisodesService.findEpisodesByCourseId(onlineCourseId);
+    public RespBody findEpisodesByCourseId(@RequestParam(value = "onlineCourseId")Long onlineCourseId, @RequestParam("collegeId")Long collegeId) {
+        List<OnlineEpisodes> onlineCourseInfoList = onlineEpisodesService.findEpisodesByCourseId(onlineCourseId,collegeId);
         return RespBody.ok(onlineCourseInfoList);
     }
 

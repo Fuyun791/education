@@ -24,18 +24,28 @@
             oe.online_course_id,
             oe.episodes_name,
             oe.episodes_brief,
-            oe.sort as episodes_sort,
+            oe.sort AS episodes_sort,
             ch.online_episodes_id,
             ch.course_hour_name,
             ch.course_hour_brief,
-            ch.sort as hour_sort,
+            ch.sort AS hour_sort,
             ch.is_type,
             ch.`directory`,
             ch.hour_time,
             oe.id,
-            ch.id as hour_id
+            ch.id AS hour_id
         FROM
-            online_episodes oe left join online_course_hour ch on oe.id = ch.online_episodes_id
-        where oe.online_course_id = #{onlineCourseId}
+            online_episodes oe
+            LEFT JOIN online_course_hour ch ON oe.id = ch.online_episodes_id
+            INNER JOIN online_course_info oi ON oe.online_course_id = oi.id
+            INNER JOIN online_course_checked oc ON oi.id = oc.online_course_id
+        WHERE
+            (
+            oi.is_share = 1
+            <if test="collegeId != null">or oi.college_id = #{collegeId} </if>
+            )
+            AND oe.online_course_id = #{onlineCourseId}
+            AND oc.checked_status = 2
+            AND oc.checked_result = 1
     </select>
 </mapper>

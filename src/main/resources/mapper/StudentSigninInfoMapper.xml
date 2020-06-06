@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.StudentSigninInfoMapper">
+    <resultMap id="studentSigninList" type="com.education.entity.StudentSigninInfo" autoMapping="true">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="signinAttendance" column="signin_attendance" jdbcType="INTEGER"/>
+        <result property="signinUnAttendance" column="signin_un_attendance" jdbcType="INTEGER"/>
+        <result property="signinNoAttendance" column="signin_no_attendance" jdbcType="INTEGER"/>
+        <result property="classNumber" column="class_number" jdbcType="VARCHAR"/>
+        <association property="studentInfo" javaType="com.education.entity.StudentInfo">
+            <result property="studentNum" column="student_num" jdbcType="INTEGER"/>
+            <result property="studentName" column="student_name" jdbcType="VARCHAR"/>
+            <result property="studentPhone" column="student_phone" jdbcType="VARCHAR"/>
+        </association>
+        <association property="courseName" javaType="com.education.entity.CourseName">
+            <result property="courseNumber" column="course_number" jdbcType="BIGINT"/>
+            <result property="courseName" column="course_name" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+    <select id="findStudentSignin" resultMap="studentSigninList">
+        SELECT
+            si.id,
+            st.student_num,
+            st.student_name,
+            st.student_phone,
+            cl.class_number,
+            cn.course_number,
+            td1.signin_attendance,
+            td2.signin_un_attendance,
+            td3.signin_no_attendance,
+            cn.course_name
+        FROM
+            student_signin_info si
+            INNER JOIN signin_info sg ON si.signin_id = sg.id
+            INNER JOIN course_info ci ON sg.course_id = ci.id
+            inner join teacher_info ti on ci.teacher_id = ti.id
+            INNER JOIN course_name cn ON ci.course_number = cn.course_number
+            INNER JOIN student_info st ON si.student_num = st.student_num
+            INNER JOIN class_info cl ON st.class_id = cl.id
+            left JOIN ( SELECT student_num, count( signin_status ) AS signin_attendance FROM student_signin_info WHERE signin_status = 2 GROUP BY student_num ) AS td1 on td1.student_num = si.student_num
+            left JOIN ( SELECT student_num, count( signin_status ) AS signin_un_attendance FROM student_signin_info WHERE signin_status = 1 GROUP BY student_num ) AS td2 on td2.student_num = si.student_num
+            left JOIN ( SELECT student_num, count( signin_status ) AS signin_no_attendance FROM student_signin_info WHERE signin_status = 0 GROUP BY student_num ) AS td3 on td3.student_num = si.student_num
+        where ti.teacher_number = #{teacherNumber} and ci.college_id = #{collegeId}
+        GROUP BY
+            student_num
+    </select>
+
+</mapper>

@@ -38,7 +38,7 @@ public interface IOnlineCourseDiscussService extends IService<OnlineCourseDiscus
      * @param onlineCourseDiscuss
      * @return
      */
-    int insertOnlineCourseDiscuss(OnlineCourseDiscuss onlineCourseDiscuss);
+    int insertOnlineCourseDiscuss(OnlineCourseDiscuss onlineCourseDiscuss, Long indexOf);
 
     /**
      * 修改 onlineCourseDiscuss

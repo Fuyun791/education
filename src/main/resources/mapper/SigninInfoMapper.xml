@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.SigninInfoMapper">
+    <resultMap id="signinList" type="com.education.entity.SigninInfo" autoMapping="true">
+        <result property="courseName" column="course_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectSigninAndCourseName" resultMap="signinList">
+        SELECT
+            s.*,
+            cn.course_name
+        FROM
+            signin_info s
+            INNER JOIN course_info ci ON s.course_id = ci.id
+            INNER JOIN course_name cn ON ci.course_number = cn.course_number
+            INNER JOIN teacher_info ti ON ci.teacher_id = ti.id
+        WHERE
+            ci.college_id = #{collegeId}
+            AND ti.teacher_number = #{teacherNumber}
+        ORDER by s.data_modified asc
+    </select>
+</mapper>

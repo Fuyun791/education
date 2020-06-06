@@ -4,18 +4,27 @@
     <resultMap id="courseDiscussList" type="com.education.entity.OnlineCourseDiscuss" autoMapping="true">
         <result property="discussPersonName" column="discuss_person_name" jdbcType="VARCHAR"/>
         <result property="discussToPersonName" column="discuss_to_person_name" jdbcType="VARCHAR"/>
+        <result property="discussPersonPic" column="discuss_person_pic" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="findDiscussByCourseId" resultMap="courseDiscussList">
         SELECT
             cd.*,
             ai.admin_name AS discuss_person_name,
-            ad.admin_name AS discuss_to_person_name
+            ad.admin_name AS discuss_to_person_name,
+            ai.admin_pic AS discuss_person_pic
         FROM
             online_course_discuss cd
             INNER JOIN admin_info ai ON cd.discuss_person = ai.admin_number
             LEFT JOIN admin_info ad ON cd.discuss_to_person = ad.admin_number
         WHERE cd.online_course_id = #{onlineCourseId} and cd.discuss_parent = #{discussParent}
         ORDER BY cd.data_modified asc
+    </select>
+    <select id="isExist" resultType="java.lang.Integer">
+        SELECT
+            count(admin_name) as result
+        FROM
+            admin_info
+        where admin_number = #{adminNumber} and admin_name = #{adminName}
     </select>
 </mapper>

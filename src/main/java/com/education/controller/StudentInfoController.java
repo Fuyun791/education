@@ -1,5 +1,6 @@
 package com.education.controller;
 
+import com.education.entity.AdminInfo;
 import com.education.entity.RespBody;
 
 import com.education.entity.StudentInfo;
@@ -75,6 +76,17 @@ public class StudentInfoController {
     public RespBody updateStudentInfo(StudentInfo studentInfo) {
         studentInfo.setDataModified(LocalDateTime.now());
         int result = studentInfoService.updateStudentInfo(studentInfo);
+        if (result == 1) {
+            return RespBody.ok();
+        }
+        return RespBody.error();
+    }
+
+    @ApiOperation("修改学生头像")
+    @RequestMapping(value = "/update-studentPic", method = RequestMethod.POST)
+    public RespBody updateStudentPic(AdminInfo adminInfo) {
+        adminInfo.setDataModified(LocalDateTime.now());
+        int result = studentInfoService.updateStudentPic(adminInfo);
         if (result == 1) {
             return RespBody.ok();
         }

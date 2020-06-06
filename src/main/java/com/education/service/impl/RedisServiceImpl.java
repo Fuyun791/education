@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -56,13 +57,28 @@ public class RedisServiceImpl implements IRedisService {
     }
 
     @Override
-    public List<String> range(String key, Integer start, Integer length) {
-        return stringRedisTemplate.opsForList().range(key,start,length);
+    public List<String> range(String key, Integer start, Integer end) {
+        return stringRedisTemplate.opsForList().range(key,start,end);
     }
 
     @Override
     public Long listSize(String key) {
         return stringRedisTemplate.opsForList().size(key);
+    }
+
+    @Override
+    public String indexList(String key, Long index) {
+        return stringRedisTemplate.opsForList().index(key,index);
+    }
+
+    @Override
+    public Set<String> keys(String pattern) {
+        return stringRedisTemplate.keys(pattern);
+    }
+
+    @Override
+    public void set(String key,Long index,String value) {
+        stringRedisTemplate.opsForList().set(key,index,value);
     }
 
 }

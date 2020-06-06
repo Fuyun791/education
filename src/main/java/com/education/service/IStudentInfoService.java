@@ -1,5 +1,6 @@
 package com.education.service;
 
+import com.education.entity.AdminInfo;
 import com.education.entity.StudentInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -54,4 +55,5 @@ public interface IStudentInfoService extends IService<StudentInfo> {
      */
     int deleteStudentInfo(int id);
 
+    int updateStudentPic(AdminInfo adminInfo);
 }

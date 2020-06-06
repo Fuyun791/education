@@ -50,6 +50,8 @@ public class AdminInfo implements Serializable {
     @ApiModelProperty(value = "外键（院校表）", example = "-1")
     private Integer collegeId;
 
+    private String adminPic;
+
     private LocalDateTime dataCreate;
 
     private LocalDateTime dataModified;

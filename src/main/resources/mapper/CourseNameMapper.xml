@@ -11,6 +11,7 @@
         <result property="year" column="year" jdbcType="VARCHAR"/>
         <result property="semester" column="semester" jdbcType="INTEGER"/>
         <result property="credit" column="credit" jdbcType="INTEGER"/>
+        <result property="courseId" column="id" jdbcType="BIGINT"/>
         <association property="classRoomInfo" javaType="com.education.entity.ClassRoomInfo">
             <result property="roomNumber" column="room_number" jdbcType="VARCHAR"/>
         </association>
@@ -27,6 +28,7 @@
             cn.course_number,
             cn.course_context,
             cn.course_count,
+            ci.id,
             cn.`year`,
             cn.semester,
             cn.credit,
