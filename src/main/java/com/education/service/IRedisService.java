@@ -67,6 +67,8 @@ public interface IRedisService {
     Long rightPush(String key, String value);
 
 
+    Long leftPush(String key, String value);
+
     /**
      * 根据start,length返回List
      * @param key
@@ -74,7 +76,7 @@ public interface IRedisService {
      * @param end
      * @return
      */
-    List<String> range(String key, Integer start, Integer end);
+    List<String> range(String key, Long start, Long end);
 
     /**
      * 返回List长度
@@ -94,4 +96,24 @@ public interface IRedisService {
      * @param value
      */
     void set(String key, Long index, String value);
+
+    Boolean addSetSort(String key, String value, double score);
+
+    Long remove(String key, Object... values);
+
+    Set<String> reverseRange(String key, long start, long end);
+
+    Set<String> rangeSetSort(String key, long start, long end);
+
+    Long rank(String key, Object o);
+
+    Double incrementScore(String key, String value, double delta);
+
+    Long sizeSetSort(String key);
+
+    void putHash(String key, String hashKey, String value);
+
+    Object getHashValue(String key, Object hashKey);
+
+    Boolean hasHashKey(String key, Object hashKey);
 }

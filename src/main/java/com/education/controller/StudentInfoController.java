@@ -49,6 +49,13 @@ public class StudentInfoController {
         return RespBody.ok(pageInfo);
     }
 
+    @ApiOperation("返回学生信息")
+    @RequestMapping(value = "/list-studentInfo", method = RequestMethod.GET)
+    public RespBody findStudentInfo(@RequestParam("studentNum")Integer studentNum){
+        StudentInfo studentInfo = studentInfoService.getStudentInfo(studentNum);
+        return RespBody.ok(studentInfo);
+    }
+
     @ApiOperation("查询学生包含学校专业")
     @RequestMapping(value = "/list-student", method = RequestMethod.GET)
     public RespBody findStudentInfoList(StudentInfo studentInfo,

@@ -10,9 +10,11 @@ import com.education.service.IOnlineCourseDiscussService;
 import com.education.service.IOnlineCourseInfoService;
 import com.education.service.IOnlineEpisodesService;
 import com.education.service.IRedisService;
+import com.education.service.impl.OnlineCourseStarServiceImpl;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,41 +46,33 @@ public class CommonController {
 
     @ApiOperation("根据相应状态查询在线课程")
     @RequestMapping(value = "/list-online-course", method = RequestMethod.GET)
-    public RespBody findOnlineCourseList(@RequestParam(value = "teacherId",required = false) Integer teacherId,
-                                         @RequestParam(value = "isShare",required = false) Boolean isShare,
-                                         @RequestParam(value = "collegeId",required = false) Long collegeId,
+    public RespBody findOnlineCourseList(@RequestParam(value = "teacherId", required = false) Integer teacherId,
+                                         @RequestParam(value = "isShare", required = false) Boolean isShare,
+                                         @RequestParam(value = "collegeId", required = false) Long collegeId,
                                          @RequestParam(value = "checkedStatus", required = false) Integer checkedStatus,
                                          @RequestParam(value = "checkedResult", required = false) Boolean checkedResult,
-                                         @RequestParam(value = "pageStart", defaultValue = "1")Integer pageState,
-                                         @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize) {
-        List<OnlineCourseInfo> onlineCourseInfoList = onlineCourseInfoService.findOnlineCourseList(teacherId,isShare,collegeId,checkedStatus,checkedResult,pageState,pageSize);
+                                         @RequestParam(value = "pageStart", defaultValue = "1") Integer pageState,
+                                         @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        List<OnlineCourseInfo> onlineCourseInfoList = onlineCourseInfoService.findOnlineCourseList(teacherId, isShare, collegeId, checkedStatus, checkedResult, pageState, pageSize);
         PageInfo<OnlineCourseInfo> pageInfo = new PageInfo<>(onlineCourseInfoList);
         return RespBody.ok(pageInfo);
     }
 
-    @ApiOperation("根据在线课表id返回其评论区")
-    @RequestMapping(value = "/list-discuss", method = RequestMethod.GET)
-    public RespBody findOnlineCourseInfo(@RequestParam("onlineCourseId")Long onlineCourseId,
-                                         @RequestParam(value = "pageStart",defaultValue = "1")Integer pageStart,
-                                         @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize){
-        List<OnlineCourseDiscuss> onlineCourseDiscussList = onlineCourseDiscussService.findDiscussByCourseId(onlineCourseId,pageStart,pageSize);
-        return RespBody.ok(onlineCourseDiscussList);
-    }
-
-    @ApiOperation("添加评论")
-    @RequestMapping(value = "/add-discuss", method = RequestMethod.POST)
-    public RespBody insertCourseDiscuss(OnlineCourseDiscuss onlineCourseDiscuss,@RequestParam(value = "indexOf",required = false) Long indexOf){
-        int result = onlineCourseDiscussService.insertOnlineCourseDiscuss(onlineCourseDiscuss,indexOf);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+    @ApiOperation("显示内层的评论")
+    @RequestMapping(value = "list-discussPerson", method = RequestMethod.GET)
+    public RespBody getDiscussByCourseId(@RequestParam(value = "onlineCourseId") Long onlineCourseId,
+                                                    @RequestParam(value = "id") Long id,
+                                                    @RequestParam("discussPerson") Integer discussPerson,
+                                                    @RequestParam(value = "pageStart", defaultValue = "1") Integer pageStart,
+                                                    @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) {
+        OnlineCourseDiscuss onlineCourseDiscuss = onlineCourseDiscussService.getDiscussByCourseId(onlineCourseId,id,discussPerson,pageStart,pageSize);
+        return RespBody.ok(onlineCourseDiscuss);
     }
 
     @ApiOperation("根据课程id返回其章节")
     @RequestMapping(value = "/list-episodes-hour", method = RequestMethod.GET)
-    public RespBody findEpisodesByCourseId(@RequestParam(value = "onlineCourseId")Long onlineCourseId) {
-        List<OnlineEpisodes> onlineCourseInfoList = onlineEpisodesService.findEpisodesByCourseId(onlineCourseId,null);
+    public RespBody findEpisodesByCourseId(@RequestParam(value = "onlineCourseId") Long onlineCourseId) {
+        List<OnlineEpisodes> onlineCourseInfoList = onlineEpisodesService.findEpisodesByCourseId(onlineCourseId, null);
         return RespBody.ok(onlineCourseInfoList);
     }
 

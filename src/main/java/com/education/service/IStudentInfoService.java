@@ -25,6 +25,8 @@ public interface IStudentInfoService extends IService<StudentInfo> {
      */
     List<StudentInfo> findStudentInfo(StudentInfo studentInfo, Integer pageStart, Integer pageSize);
 
+    StudentInfo getStudentInfo(Integer studentNum);
+
     /**
      * 根据studentInfo的条件返回学生信息，包含学校，专业
      * @param studentInfo

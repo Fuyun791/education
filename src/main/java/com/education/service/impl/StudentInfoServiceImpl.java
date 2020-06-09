@@ -44,6 +44,11 @@ public class StudentInfoServiceImpl extends ServiceImpl<StudentInfoMapper, Stude
     }
 
     @Override
+    public StudentInfo getStudentInfo(Integer studentNum) {
+        return studentInfoMapper.getStudentInfo(studentNum);
+    }
+
+    @Override
     public List<StudentInfo> findStudentInfoList(StudentInfo studentInfo, Integer pageStart, Integer pageSize) {
         PageHelper.startPage(pageStart, pageSize);
         return studentInfoMapper.findStudentInfoList(studentInfo);
@@ -67,6 +72,9 @@ public class StudentInfoServiceImpl extends ServiceImpl<StudentInfoMapper, Stude
     @Override
     public int updateStudentPic(AdminInfo adminInfo) {
         UpdateWrapper<AdminInfo> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.set("admin_name",adminInfo.getAdminName());
+        updateWrapper.set("admin_pic",adminInfo.getAdminPic());
+        updateWrapper.set("data_modified",adminInfo.getDataModified());
         updateWrapper.eq("admin_number", adminInfo.getAdminNumber());
         boolean result = adminInfoService.update(updateWrapper);
         return result ? 1 : 0;

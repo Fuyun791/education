@@ -24,6 +24,8 @@ public interface IOnlineCourseDiscussService extends IService<OnlineCourseDiscus
      */
     List<OnlineCourseDiscuss> findOnlineCourseDiscuss(OnlineCourseDiscuss onlineCourseDiscuss, Integer pageStart, Integer pageSize);
 
+    OnlineCourseDiscuss getDiscussByCourseId(Long onlineCourseId, Long id, Integer discussPerson, Integer pageStart, Integer pageSize);
+
     /**
      * 返回在线课程的
      * @param onlineCourseId
@@ -31,14 +33,14 @@ public interface IOnlineCourseDiscussService extends IService<OnlineCourseDiscus
      * @param pageSize
      * @return
      */
-    List<OnlineCourseDiscuss> findDiscussByCourseId(Long onlineCourseId,Integer pageStart,Integer pageSize);
+    List<OnlineCourseDiscuss> findDiscussByCourseId(Long onlineCourseId,Integer pageStart,Integer pageSize,String model);
 
     /**
      * 添加 onlineCourseDiscuss
      * @param onlineCourseDiscuss
      * @return
      */
-    int insertOnlineCourseDiscuss(OnlineCourseDiscuss onlineCourseDiscuss, Long indexOf);
+    int insertOnlineCourseDiscuss(OnlineCourseDiscuss onlineCourseDiscuss,Integer discussToPersonId);
 
     /**
      * 修改 onlineCourseDiscuss

@@ -15,24 +15,4 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class StudentInfoControllerTest {
 
-    @Autowired
-    private StudentInfoController studentInfoController;
-
-    @Autowired
-    private StudentInfoMapper studentInfoMapper;
-
-    @Test
-    void findStudentInfo() {
-    }
-
-
-    @Test
-    void findStudent() {
-        StudentInfo studentInfo = new StudentInfo();
-        studentInfo.setStudentSex("男");
-        studentInfo.setCollegeId(8L);
-        studentInfo.setSpecialtyId(2L);
-        List<StudentInfo> studentInfoList = studentInfoMapper.findStudentInfoList(studentInfo);
-        System.out.println();
-    }
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,8 +19,12 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RedisServiceImpl implements IRedisService {
 
+    private final StringRedisTemplate stringRedisTemplate;
+
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    public RedisServiceImpl(StringRedisTemplate stringRedisTemplate) {
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     @Override
     public void set(String key, String value) {
@@ -57,7 +62,12 @@ public class RedisServiceImpl implements IRedisService {
     }
 
     @Override
-    public List<String> range(String key, Integer start, Integer end) {
+    public Long leftPush(String key, String value) {
+        return stringRedisTemplate.opsForList().leftPush(key,value);
+    }
+
+    @Override
+    public List<String> range(String key, Long start, Long end) {
         return stringRedisTemplate.opsForList().range(key,start,end);
     }
 
@@ -79,6 +89,56 @@ public class RedisServiceImpl implements IRedisService {
     @Override
     public void set(String key,Long index,String value) {
         stringRedisTemplate.opsForList().set(key,index,value);
+    }
+
+    @Override
+    public Boolean addSetSort(String key, String value, double score) {
+        return stringRedisTemplate.opsForZSet().add(key,value,score);
+    }
+
+    @Override
+    public Long remove(String key, Object... values) {
+        return stringRedisTemplate.opsForZSet().remove(key,values);
+    }
+
+    @Override
+    public Set<String> reverseRange(String key, long start, long end) {
+        return stringRedisTemplate.opsForZSet().reverseRange(key,start,end);
+    }
+
+    @Override
+    public Set<String> rangeSetSort(String key, long start, long end) {
+        return stringRedisTemplate.opsForZSet().range(key,start,end);
+    }
+
+    @Override
+    public Long rank(String key, Object o) {
+        return stringRedisTemplate.opsForZSet().rank(key,o);
+    }
+
+    @Override
+    public Double incrementScore(String key, String value, double delta) {
+        return stringRedisTemplate.opsForZSet().incrementScore(key,value,delta);
+    }
+
+    @Override
+    public Long sizeSetSort(String key) {
+        return stringRedisTemplate.opsForZSet().size(key);
+    }
+
+    @Override
+    public void putHash(String key, String hashKey, String value) {
+        stringRedisTemplate.opsForHash().put(key,hashKey,value);
+    }
+
+    @Override
+    public Object getHashValue(String key, Object hashKey) {
+        return stringRedisTemplate.opsForHash().get(key,hashKey);
+    }
+
+    @Override
+    public Boolean hasHashKey(String key, Object hashKey) {
+        return stringRedisTemplate.opsForHash().hasKey(key,hashKey);
     }
 
 }

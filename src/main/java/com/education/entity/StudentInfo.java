@@ -73,4 +73,10 @@ public class StudentInfo implements Serializable {
     @TableField(exist = false)
     private List<CourseInfo> courseInfo;
 
+    @TableField(exist = false)
+    private String adminName;
+
+    @TableField(exist = false)
+    private String adminPic;
+
 }

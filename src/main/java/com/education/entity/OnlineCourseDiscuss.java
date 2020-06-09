@@ -60,7 +60,7 @@ public class OnlineCourseDiscuss implements Serializable {
     private String discussPersonPic;
 
     @ApiModelProperty(value = "点赞数，只有一级有", example = "0")
-    private Long star;
+    private Long star=0L;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataCreate;
@@ -71,5 +71,9 @@ public class OnlineCourseDiscuss implements Serializable {
     @TableField(exist = false)
     private List<OnlineCourseDiscuss> onlineCourseDiscussList;
 
+    public OnlineCourseDiscuss incrementStar(Integer value) {
+        this.star = this.star + value;
+        return this;
+    }
 
 }

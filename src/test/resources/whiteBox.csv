@@ -1,0 +1,5 @@
+﻿onlineCourseId,discussPerson,discussParent,discussPersonName,discussText,discussToPerson,discussToPersonName,indexOf,expect
+2,2,0,管理员测试1,测试用例1,,,0,500
+2,2,1,管理员测试,测试用例2,1,咖啡,10,500
+2,2,1,管理员测试,测试用例3,1,咖啡,0,200
+10,2,1,管理员测试,测试用例3,1,咖啡,0,500

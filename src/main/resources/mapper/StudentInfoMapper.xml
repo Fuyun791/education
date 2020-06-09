@@ -24,6 +24,23 @@
         </association>
     </resultMap>
 
+    <resultMap id="userInfo" type="com.education.entity.StudentInfo" autoMapping="true">
+        <result property="adminName" column="admin_name" jdbcType="VARCHAR"/>
+        <result property="adminPic" column="admin_pic" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getStudentInfo" resultMap="userInfo">
+        SELECT
+               si.*,
+               ai.admin_name,
+               ai.admin_pic
+        FROM
+             student_info si
+                 INNER JOIN admin_info ai ON si.student_num = ai.admin_number
+        WHERE
+                si.student_num = #{studentNum}
+    </select>
+
     <select id="findStudentInfoList" resultMap="userList" parameterType="com.education.entity.StudentInfo">
         SELECT
             s.*,

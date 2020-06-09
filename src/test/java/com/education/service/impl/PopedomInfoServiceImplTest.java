@@ -11,13 +11,4 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class PopedomInfoServiceImplTest {
-
-    @Autowired
-    private IPopedomInfoService popedomInfoService;
-
-    @Test
-    void findPopedomMenuByRoleId() {
-        List<PopedomInfo> popedomInfoList = popedomInfoService.findPopedomMenuByRoleId(2L);
-        System.out.println();
-    }
 }

@@ -25,4 +25,6 @@ public interface StudentInfoMapper extends BaseMapper<StudentInfo> {
      */
     List<StudentInfo> findStudentInfoList(StudentInfo studentInfo);
 
+    StudentInfo getStudentInfo(@Param("studentNum")Integer studentNum);
+
 }
