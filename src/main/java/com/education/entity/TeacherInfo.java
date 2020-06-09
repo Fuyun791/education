@@ -64,7 +64,7 @@ public class TeacherInfo implements Serializable {
 
     //我加的
     @TableField(exist = false)
-    private Integer year;
+    private String year;
 
     @TableField(exist = false)
     private Integer semester;

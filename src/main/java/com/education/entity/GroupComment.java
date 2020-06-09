@@ -12,35 +12,45 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 教室表
+ * 
  * </p>
  *
  * @author dell
- * @since 2020-05-23
+ * @since 2020-06-04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="ClassRoomInfo对象", description="教室表")
-public class ClassRoomInfo implements Serializable {
+@ApiModel(value="GroupComment对象", description="")
+public class GroupComment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private String roomNumber;
+    @ApiModelProperty(value = "外键(topic_info表)")
+    private Long topicId;
 
-    @ApiModelProperty(value = "外键(院系表faculty_info)", example = "0")
-    private Long facultyId;
+    @ApiModelProperty(value = "外键(student_info表)")
+    private Long studentId;
+
+    @ApiModelProperty(value = "所属评论(子评论)")
+    private Long activityId;
+
+    @ApiModelProperty(value = "评论内容")
+    private String commentContent;
+
+    @ApiModelProperty(value = "评论头像图片")
+    private String commentImg;
 
     private LocalDateTime dataCreate;
 
     private LocalDateTime dataModified;
 
-    //我加的
-    private String year;
+    //为了显示学生姓名和头像加的
+    private String studentName;
 
-    private Integer semester;
+    private String studentPic;
 
 }

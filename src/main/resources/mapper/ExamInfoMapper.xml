@@ -20,12 +20,32 @@
         </association>
     </resultMap>
 
+    <resultMap id="ExamStudentPlanList" type="com.education.entity.StudentExam">
+        <association property="examInfo" javaType="com.education.entity.ExamInfo">
+            <result property="id" column="id" jdbcType="BIGINT" />
+            <result  property="examName" column="exam_name" jdbcType="VARCHAR"/>
+            <result  property="startExam" column="start_exam" jdbcType="VARCHAR"/>
+            <result  property="endExam" column="end_exam" jdbcType="VARCHAR"/>
+        </association>
+        <association property="classRoomInfo" javaType="com.education.entity.ClassRoomInfo">
+            <result property="roomNumber" column="room_number" jdbcType="VARCHAR" />
+        </association>
+        <association property="studentInfo" javaType="com.education.entity.StudentInfo">
+            <result property="studentName" column="student_name" jdbcType="VARCHAR" />
+            <result property="studentNum" column="student_num" jdbcType="INTEGER" />
+        </association>
+    </resultMap>
+
     <select id="findExamSubjectPlanList" resultMap="examInfoList">
         select exam_info.exam_name,exam_info.start_exam,exam_info.end_exam,class_room_info.room_number,teacher_info.teacher_name
         from (exam_info inner join class_room_info on exam_info.room_id = class_room_info.id)
         inner join teacher_info on exam_info.proctor_id = teacher_info.id
+        inner join course_info on exam_info.course_id = course_info.id
+        inner join course_name on course_info.course_number = course_name.course_number
         <where>
             <if test="examName != null">exam_info.exam_name like concat('%',#{examName},'%') </if>
+            <if test="year != null ">and course_name.year = #{year}</if>
+            <if test="semester != null ">and course_name.semester = #{semester}</if>
         </where>
     </select>
 
@@ -33,8 +53,12 @@
         select exam_info.exam_name,exam_info.start_exam,exam_info.end_exam,class_room_info.room_number,teacher_info.teacher_name
         from (exam_info inner join class_room_info on exam_info.room_id = class_room_info.id)
         inner join teacher_info on exam_info.proctor_id = teacher_info.id
+        inner join course_info on exam_info.course_id = course_info.id
+        inner join course_name on course_info.course_number = course_name.course_number
         <where>
             <if test="roomNumber != null">class_room_info.room_number like concat('%',#{roomNumber},'%') </if>
+            <if test="year != null ">and course_name.year = #{year}</if>
+            <if test="semester != null ">and course_name.semester = #{semester}</if>
         </where>
     </select>
 
@@ -60,7 +84,7 @@
         </where>
     </select>
 
-    <select id="findExamStudentPlanList" resultMap="examInfoList">
+    <select id="findExamStudentPlanList" resultMap="ExamStudentPlanList">
         select
         student_info.student_num,
         student_info.student_name,
@@ -73,9 +97,13 @@
         inner join exam_info on student_exam.course_id = exam_info.course_id
         inner join student_info on student_exam.student_id = student_info.id
         inner join class_room_info on exam_info.room_id = class_room_info.id
+        inner join course_info on exam_info.course_id = course_info.id
+        inner join course_name on course_info.course_number = course_name.course_number
         <where>
             <if test="studentNum != null">student_info.student_Num = #{studentNum} </if>
             <if test="studentName != null">and student_info.student_name like concat('%',#{studentName},'%') </if>
+            <if test="year != null ">and course_name.year = #{year}</if>
+            <if test="semester != null ">and course_name.semester = #{semester}</if>
         </where>
     </select>
 

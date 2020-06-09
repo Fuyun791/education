@@ -66,4 +66,7 @@ public interface ICourseInfoService extends IService<CourseInfo> {
      */
     int deleteCourseInfo(int id);
 
+    //我写的返回全校课表
+    List<TeacherInfo> findAllCourseList(Integer pageStart, Integer pageSize);
+
 }

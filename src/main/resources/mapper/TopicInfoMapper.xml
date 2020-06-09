@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.TopicInfoMapper">
+
+    <resultMap id="TopicInfoList" type="com.education.entity.TopicInfo">
+        <result property="id" column="id" jdbcType="BIGINT" />
+        <result property="groupId" column="group_id" jdbcType="BIGINT" />
+        <result property="topicName" column="topic_name" jdbcType="VARCHAR" />
+        <result property="topicBrief" column="topic_brief" jdbcType="VARCHAR" />
+        <result property="topicContent" column="topic_content" jdbcType="LONGVARCHAR" />
+        <result property="userId" column="user_id" jdbcType="VARCHAR" />
+        <result property="topicImg" column="topic_img" jdbcType="VARCHAR" />
+        <result property="dataCreate" column="data_create" jdbcType="VARCHAR" />
+        <result property="groupName" column="group_name" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="findTopicInfoList" resultMap="TopicInfoList">
+        select
+        topic_info.id,
+        topic_info.topic_name,
+        topic_info.topic_brief,
+        topic_info.topic_img
+        from
+        topic_info
+        <where>
+            topic_info.group_id = #{groupId}
+        </where>
+    </select>
+
+    <select id="findTopicContentList" resultMap="TopicInfoList">
+        select
+        topic_info.topic_name,
+        topic_info.topic_content,
+        topic_info.data_create,
+        group_info.group_name
+        from
+        topic_info
+        inner join group_info on topic_info.group_id = group_info.id
+        <where>
+            topic_info.id = #{id}
+        </where>
+    </select>
+
+
+</mapper>

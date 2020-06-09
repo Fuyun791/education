@@ -12,35 +12,35 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 教室表
+ * 
  * </p>
  *
  * @author dell
- * @since 2020-05-23
+ * @since 2020-06-05
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="ClassRoomInfo对象", description="教室表")
-public class ClassRoomInfo implements Serializable {
+@ApiModel(value="StuGroupRelation对象", description="")
+public class StuGroupRelation implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private String roomNumber;
+    @ApiModelProperty(value = "外键(学生表student_info)")
+    private Long studentId;
 
-    @ApiModelProperty(value = "外键(院系表faculty_info)", example = "0")
-    private Long facultyId;
+    @ApiModelProperty(value = "外键(兴趣小组表group_info)")
+    private Long groupId;
+
+    @ApiModelProperty(value = "学生加入时间")
+    private LocalDateTime joinTime;
 
     private LocalDateTime dataCreate;
 
     private LocalDateTime dataModified;
 
-    //我加的
-    private String year;
-
-    private Integer semester;
 
 }

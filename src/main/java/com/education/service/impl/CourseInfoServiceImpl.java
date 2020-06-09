@@ -123,4 +123,12 @@ public class CourseInfoServiceImpl extends ServiceImpl<CourseInfoMapper, CourseI
         return courseInfoMapper.deleteById(id);
     }
 
+
+    //我写的返回全校课表
+    @Override
+    public List<TeacherInfo> findAllCourseList(Integer pageStart, Integer pageSize){
+        PageHelper.startPage(pageStart,pageSize);
+        return courseInfoMapper.findAllCourseList();
+    }
+
 }

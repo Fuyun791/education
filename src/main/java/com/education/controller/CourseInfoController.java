@@ -98,4 +98,13 @@ public class CourseInfoController {
         return RespBody.error();
     }
 
+    //我加的，查询全校课表,先不写参数
+    @ApiOperation("查询全校课表")
+    @RequestMapping(value = "/list-allCourseList",method = RequestMethod.GET)
+    public RespBody findAllCourseList(@RequestParam(value = "pageStart",defaultValue = "1")Integer pageStart,
+                                      @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize){
+        List<TeacherInfo> allCourseList = courseInfoService.findAllCourseList(pageStart,pageSize);
+        PageInfo<TeacherInfo> pageInfo = new PageInfo<>(allCourseList);
+        return RespBody.ok(pageInfo);
+    }
 }

@@ -1,6 +1,7 @@
 package com.education.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -12,35 +13,42 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 教室表
+ * 
  * </p>
  *
  * @author dell
- * @since 2020-05-23
+ * @since 2020-06-02
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="ClassRoomInfo对象", description="教室表")
-public class ClassRoomInfo implements Serializable {
+@ApiModel(value="GroupInfo对象", description="")
+public class GroupInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private String roomNumber;
+    @ApiModelProperty(value = "小组简介")
+    private String groupBrief;
 
-    @ApiModelProperty(value = "外键(院系表faculty_info)", example = "0")
-    private Long facultyId;
+    @ApiModelProperty(value = "小组名称")
+    private String groupName;
+
+    @ApiModelProperty(value = "小组头像图片")
+    private String groupImg;
+
+    @ApiModelProperty(value = "外键(院校表college_info)")
+    private Long collegeId;
 
     private LocalDateTime dataCreate;
 
     private LocalDateTime dataModified;
 
-    //我加的
-    private String year;
+    //为了多表操作加的
+    @TableField(exist = false)
+    private TopicInfo topicInfo;
 
-    private Integer semester;
 
 }
