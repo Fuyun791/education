@@ -69,5 +69,7 @@ public class CourseName implements Serializable {
     @TableField(exist = false)
     private Long courseId;
 
+    //我加的
+    private Integer courseType;
 
 }

@@ -43,7 +43,7 @@ public class StudentExam implements Serializable {
 
     private LocalDateTime dataModified;
 
-    //下面三个是为了多表查询加的
+    //下面4个是为了多表查询加的
     @TableField(exist = false)
     private StudentInfo studentInfo;
 
@@ -52,5 +52,8 @@ public class StudentExam implements Serializable {
 
     @TableField(exist = false)
     private CourseName courseName;
+
+    @TableField(exist = false)
+    private ClassRoomInfo classRoomInfo;
 
 }

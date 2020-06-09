@@ -40,4 +40,10 @@ public interface CourseInfoMapper extends BaseMapper<CourseInfo> {
     StudentInfo findStudentCourseList(@Param("studentName")String studentName,
                                       @Param("studentNum")Integer studentNum, @Param("courseName")String courseName);
 
+
+    /*
+     * 我写的
+     * 返回全校课表
+     */
+    List<TeacherInfo> findAllCourseList();
 }

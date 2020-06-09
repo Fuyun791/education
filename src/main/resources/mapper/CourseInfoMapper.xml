@@ -103,4 +103,29 @@
     </select>
 
 
+    <resultMap id="allCourseList" type="com.education.entity.CourseInfo">
+        <result property="id" column="id" />
+        <result property="courseNumber" column="course_number" />
+        <association property="teacherInfo" javaType="com.education.entity.TeacherInfo">
+            <result property="teacherName" column="teacher_name" />
+            <result property="teacherNumber" column="teacher_number" />
+        </association>
+        <association property="courseName" javaType="com.education.entity.CourseName">
+            <result property="courseName" column="course_name" />
+        </association>
+    </resultMap>
+
+    <select id="findAllCourseList" resultMap="allCourseList">
+        SELECT
+            course_info.id,
+            course_info.course_number,
+            course_name.course_name,
+            teacher_info.teacher_name,
+            teacher_info.teacher_number
+        FROM
+            course_name
+            inner join course_info on course_info.course_number = course_name.course_number
+            inner join teacher_info on course_info.teacher_id = teacher_info.id
+    </select>
+
 </mapper>

@@ -79,4 +79,11 @@ public class StudentInfo implements Serializable {
     @TableField(exist = false)
     private String adminPic;
 
+    //学年和学期
+    @TableField(exist = false)
+    private String year;
+
+    @TableField(exist = false)
+    private Integer semester;
+
 }

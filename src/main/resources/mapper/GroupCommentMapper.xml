@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.GroupCommentMapper">
+
+    <resultMap id="GroupCommentList" type="com.education.entity.GroupComment">
+        <result property="id" column="id" jdbcType="BIGINT" />
+        <result property="commentContent" column="comment_content" jdbcType="LONGVARCHAR" />
+        <result property="commentImg" column="comment_img" jdbcType="VARCHAR" />
+        <result property="studentName" column="student_name" jdbcType="VARCHAR" />
+        <result property="studentPic" column="student_pic" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findGroupCommentList" resultMap="GroupCommentList">
+        select
+        group_comment.id,
+        group_comment.comment_content,
+        student_info.student_name,
+        student_info.student_pic
+        from
+        group_comment
+        inner join student_info on group_comment.student_id = student_info.id
+        <where>
+            group_comment.topic_id = #{topicId}
+        </where>
+    </select>
+
+    <insert id="insertGroupComment">
+        insert into
+        group_comment(
+          topic_id,
+          student_id,
+          comment_content,
+          data_modified,
+          data_create
+        )
+        values (
+          #{topicId},
+          (SELECT student_info.id FROM student_info WHERE student_info.student_num = #{studentNum}),
+          #{commentContent},
+          #{dataModified},
+          #{dataCreate}
+        )
+    </insert>
+</mapper>

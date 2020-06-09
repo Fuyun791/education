@@ -59,6 +59,10 @@ public class ExamInfo implements Serializable {
 
     private LocalDateTime dataModified;
 
+    //学年和学期
+    private String year;
+
+    private Integer semester;
     //下面三个是为了多表查询加的
     @TableField(exist = false)
     private ClassRoomInfo classRoomInfo;
@@ -68,5 +72,6 @@ public class ExamInfo implements Serializable {
 
     @TableField(exist = false)
     private StudentInfo studentInfo;
+
 
 }

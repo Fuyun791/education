@@ -14,6 +14,7 @@
         </association>
         <association property="courseName" javaType="com.education.entity.CourseName">
             <result property="credit" column="credit" javaType="INTEGER" />
+            <result property="courseType" column="course_type" javaType="INTEGER" />
         </association>
     </resultMap>
 
@@ -28,9 +29,13 @@
         exam_info
         inner join student_exam on exam_info.course_id = student_exam.course_id
         inner join student_info on student_exam.student_id = student_info.id
+        inner join course_info on exam_info.course_id = course_info.id
+        inner join course_name on course_info.course_number = course_name.course_number
         <where>
             <if test="studentNum != null">student_info.student_num = #{studentNum} </if>
             <if test="studentName != null">and student_info.student_name like concat('%',#{studentName},'%') </if>
+            <if test="year != null ">and course_name.year = #{year}</if>
+            <if test="semester != null ">and course_name.semester = #{semester}</if>
         </where>
     </select>
 
@@ -41,7 +46,8 @@
         student_info.student_name,
         student_info.student_sex,
         exam_info.exam_name,
-        course_name.credit
+        course_name.credit,
+        course_name.course_type
         from
         exam_info
         inner join student_exam on exam_info.course_id = student_exam.course_id
@@ -51,6 +57,8 @@
         <where>
             <if test="studentNum != null">student_info.student_num = #{studentNum} </if>
             <if test="studentName != null">and student_info.student_name like concat('%',#{studentName},'%') </if>
+            <if test="year != null ">and course_name.year = #{year}</if>
+            <if test="semester != null ">and course_name.semester = #{semester}</if>
         </where>
     </select>
 </mapper>

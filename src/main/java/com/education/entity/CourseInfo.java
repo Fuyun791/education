@@ -66,4 +66,8 @@ public class CourseInfo implements Serializable {
     @TableField(exist = false)
     private List<CourseTimeInfo> courseTimeInfo;
 
+    //我加的
+    @TableField(exist = false)
+    private TeacherInfo teacherInfo;
+
 }
