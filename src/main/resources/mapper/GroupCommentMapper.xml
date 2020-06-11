@@ -7,7 +7,7 @@
         <result property="commentContent" column="comment_content" jdbcType="LONGVARCHAR" />
         <result property="commentImg" column="comment_img" jdbcType="VARCHAR" />
         <result property="studentName" column="student_name" jdbcType="VARCHAR" />
-        <result property="studentPic" column="student_pic" jdbcType="VARCHAR"/>
+        <result property="adminPic" column="admin_pic" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="findGroupCommentList" resultMap="GroupCommentList">
@@ -15,10 +15,11 @@
         group_comment.id,
         group_comment.comment_content,
         student_info.student_name,
-        student_info.student_pic
+        admin_info.admin_pic
         from
         group_comment
         inner join student_info on group_comment.student_id = student_info.id
+        inner join admin_info on student_info.student_num = admin_info.admin_number
         <where>
             group_comment.topic_id = #{topicId}
         </where>
