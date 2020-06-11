@@ -48,9 +48,9 @@ public class GroupComment implements Serializable {
 
     private LocalDateTime dataModified;
 
-    //为了显示学生姓名和头像加的
+    //为了显示学生姓名和管理员头像加的
     private String studentName;
 
-    private String studentPic;
+    private String adminPic;
 
 }
