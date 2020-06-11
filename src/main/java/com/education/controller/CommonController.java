@@ -2,14 +2,12 @@ package com.education.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.education.entity.OnlineCourseDiscuss;
-import com.education.entity.OnlineCourseInfo;
-import com.education.entity.OnlineEpisodes;
-import com.education.entity.RespBody;
+import com.education.entity.*;
 import com.education.service.IOnlineCourseDiscussService;
 import com.education.service.IOnlineCourseInfoService;
 import com.education.service.IOnlineEpisodesService;
 import com.education.service.IRedisService;
+import com.education.service.impl.OnlineClassifyServiceImpl;
 import com.education.service.impl.OnlineCourseStarServiceImpl;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -37,11 +35,24 @@ public class CommonController {
 
     private final IOnlineCourseDiscussService onlineCourseDiscussService;
 
+    private final OnlineClassifyServiceImpl onlineClassifyService;
+
     @Autowired
-    public CommonController(IOnlineCourseInfoService onlineCourseInfoService, IOnlineEpisodesService onlineEpisodesService, IOnlineCourseDiscussService onlineCourseDiscussService, IRedisService redisService) {
+    public CommonController(IOnlineCourseInfoService onlineCourseInfoService, IOnlineEpisodesService onlineEpisodesService, IOnlineCourseDiscussService onlineCourseDiscussService, IRedisService redisService, OnlineClassifyServiceImpl onlineClassifyService) {
         this.onlineCourseInfoService = onlineCourseInfoService;
         this.onlineEpisodesService = onlineEpisodesService;
         this.onlineCourseDiscussService = onlineCourseDiscussService;
+        this.onlineClassifyService = onlineClassifyService;
+    }
+
+    @ApiOperation("查询在线课程分类")
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public RespBody findAllOnlineClassify(OnlineClassify onlineClassify,
+                                       @RequestParam(value = "pageStart",defaultValue = "1")Integer pageStart,
+                                       @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize){
+        List<OnlineClassify> onlineClassifyList = onlineClassifyService.findOnlineClassify(onlineClassify, pageStart, pageSize);
+        PageInfo<OnlineClassify> pageInfo = new PageInfo<>(onlineClassifyList);
+        return RespBody.ok(pageInfo);
     }
 
     @ApiOperation("根据相应状态查询在线课程")

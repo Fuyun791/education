@@ -55,19 +55,6 @@ public class OnlineCourseStarController {
         return RespBody.ok(onlineCourseStarList);
     }
 
-    @ApiOperation("进行用户点赞")
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public RespBody insertOnlineCourseStar(OnlineCourseStar onlineCourseStar,
-                                           @RequestParam("discussParent") Long discussParent,
-                                           @RequestParam("discussPerson") Integer discussPerson,
-                                           @RequestParam("onlineCourseId") Long onlineCourseId) {
-        int result = onlineCourseStarService.insertOnlineCourseStar(onlineCourseStar, discussParent, discussPerson, onlineCourseId);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
-    }
-
     @ApiOperation("修改用户点赞")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public RespBody updateOnlineCourseStar(OnlineCourseStar onlineCourseStar) {

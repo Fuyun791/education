@@ -35,12 +35,15 @@ public class OnlineCourseStarServiceImpl extends ServiceImpl<OnlineCourseStarMap
 
     private final OnlineCourseStarMapper onlineCourseStarMapper;
 
+    private final OnlineCourseDiscussServiceImpl onlineCourseDiscussService;
+
     private final IRedisService redisService;
 
     @Autowired
-    public OnlineCourseStarServiceImpl(OnlineCourseStarMapper onlineCourseStarMapper, IRedisService redisService) {
+    public OnlineCourseStarServiceImpl(OnlineCourseStarMapper onlineCourseStarMapper, IRedisService redisService, OnlineCourseDiscussServiceImpl onlineCourseDiscussService) {
         this.onlineCourseStarMapper = onlineCourseStarMapper;
         this.redisService = redisService;
+        this.onlineCourseDiscussService = onlineCourseDiscussService;
     }
 
     @Override
@@ -53,7 +56,7 @@ public class OnlineCourseStarServiceImpl extends ServiceImpl<OnlineCourseStarMap
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.REPEATABLE_READ)
     @Override
-    public int insertOnlineCourseStar(OnlineCourseStar onlineCourseStar, Long discussParent, Integer discussPerson, Long onlineCourseId) {
+    public int insertOnlineCourseStar(OnlineCourseStar onlineCourseStar, Long discussParent, Integer discussPerson, Long onlineCourseId,Integer discussToPerson) throws Exception {
         //这个key代表的意思是课程号下的评论id
         int result = 0;
         String discussKey = "onlineCourseDiscuss:" + onlineCourseId;
@@ -67,12 +70,13 @@ public class OnlineCourseStarServiceImpl extends ServiceImpl<OnlineCourseStarMap
         String hash = onlineCourseId + "_" + onlineCourseStar.getDiscussCourseId();
         String keyStar = "discussStar:" + onlineCourseStar.getStarPerson();
         //代表要添加对象的KeyHash
-        String hashStarKey = onlineCourseStar.getDiscussCourseId() + "_" + discussPerson;
+        String hashStarKey = onlineCourseStar.getDiscussCourseId() + "_" + discussToPerson;
         //存在说明应该做删除操作
         if (redisService.rank(keyStar, hash) != null) {
             //对onlineCourse里的star做减法
             OnlineCourseDiscuss onlineCourseDiscuss = JSON.parseObject(String.valueOf(redisService.getHashValue(discussKey,hashStarKey)), OnlineCourseDiscuss.class);
             redisService.putHash(discussKey,hashStarKey,JSON.toJSONString(onlineCourseDiscuss.incrementStar(-1)));
+            onlineCourseDiscussService.updateOnlineCourseDiscuss(onlineCourseDiscuss);
             //降低onlineCourseStar里的排序
             redisService.incrementScore(discussStarKey, hashStarKey, -1);
             //移除discussStar里的评论
@@ -91,7 +95,11 @@ public class OnlineCourseStarServiceImpl extends ServiceImpl<OnlineCourseStarMap
                     onlineCourseStar.getDataModified().toInstant(ZoneOffset.of("+8")).toEpochMilli());
             //修改onlineCourse里的star数量
             OnlineCourseDiscuss onlineCourseDiscuss = JSON.parseObject(String.valueOf(redisService.getHashValue(discussKey,hashStarKey)), OnlineCourseDiscuss.class);
+            if(onlineCourseDiscuss == null) {
+                throw new Exception();
+            }
             redisService.putHash(discussKey,hashStarKey,JSON.toJSONString(onlineCourseDiscuss.incrementStar(1)));
+            onlineCourseDiscussService.updateOnlineCourseDiscuss(onlineCourseDiscuss);
             //增加onlineCourseStar里的star排序得分
             redisService.incrementScore(discussStarKey, hashStarKey, 1);
         }

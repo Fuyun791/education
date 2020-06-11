@@ -11,6 +11,7 @@ import com.education.service.IRoleInfoService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -21,6 +22,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -67,6 +69,11 @@ public class AdminInfoServiceImpl extends ServiceImpl<AdminInfoMapper, AdminInfo
 
     @Override
     public int insertAdminInfo(AdminInfo adminInfo) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String password = passwordEncoder.encode(adminInfo.getPassword().trim());
+        adminInfo.setPassword(password);
+        adminInfo.setDataCreate(LocalDateTime.now());
+        adminInfo.setDataModified(LocalDateTime.now());
         return adminInfoMapper.insert(adminInfo);
     }
 

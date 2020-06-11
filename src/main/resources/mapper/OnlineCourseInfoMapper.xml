@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.education.mapper.OnlineCourseInfoMapper">
     <resultMap id="onlineCourse" type="com.education.entity.OnlineCourseInfo" autoMapping="true">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="teacherName" column="teacher_name" jdbcType="VARCHAR"/>
         <association property="onlineCourseChecked" javaType="com.education.entity.OnlineCourseChecked">
             <result property="people" column="people" jdbcType="BIGINT"/>
             <result property="checkedData" column="checked_data" jdbcType="TIMESTAMP"/>
@@ -16,10 +18,12 @@
             cc.people,
             cc.checked_data,
             cc.checked_status,
-            cc.checked_result
+            cc.checked_result,
+            ti.teacher_name
         FROM
             online_course_info ci
             INNER JOIN online_course_checked cc ON ci.id = cc.online_course_id
+            INNER JOIN teacher_info ti on ci.teacher_id = ti.teacher_number
         <where>
             (
             <if test="isShare != null">ci.is_share = #{isShare} </if>

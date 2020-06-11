@@ -13,6 +13,8 @@ import com.education.mapper.StudentInfoMapper;
 import com.education.service.IStudentInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -28,6 +30,8 @@ public class StudentInfoServiceImpl extends ServiceImpl<StudentInfoMapper, Stude
     private final StudentInfoMapper studentInfoMapper;
 
     private final AdminInfoServiceImpl adminInfoService;
+
+    private final static String ADMIN_PIC = "http://123.57.57.136/jklimage/cat.png";
 
     @Autowired
     public StudentInfoServiceImpl(StudentInfoMapper studentInfoMapper, AdminInfoServiceImpl adminInfoService) {
@@ -54,9 +58,22 @@ public class StudentInfoServiceImpl extends ServiceImpl<StudentInfoMapper, Stude
         return studentInfoMapper.findStudentInfoList(studentInfo);
     }
 
+    @Transactional(rollbackFor = Exception.class, isolation = Isolation.REPEATABLE_READ)
     @Override
     public int insertStudentInfo(StudentInfo studentInfo) {
-        return studentInfoMapper.insert(studentInfo);
+        int result = 0;
+        if(studentInfoMapper.insert(studentInfo) == 1) {
+            AdminInfo adminInfo = new AdminInfo();
+            adminInfo.setAdminNumber(studentInfo.getStudentNum());
+            adminInfo.setAdminName(studentInfo.getStudentName());
+            adminInfo.setPassword("123456");
+            adminInfo.setPhone(studentInfo.getStudentPhone());
+            adminInfo.setRoleId(4L);
+            adminInfo.setCollegeId(studentInfo.getCollegeId());
+            adminInfo.setAdminPic(ADMIN_PIC);
+            result = adminInfoService.insertAdminInfo(adminInfo);
+        }
+        return result;
     }
 
     @Override

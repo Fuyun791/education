@@ -48,7 +48,7 @@ public class AdminInfo implements Serializable {
     private Long roleId;
 
     @ApiModelProperty(value = "外键（院校表）", example = "-1")
-    private Integer collegeId;
+    private Long collegeId;
 
     private String adminPic;
 

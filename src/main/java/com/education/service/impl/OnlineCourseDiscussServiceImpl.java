@@ -192,6 +192,7 @@ public class OnlineCourseDiscussServiceImpl extends ServiceImpl<OnlineCourseDisc
             }
         }
         if (result == 0) {
+            logger.error("某一用户不存在");
             return 0;
         }
         //  外层key
@@ -222,8 +223,8 @@ public class OnlineCourseDiscussServiceImpl extends ServiceImpl<OnlineCourseDisc
             keyStar += stringBuilder;
         }
         //  判断是否是子评论
+        lock.lock();
         try {
-            lock.lock();
             try {
                 onlineCourseDiscuss.setDataCreate(LocalDateTime.now());
                 onlineCourseDiscuss.setDataModified(LocalDateTime.now());

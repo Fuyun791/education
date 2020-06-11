@@ -30,7 +30,7 @@ public interface IOnlineCourseStarService extends IService<OnlineCourseStar> {
      * @param onlineCourseStar
      * @return
      */
-    int insertOnlineCourseStar(OnlineCourseStar onlineCourseStar,Long discussParent,  Integer discussPerson, Long onlineCourseId);
+    int insertOnlineCourseStar(OnlineCourseStar onlineCourseStar,Long discussParent,  Integer discussPerson, Long onlineCourseId,Integer discussToPerson) throws Exception;
 
     //还要写个获取star的代码
     Set<String> getOnlineCourseStar(String discussPerson, Long onlineCourseId);

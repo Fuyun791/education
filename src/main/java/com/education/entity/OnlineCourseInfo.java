@@ -44,6 +44,9 @@ public class OnlineCourseInfo implements Serializable {
     @ApiModelProperty(value = "授课教师，外键teacher_info", example = "0")
     private Long teacherId;
 
+    @TableField(exist = false)
+    private String teacherName;
+
     @ApiModelProperty(value = "学时", example = "0")
     private Integer time;
 

@@ -76,11 +76,6 @@ public class AdminInfoController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public RespBody insertAdminInfo(AdminInfo adminInfo) {
         if (adminInfo.getPassword() != null) {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String password = passwordEncoder.encode(adminInfo.getPassword().trim());
-            adminInfo.setPassword(password);
-            adminInfo.setDataCreate(LocalDateTime.now());
-            adminInfo.setDataModified(LocalDateTime.now());
             int result = adminInfoService.insertAdminInfo(adminInfo);
             if (result == 1) {
                 return RespBody.ok();

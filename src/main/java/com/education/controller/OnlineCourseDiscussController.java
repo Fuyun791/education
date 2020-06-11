@@ -85,9 +85,10 @@ public class OnlineCourseDiscussController {
     @RequestMapping(value = "/click-star", method = RequestMethod.POST)
     public RespBody insertOnlineCourseStar(OnlineCourseStar onlineCourseStar,
                                            @RequestParam("discussParent") Long discussParent,
-                                           @RequestParam("discussPerson") Integer discussPerson,
-                                           @RequestParam("onlineCourseId") Long onlineCourseId) {
-        int result = onlineCourseStarService.insertOnlineCourseStar(onlineCourseStar, discussParent, discussPerson, onlineCourseId);
+                                           @RequestParam(value = "discussPerson", required = false,defaultValue = "0") Integer discussPerson,
+                                           @RequestParam("onlineCourseId") Long onlineCourseId,
+                                           @RequestParam("discussToPerson") Integer discussToPerson) throws Exception {
+        int result = onlineCourseStarService.insertOnlineCourseStar(onlineCourseStar, discussParent, discussPerson, onlineCourseId,discussToPerson);
         if (result == 1) {
             return RespBody.ok();
         }

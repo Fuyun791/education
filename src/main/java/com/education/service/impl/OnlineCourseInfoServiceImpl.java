@@ -27,11 +27,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OnlineCourseInfoServiceImpl extends ServiceImpl<OnlineCourseInfoMapper, OnlineCourseInfo> implements IOnlineCourseInfoService {
 
-    @Autowired
-    private OnlineCourseInfoMapper onlineCourseInfoMapper;
+    private final OnlineCourseInfoMapper onlineCourseInfoMapper;
+
+    private final OnlineCourseCheckedMapper onlineCourseCheckedMapper;
 
     @Autowired
-    private OnlineCourseCheckedMapper onlineCourseCheckedMapper;
+    public OnlineCourseInfoServiceImpl(OnlineCourseInfoMapper onlineCourseInfoMapper, OnlineCourseCheckedMapper onlineCourseCheckedMapper) {
+        this.onlineCourseInfoMapper = onlineCourseInfoMapper;
+        this.onlineCourseCheckedMapper = onlineCourseCheckedMapper;
+    }
 
     @Override
     public List<OnlineCourseInfo> findOnlineCourseInfo(OnlineCourseInfo onlineCourseInfo, Integer pageStart, Integer pageSize) {
