@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 
 /**
  * <p>
-    *  Mapper 接口
-    * </p>
+ * Mapper 接口
+ * </p>
  *
  * @author dell
  * @since 2020-06-08

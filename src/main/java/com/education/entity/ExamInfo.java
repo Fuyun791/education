@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dell
@@ -24,54 +24,54 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="ExamInfo对象", description="")
+@ApiModel(value = "ExamInfo对象", description = "")
 public class ExamInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    private String examName;
+  private String examName;
 
-    @ApiModelProperty(value = "外键(课程表course_info)", example = "0")
-    private Long courseId;
+  @ApiModelProperty(value = "外键(课程表course_info)", example = "0")
+  private Long courseId;
 
-    @ApiModelProperty(value = "考试人数", example = "0")
-    private Integer seatNum;
+  @ApiModelProperty(value = "考试人数", example = "0")
+  private Integer seatNum;
 
-    @ApiModelProperty(value = "监考老师外键(teacher_info)", example = "0")
-    private Long proctorId;
+  @ApiModelProperty(value = "监考老师外键(teacher_info)", example = "0")
+  private Long proctorId;
 
-    @ApiModelProperty(value = "授课老师(teacher_info)", example = "0")
-    private Long teacherId;
+  @ApiModelProperty(value = "授课老师(teacher_info)", example = "0")
+  private Long teacherId;
 
-    @ApiModelProperty(value = "考试开始时间")
-    private LocalDateTime startExam;
+  @ApiModelProperty(value = "考试开始时间")
+  private LocalDateTime startExam;
 
-    @ApiModelProperty(value = "考试结束时间")
-    private LocalDateTime endExam;
+  @ApiModelProperty(value = "考试结束时间")
+  private LocalDateTime endExam;
 
-    @ApiModelProperty(value = "考试教室", example = "0")
-    private Long roomId;
+  @ApiModelProperty(value = "考试教室", example = "0")
+  private Long roomId;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
-    //学年和学期
-    private String year;
+  //学年和学期
+  private String year;
 
-    private Integer semester;
-    //下面三个是为了多表查询加的
-    @TableField(exist = false)
-    private ClassRoomInfo classRoomInfo;
+  private Integer semester;
+  //下面三个是为了多表查询加的
+  @TableField(exist = false)
+  private ClassRoomInfo classRoomInfo;
 
-    @TableField(exist = false)
-    private TeacherInfo teacherInfo;
+  @TableField(exist = false)
+  private TeacherInfo teacherInfo;
 
-    @TableField(exist = false)
-    private StudentInfo studentInfo;
+  @TableField(exist = false)
+  private StudentInfo studentInfo;
 
 
 }

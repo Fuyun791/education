@@ -14,49 +14,53 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
-    *  服务实现类
-    * </p>
+ * 服务实现类
+ * </p>
  *
  * @author dell
  * @since 2020-06-04
  */
 @Service
-public class GroupCommentServiceImpl extends ServiceImpl<GroupCommentMapper, GroupComment> implements IGroupCommentService {
+public class GroupCommentServiceImpl extends
+    ServiceImpl<GroupCommentMapper, GroupComment> implements IGroupCommentService {
 
-    @Autowired
-    private GroupCommentMapper groupCommentMapper;
+  @Autowired
+  private GroupCommentMapper groupCommentMapper;
 
-    @Override
-    public List<GroupComment> findGroupComment(GroupComment groupComment, Integer pageStart, Integer pageSize) {
-        //这里根据具体的条件进行扩充
-        QueryWrapper<GroupComment> queryWrapper=new QueryWrapper<>(groupComment);
-        PageHelper.startPage(pageStart,pageSize);
-        return groupCommentMapper.selectList(queryWrapper);
-    }
+  @Override
+  public List<GroupComment> findGroupComment(GroupComment groupComment, Integer pageStart,
+      Integer pageSize) {
+    //这里根据具体的条件进行扩充
+    QueryWrapper<GroupComment> queryWrapper = new QueryWrapper<>(groupComment);
+    PageHelper.startPage(pageStart, pageSize);
+    return groupCommentMapper.selectList(queryWrapper);
+  }
 
-    @Override
-    public int insertGroupComment(GroupComment groupComment) {
-        return groupCommentMapper.insert(groupComment);
-    }
+  @Override
+  public int insertGroupComment(GroupComment groupComment) {
+    return groupCommentMapper.insert(groupComment);
+  }
 
-    @Override
-    public int updateGroupComment(GroupComment groupComment) {
-        return groupCommentMapper.updateById(groupComment);
-    }
+  @Override
+  public int updateGroupComment(GroupComment groupComment) {
+    return groupCommentMapper.updateById(groupComment);
+  }
 
-    @Override
-    public int deleteGroupComment(int id) {
-        return groupCommentMapper.deleteById(id);
-    }
+  @Override
+  public int deleteGroupComment(int id) {
+    return groupCommentMapper.deleteById(id);
+  }
 
-    //返回话题评论列表
-    @Override
-    public List<GroupComment> findGroupCommentList(GroupComment groupComment){
-        return groupCommentMapper.findGroupCommentList(groupComment);
-    }
+  //返回话题评论列表
+  @Override
+  public List<GroupComment> findGroupCommentList(GroupComment groupComment) {
+    return groupCommentMapper.findGroupCommentList(groupComment);
+  }
 
-    @Override
-    public int insertGroupComment (int topicId,int studentNum,String commentContent,String dataModified,String dataCreate){
-        return groupCommentMapper.insertGroupComment(topicId,studentNum,commentContent,dataModified,dataCreate);
-    }
+  @Override
+  public int insertGroupComment(int topicId, int studentNum, String commentContent,
+      String dataModified, String dataCreate) {
+    return groupCommentMapper
+        .insertGroupComment(topicId, studentNum, commentContent, dataModified, dataCreate);
+  }
 }

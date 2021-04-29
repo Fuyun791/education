@@ -10,8 +10,8 @@ import java.util.List;
 
 /**
  * <p>
-    * 主要分主管理员和子管理员 Mapper 接口
-    * </p>
+ * 主要分主管理员和子管理员 Mapper 接口
+ * </p>
  *
  * @author dell
  * @since 2020-05-10
@@ -19,11 +19,12 @@ import java.util.List;
 @Repository
 public interface AdminInfoMapper extends BaseMapper<AdminInfo> {
 
-    /**
-     * 查找这个角色所能访问的功能
-     * @param roleId
-     * @return
-     */
-    List<PopedomInfo> getPopedomInfoListByRoleId(@Param("roleId")Long roleId);
+  /**
+   * 查找这个角色所能访问的功能
+   *
+   * @param roleId
+   * @return
+   */
+  List<PopedomInfo> getPopedomInfoListByRoleId(@Param("roleId") Long roleId);
 
 }

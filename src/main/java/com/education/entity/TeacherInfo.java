@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dell
@@ -24,49 +24,49 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="TeacherInfo对象", description="")
+@ApiModel(value = "TeacherInfo对象", description = "")
 public class TeacherInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    private Integer teacherNumber;
+  private Integer teacherNumber;
 
-    private String teacherName;
+  private String teacherName;
 
-    private String teacherSex;
+  private String teacherSex;
 
-    private String teacherPhone;
+  private String teacherPhone;
 
-    @ApiModelProperty(value = "教师职务")
-    private String portfolio;
+  @ApiModelProperty(value = "教师职务")
+  private String portfolio;
 
-    @ApiModelProperty(value = "外键(院系表faculty_info)", example = "0")
-    private Long facultyId;
+  @ApiModelProperty(value = "外键(院系表faculty_info)", example = "0")
+  private Long facultyId;
 
-    @ApiModelProperty(value = "外键(院校表college_info)", example = "0")
-    private Long collegeId;
+  @ApiModelProperty(value = "外键(院校表college_info)", example = "0")
+  private Long collegeId;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
-    @TableField(exist = false)
-    private CollegeInfo collegeInfo;
+  @TableField(exist = false)
+  private CollegeInfo collegeInfo;
 
-    @TableField(exist = false)
-    private FacultyInfo facultyInfo;
+  @TableField(exist = false)
+  private FacultyInfo facultyInfo;
 
-    @TableField(exist = false)
-    private List<CourseInfo> courseInfo;
+  @TableField(exist = false)
+  private List<CourseInfo> courseInfo;
 
-    //我加的
-    @TableField(exist = false)
-    private String year;
+  //我加的
+  @TableField(exist = false)
+  private String year;
 
-    @TableField(exist = false)
-    private Integer semester;
+  @TableField(exist = false)
+  private Integer semester;
 
 }

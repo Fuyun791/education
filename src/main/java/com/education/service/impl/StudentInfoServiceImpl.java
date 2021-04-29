@@ -25,76 +25,80 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 2020-05-16
  */
 @Service
-public class StudentInfoServiceImpl extends ServiceImpl<StudentInfoMapper, StudentInfo> implements IStudentInfoService {
+public class StudentInfoServiceImpl extends ServiceImpl<StudentInfoMapper, StudentInfo> implements
+    IStudentInfoService {
 
-    private final StudentInfoMapper studentInfoMapper;
+  private final StudentInfoMapper studentInfoMapper;
 
-    private final AdminInfoServiceImpl adminInfoService;
+  private final AdminInfoServiceImpl adminInfoService;
 
-    private final static String ADMIN_PIC = "http://123.57.57.136/jklimage/cat.png";
+  private final static String ADMIN_PIC = "http://123.57.57.136/jklimage/cat.png";
 
-    @Autowired
-    public StudentInfoServiceImpl(StudentInfoMapper studentInfoMapper, AdminInfoServiceImpl adminInfoService) {
-        this.studentInfoMapper = studentInfoMapper;
-        this.adminInfoService = adminInfoService;
+  @Autowired
+  public StudentInfoServiceImpl(StudentInfoMapper studentInfoMapper,
+      AdminInfoServiceImpl adminInfoService) {
+    this.studentInfoMapper = studentInfoMapper;
+    this.adminInfoService = adminInfoService;
+  }
+
+  @Override
+  public List<StudentInfo> findStudentInfo(StudentInfo studentInfo, Integer pageStart,
+      Integer pageSize) {
+    //这里根据具体的条件进行扩充
+    QueryWrapper<StudentInfo> queryWrapper = new QueryWrapper<>(studentInfo);
+    PageHelper.startPage(pageStart, pageSize);
+    return studentInfoMapper.selectList(queryWrapper);
+  }
+
+  @Override
+  public StudentInfo getStudentInfo(Integer studentNum) {
+    return studentInfoMapper.getStudentInfo(studentNum);
+  }
+
+  @Override
+  public List<StudentInfo> findStudentInfoList(StudentInfo studentInfo, Integer pageStart,
+      Integer pageSize) {
+    PageHelper.startPage(pageStart, pageSize);
+    return studentInfoMapper.findStudentInfoList(studentInfo);
+  }
+
+  @Transactional(rollbackFor = Exception.class, isolation = Isolation.REPEATABLE_READ)
+  @Override
+  public int insertStudentInfo(StudentInfo studentInfo) {
+    int result = 0;
+    if (studentInfoMapper.insert(studentInfo) == 1) {
+      AdminInfo adminInfo = new AdminInfo();
+      adminInfo.setAdminNumber(studentInfo.getStudentNum());
+      adminInfo.setAdminName(studentInfo.getStudentName());
+      adminInfo.setPassword("123456");
+      adminInfo.setPhone(studentInfo.getStudentPhone());
+      adminInfo.setRoleId(4L);
+      adminInfo.setCollegeId(studentInfo.getCollegeId());
+      adminInfo.setAdminPic(ADMIN_PIC);
+      result = adminInfoService.insertAdminInfo(adminInfo);
     }
+    return result;
+  }
 
-    @Override
-    public List<StudentInfo> findStudentInfo(StudentInfo studentInfo, Integer pageStart, Integer pageSize) {
-        //这里根据具体的条件进行扩充
-        QueryWrapper<StudentInfo> queryWrapper = new QueryWrapper<>(studentInfo);
-        PageHelper.startPage(pageStart, pageSize);
-        return studentInfoMapper.selectList(queryWrapper);
-    }
+  @Override
+  public int updateStudentInfo(StudentInfo studentInfo) {
+    return studentInfoMapper.updateById(studentInfo);
+  }
 
-    @Override
-    public StudentInfo getStudentInfo(Integer studentNum) {
-        return studentInfoMapper.getStudentInfo(studentNum);
-    }
+  @Override
+  public int deleteStudentInfo(int id) {
+    return studentInfoMapper.deleteById(id);
+  }
 
-    @Override
-    public List<StudentInfo> findStudentInfoList(StudentInfo studentInfo, Integer pageStart, Integer pageSize) {
-        PageHelper.startPage(pageStart, pageSize);
-        return studentInfoMapper.findStudentInfoList(studentInfo);
-    }
-
-    @Transactional(rollbackFor = Exception.class, isolation = Isolation.REPEATABLE_READ)
-    @Override
-    public int insertStudentInfo(StudentInfo studentInfo) {
-        int result = 0;
-        if(studentInfoMapper.insert(studentInfo) == 1) {
-            AdminInfo adminInfo = new AdminInfo();
-            adminInfo.setAdminNumber(studentInfo.getStudentNum());
-            adminInfo.setAdminName(studentInfo.getStudentName());
-            adminInfo.setPassword("123456");
-            adminInfo.setPhone(studentInfo.getStudentPhone());
-            adminInfo.setRoleId(4L);
-            adminInfo.setCollegeId(studentInfo.getCollegeId());
-            adminInfo.setAdminPic(ADMIN_PIC);
-            result = adminInfoService.insertAdminInfo(adminInfo);
-        }
-        return result;
-    }
-
-    @Override
-    public int updateStudentInfo(StudentInfo studentInfo) {
-        return studentInfoMapper.updateById(studentInfo);
-    }
-
-    @Override
-    public int deleteStudentInfo(int id) {
-        return studentInfoMapper.deleteById(id);
-    }
-
-    @Override
-    public int updateStudentPic(AdminInfo adminInfo) {
-        UpdateWrapper<AdminInfo> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.set("admin_name",adminInfo.getAdminName());
-        updateWrapper.set("admin_pic",adminInfo.getAdminPic());
-        updateWrapper.set("data_modified",adminInfo.getDataModified());
-        updateWrapper.eq("admin_number", adminInfo.getAdminNumber());
-        boolean result = adminInfoService.update(updateWrapper);
-        return result ? 1 : 0;
-    }
+  @Override
+  public int updateStudentPic(AdminInfo adminInfo) {
+    UpdateWrapper<AdminInfo> updateWrapper = new UpdateWrapper<>();
+    updateWrapper.set("admin_name", adminInfo.getAdminName());
+    updateWrapper.set("admin_pic", adminInfo.getAdminPic());
+    updateWrapper.set("data_modified", adminInfo.getDataModified());
+    updateWrapper.eq("admin_number", adminInfo.getAdminNumber());
+    boolean result = adminInfoService.update(updateWrapper);
+    return result ? 1 : 0;
+  }
 
 }

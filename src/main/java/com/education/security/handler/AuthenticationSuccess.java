@@ -25,33 +25,35 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class AuthenticationSuccess extends SimpleUrlAuthenticationSuccessHandler {
 
-    @Autowired
-    private IRedisService redisService;
+  @Autowired
+  private IRedisService redisService;
 
-    @Override
-    protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
-        PrintWriter out=response.getWriter();
-        UserDetails selfUserDetails = (UserDetails) authentication.getPrincipal();
-        SecurityUserDetails securityUserDetails = (SecurityUserDetails) selfUserDetails;
-        if (securityUserDetails.getRoleId() == 4L) {
-            StringBuilder stringBuilder = new StringBuilder();
-            String jwtToken = UUID.randomUUID().toString().replace("-", "");
-            redisService.set("Authorization:" + jwtToken, selfUserDetails.getUsername(),10L, TimeUnit.DAYS);
-            stringBuilder.append(securityUserDetails.getCollegeId());
-            stringBuilder.append("_");
-            stringBuilder.append(jwtToken);
-            out.write(JSON.toJSONString(RespBody.ok(stringBuilder.toString())));
-        } else {
-            // 创建 token ，并返回 ，设置过期时间为 3600 为1小时
-            String jwtToken = JwtTokenUtil.generateToken(selfUserDetails.getUsername(), 3600);
-            out.write(JSON.toJSONString(RespBody.ok(jwtToken)));
-        }
-        out.flush();
-        out.close();
-        //super.handle(request, response, authentication);
+  @Override
+  protected void handle(HttpServletRequest request, HttpServletResponse response,
+      Authentication authentication) throws IOException, ServletException {
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Cache-Control", "no-cache");
+    response.setCharacterEncoding("UTF-8");
+    response.setContentType("application/json");
+    PrintWriter out = response.getWriter();
+    UserDetails selfUserDetails = (UserDetails) authentication.getPrincipal();
+    SecurityUserDetails securityUserDetails = (SecurityUserDetails) selfUserDetails;
+    if (securityUserDetails.getRoleId() == 4L) {
+      StringBuilder stringBuilder = new StringBuilder();
+      String jwtToken = UUID.randomUUID().toString().replace("-", "");
+      redisService
+          .set("Authorization:" + jwtToken, selfUserDetails.getUsername(), 10L, TimeUnit.DAYS);
+      stringBuilder.append(securityUserDetails.getCollegeId());
+      stringBuilder.append("_");
+      stringBuilder.append(jwtToken);
+      out.write(JSON.toJSONString(RespBody.ok(stringBuilder.toString())));
+    } else {
+      // 创建 token ，并返回 ，设置过期时间为 3600 为1小时
+      String jwtToken = JwtTokenUtil.generateToken(selfUserDetails.getUsername(), 3600);
+      out.write(JSON.toJSONString(RespBody.ok(jwtToken)));
     }
+    out.flush();
+    out.close();
+    //super.handle(request, response, authentication);
+  }
 }

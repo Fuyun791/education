@@ -25,52 +25,53 @@ import org.springframework.stereotype.Service;
  * @since 2020-05-10
  */
 @Service
-public class RoleInfoServiceImpl extends ServiceImpl<RoleInfoMapper, RoleInfo> implements IRoleInfoService {
+public class RoleInfoServiceImpl extends ServiceImpl<RoleInfoMapper, RoleInfo> implements
+    IRoleInfoService {
 
-    @Autowired
-    private RoleInfoMapper roleInfoMapper;
+  @Autowired
+  private RoleInfoMapper roleInfoMapper;
 
-    @Autowired
-    private IPopedomInfoService popedomInfoService;
+  @Autowired
+  private IPopedomInfoService popedomInfoService;
 
-    @Autowired
-    private IRedisService redisService;
+  @Autowired
+  private IRedisService redisService;
 
-    @Override
-    public List<RoleInfo> findRoleInfo(RoleInfo roleInfo, Integer pageStart, Integer pageSize) {
-        //这里根据具体的条件进行扩充
-        QueryWrapper<RoleInfo> queryWrapper = new QueryWrapper<>(roleInfo);
-        PageHelper.startPage(pageStart, pageSize);
-        return roleInfoMapper.selectList(queryWrapper);
+  @Override
+  public List<RoleInfo> findRoleInfo(RoleInfo roleInfo, Integer pageStart, Integer pageSize) {
+    //这里根据具体的条件进行扩充
+    QueryWrapper<RoleInfo> queryWrapper = new QueryWrapper<>(roleInfo);
+    PageHelper.startPage(pageStart, pageSize);
+    return roleInfoMapper.selectList(queryWrapper);
+  }
+
+  @Override
+  public RoleInfo findRoleAndPopedomInfoById(Long roleId) {
+    RoleInfo roleInfo = null;
+    String str = "roleInfo:" + roleId;
+    if (redisService.getByKey(str) == null) {
+      roleInfo = roleInfoMapper.selectById(roleId);
+      roleInfo.setPopedomInfoList(popedomInfoService.findPopedomMenuByRoleId(roleId));
+      redisService.set(str, JSON.toJSONString(roleInfo), 11L, TimeUnit.HOURS);
+    } else {
+      roleInfo = JSON.parseObject(redisService.getByKey(str), RoleInfo.class);
     }
+    return roleInfo;
+  }
 
-    @Override
-    public RoleInfo findRoleAndPopedomInfoById(Long roleId) {
-        RoleInfo roleInfo = null;
-        String str = "roleInfo:" + roleId;
-        if (redisService.getByKey(str) == null) {
-            roleInfo = roleInfoMapper.selectById(roleId);
-            roleInfo.setPopedomInfoList(popedomInfoService.findPopedomMenuByRoleId(roleId));
-            redisService.set(str, JSON.toJSONString(roleInfo), 11L, TimeUnit.HOURS);
-        } else {
-            roleInfo = JSON.parseObject(redisService.getByKey(str), RoleInfo.class);
-        }
-        return roleInfo;
-    }
+  @Override
+  public int insertRoleInfo(RoleInfo roleInfo) {
+    return roleInfoMapper.insert(roleInfo);
+  }
 
-    @Override
-    public int insertRoleInfo(RoleInfo roleInfo) {
-        return roleInfoMapper.insert(roleInfo);
-    }
+  @Override
+  public int updateRoleInfo(RoleInfo roleInfo) {
+    return roleInfoMapper.updateById(roleInfo);
+  }
 
-    @Override
-    public int updateRoleInfo(RoleInfo roleInfo) {
-        return roleInfoMapper.updateById(roleInfo);
-    }
-
-    @Override
-    public int deleteRoleInfo(int id) {
-        return roleInfoMapper.deleteById(id);
-    }
+  @Override
+  public int deleteRoleInfo(int id) {
+    return roleInfoMapper.deleteById(id);
+  }
 
 }

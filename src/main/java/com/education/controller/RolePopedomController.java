@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
-    *  前端控制器
-    * </p>
+ * 前端控制器
+ * </p>
  *
  * @author dell
  * @since 2020-05-11
@@ -30,51 +30,52 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/education/role-popedom")
 public class RolePopedomController {
 
-    private final IRolePopedomService rolePopedomService;
+  private final IRolePopedomService rolePopedomService;
 
-    @Autowired
-    public RolePopedomController(IRolePopedomService rolePopedomService) {
-        this.rolePopedomService = rolePopedomService;
-    }
+  @Autowired
+  public RolePopedomController(IRolePopedomService rolePopedomService) {
+    this.rolePopedomService = rolePopedomService;
+  }
 
-    @ApiOperation("查询角色权限")
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public RespBody findRolePopedom(RolePopedom rolePopedom,
-                                 @RequestParam(value = "pageStart",defaultValue = "1")Integer pageStart,
-                                 @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize){
-        List<RolePopedom> rolePopedomList = rolePopedomService.findRolePopedom(rolePopedom, pageStart, pageSize);
-        PageInfo<RolePopedom> pageInfo = new PageInfo<>(rolePopedomList);
-        return RespBody.ok(pageInfo);
-    }
+  @ApiOperation("查询角色权限")
+  @RequestMapping(value = "/list", method = RequestMethod.GET)
+  public RespBody findRolePopedom(RolePopedom rolePopedom,
+      @RequestParam(value = "pageStart", defaultValue = "1") Integer pageStart,
+      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+    List<RolePopedom> rolePopedomList = rolePopedomService
+        .findRolePopedom(rolePopedom, pageStart, pageSize);
+    PageInfo<RolePopedom> pageInfo = new PageInfo<>(rolePopedomList);
+    return RespBody.ok(pageInfo);
+  }
 
-    @ApiOperation("添加角色权限")
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public RespBody insertRolePopedom(RolePopedom rolePopedom) {
-        int result = rolePopedomService.insertRolePopedom(rolePopedom);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+  @ApiOperation("添加角色权限")
+  @RequestMapping(value = "/insert", method = RequestMethod.POST)
+  public RespBody insertRolePopedom(RolePopedom rolePopedom) {
+    int result = rolePopedomService.insertRolePopedom(rolePopedom);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
-    @ApiOperation("修改角色权限")
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public RespBody updateRolePopedom(RolePopedom rolePopedom) {
-        int result = rolePopedomService.updateRolePopedom(rolePopedom);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+  @ApiOperation("修改角色权限")
+  @RequestMapping(value = "/update", method = RequestMethod.POST)
+  public RespBody updateRolePopedom(RolePopedom rolePopedom) {
+    int result = rolePopedomService.updateRolePopedom(rolePopedom);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
-    @ApiOperation("删除角色权限")
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public RespBody deleteRolePopedom(@RequestParam("id")int id) {
-        int result = rolePopedomService.deleteRolePopedom(id);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+  @ApiOperation("删除角色权限")
+  @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+  public RespBody deleteRolePopedom(@RequestParam("id") int id) {
+    int result = rolePopedomService.deleteRolePopedom(id);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
 }

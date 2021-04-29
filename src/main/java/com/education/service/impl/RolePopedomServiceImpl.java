@@ -14,39 +14,41 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
-    *  服务实现类
-    * </p>
+ * 服务实现类
+ * </p>
  *
  * @author dell
  * @since 2020-05-11
  */
 @Service
-public class RolePopedomServiceImpl extends ServiceImpl<RolePopedomMapper, RolePopedom> implements IRolePopedomService {
+public class RolePopedomServiceImpl extends ServiceImpl<RolePopedomMapper, RolePopedom> implements
+    IRolePopedomService {
 
-    @Autowired
-    private RolePopedomMapper rolePopedomMapper;
+  @Autowired
+  private RolePopedomMapper rolePopedomMapper;
 
-    @Override
-    public List<RolePopedom> findRolePopedom(RolePopedom rolePopedom, Integer pageStart, Integer pageSize) {
-        //这里根据具体的条件进行扩充
-        QueryWrapper<RolePopedom> queryWrapper=new QueryWrapper<>(rolePopedom);
-        PageHelper.startPage(pageStart,pageSize);
-        return rolePopedomMapper.selectList(queryWrapper);
-    }
+  @Override
+  public List<RolePopedom> findRolePopedom(RolePopedom rolePopedom, Integer pageStart,
+      Integer pageSize) {
+    //这里根据具体的条件进行扩充
+    QueryWrapper<RolePopedom> queryWrapper = new QueryWrapper<>(rolePopedom);
+    PageHelper.startPage(pageStart, pageSize);
+    return rolePopedomMapper.selectList(queryWrapper);
+  }
 
-    @Override
-    public int insertRolePopedom(RolePopedom rolePopedom) {
-        return rolePopedomMapper.insert(rolePopedom);
-    }
+  @Override
+  public int insertRolePopedom(RolePopedom rolePopedom) {
+    return rolePopedomMapper.insert(rolePopedom);
+  }
 
-    @Override
-    public int updateRolePopedom(RolePopedom rolePopedom) {
-        return rolePopedomMapper.updateById(rolePopedom);
-    }
+  @Override
+  public int updateRolePopedom(RolePopedom rolePopedom) {
+    return rolePopedomMapper.updateById(rolePopedom);
+  }
 
-    @Override
-    public int deleteRolePopedom(int id) {
-        return rolePopedomMapper.deleteById(id);
-    }
+  @Override
+  public int deleteRolePopedom(int id) {
+    return rolePopedomMapper.deleteById(id);
+  }
 
 }

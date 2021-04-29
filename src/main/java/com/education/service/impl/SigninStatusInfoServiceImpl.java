@@ -14,39 +14,41 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
-    *  服务实现类
-    * </p>
+ * 服务实现类
+ * </p>
  *
  * @author dell
  * @since 2020-05-31
  */
 @Service
-public class SigninStatusInfoServiceImpl extends ServiceImpl<SigninStatusInfoMapper, SigninStatusInfo> implements ISigninStatusInfoService {
+public class SigninStatusInfoServiceImpl extends
+    ServiceImpl<SigninStatusInfoMapper, SigninStatusInfo> implements ISigninStatusInfoService {
 
-    @Autowired
-    private SigninStatusInfoMapper signinStatusInfoMapper;
+  @Autowired
+  private SigninStatusInfoMapper signinStatusInfoMapper;
 
-    @Override
-    public List<SigninStatusInfo> findSigninStatusInfo(SigninStatusInfo signinStatusInfo, Integer pageStart, Integer pageSize) {
-        //这里根据具体的条件进行扩充
-        QueryWrapper<SigninStatusInfo> queryWrapper=new QueryWrapper<>(signinStatusInfo);
-        PageHelper.startPage(pageStart,pageSize);
-        return signinStatusInfoMapper.selectList(queryWrapper);
-    }
+  @Override
+  public List<SigninStatusInfo> findSigninStatusInfo(SigninStatusInfo signinStatusInfo,
+      Integer pageStart, Integer pageSize) {
+    //这里根据具体的条件进行扩充
+    QueryWrapper<SigninStatusInfo> queryWrapper = new QueryWrapper<>(signinStatusInfo);
+    PageHelper.startPage(pageStart, pageSize);
+    return signinStatusInfoMapper.selectList(queryWrapper);
+  }
 
-    @Override
-    public int insertSigninStatusInfo(SigninStatusInfo signinStatusInfo) {
-        return signinStatusInfoMapper.insert(signinStatusInfo);
-    }
+  @Override
+  public int insertSigninStatusInfo(SigninStatusInfo signinStatusInfo) {
+    return signinStatusInfoMapper.insert(signinStatusInfo);
+  }
 
-    @Override
-    public int updateSigninStatusInfo(SigninStatusInfo signinStatusInfo) {
-        return signinStatusInfoMapper.updateById(signinStatusInfo);
-    }
+  @Override
+  public int updateSigninStatusInfo(SigninStatusInfo signinStatusInfo) {
+    return signinStatusInfoMapper.updateById(signinStatusInfo);
+  }
 
-    @Override
-    public int deleteSigninStatusInfo(int id) {
-        return signinStatusInfoMapper.deleteById(id);
-    }
+  @Override
+  public int deleteSigninStatusInfo(int id) {
+    return signinStatusInfoMapper.deleteById(id);
+  }
 
 }

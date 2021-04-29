@@ -14,39 +14,41 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
-    * 院系表 服务实现类
-    * </p>
+ * 院系表 服务实现类
+ * </p>
  *
  * @author dell
  * @since 2020-05-16
  */
 @Service
-public class FacultyInfoServiceImpl extends ServiceImpl<FacultyInfoMapper, FacultyInfo> implements IFacultyInfoService {
+public class FacultyInfoServiceImpl extends ServiceImpl<FacultyInfoMapper, FacultyInfo> implements
+    IFacultyInfoService {
 
-    @Autowired
-    private FacultyInfoMapper facultyInfoMapper;
+  @Autowired
+  private FacultyInfoMapper facultyInfoMapper;
 
-    @Override
-    public List<FacultyInfo> findFacultyInfo(FacultyInfo facultyInfo, Integer pageStart, Integer pageSize) {
-        //这里根据具体的条件进行扩充
-        QueryWrapper<FacultyInfo> queryWrapper=new QueryWrapper<>(facultyInfo);
-        PageHelper.startPage(pageStart,pageSize);
-        return facultyInfoMapper.selectList(queryWrapper);
-    }
+  @Override
+  public List<FacultyInfo> findFacultyInfo(FacultyInfo facultyInfo, Integer pageStart,
+      Integer pageSize) {
+    //这里根据具体的条件进行扩充
+    QueryWrapper<FacultyInfo> queryWrapper = new QueryWrapper<>(facultyInfo);
+    PageHelper.startPage(pageStart, pageSize);
+    return facultyInfoMapper.selectList(queryWrapper);
+  }
 
-    @Override
-    public int insertFacultyInfo(FacultyInfo facultyInfo) {
-        return facultyInfoMapper.insert(facultyInfo);
-    }
+  @Override
+  public int insertFacultyInfo(FacultyInfo facultyInfo) {
+    return facultyInfoMapper.insert(facultyInfo);
+  }
 
-    @Override
-    public int updateFacultyInfo(FacultyInfo facultyInfo) {
-        return facultyInfoMapper.updateById(facultyInfo);
-    }
+  @Override
+  public int updateFacultyInfo(FacultyInfo facultyInfo) {
+    return facultyInfoMapper.updateById(facultyInfo);
+  }
 
-    @Override
-    public int deleteFacultyInfo(int id) {
-        return facultyInfoMapper.deleteById(id);
-    }
+  @Override
+  public int deleteFacultyInfo(int id) {
+    return facultyInfoMapper.deleteById(id);
+  }
 
 }

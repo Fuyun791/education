@@ -21,34 +21,36 @@ import org.springframework.stereotype.Service;
  * @since 2020-05-31
  */
 @Service
-public class SigninInfoServiceImpl extends ServiceImpl<SigninInfoMapper, SigninInfo> implements ISigninInfoService {
+public class SigninInfoServiceImpl extends ServiceImpl<SigninInfoMapper, SigninInfo> implements
+    ISigninInfoService {
 
-    private final SigninInfoMapper signinInfoMapper;
+  private final SigninInfoMapper signinInfoMapper;
 
-    @Autowired
-    public SigninInfoServiceImpl(SigninInfoMapper signinInfoMapper) {
-        this.signinInfoMapper = signinInfoMapper;
-    }
+  @Autowired
+  public SigninInfoServiceImpl(SigninInfoMapper signinInfoMapper) {
+    this.signinInfoMapper = signinInfoMapper;
+  }
 
-    @Override
-    public List<SigninInfo> findSigninInfo(SigninInfo signinInfo, Long collegeId, Long teacherNumber, Integer pageStart, Integer pageSize) {
-        PageHelper.startPage(pageStart, pageSize);
-        return signinInfoMapper.selectSigninAndCourseName(signinInfo, collegeId, teacherNumber);
-    }
+  @Override
+  public List<SigninInfo> findSigninInfo(SigninInfo signinInfo, Long collegeId, Long teacherNumber,
+      Integer pageStart, Integer pageSize) {
+    PageHelper.startPage(pageStart, pageSize);
+    return signinInfoMapper.selectSigninAndCourseName(signinInfo, collegeId, teacherNumber);
+  }
 
-    @Override
-    public int insertSigninInfo(SigninInfo signinInfo) {
-        return signinInfoMapper.insert(signinInfo);
-    }
+  @Override
+  public int insertSigninInfo(SigninInfo signinInfo) {
+    return signinInfoMapper.insert(signinInfo);
+  }
 
-    @Override
-    public int updateSigninInfo(SigninInfo signinInfo) {
-        return signinInfoMapper.updateById(signinInfo);
-    }
+  @Override
+  public int updateSigninInfo(SigninInfo signinInfo) {
+    return signinInfoMapper.updateById(signinInfo);
+  }
 
-    @Override
-    public int deleteSigninInfo(int id) {
-        return signinInfoMapper.deleteById(id);
-    }
+  @Override
+  public int deleteSigninInfo(int id) {
+    return signinInfoMapper.deleteById(id);
+  }
 
 }

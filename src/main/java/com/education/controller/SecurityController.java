@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/education/security-info")
 public class SecurityController {
 
-    @ApiOperation("要求登录")
-    @RequestMapping(value = "/needLogin", method = RequestMethod.GET)
-    public RespBody needLogin() {
-        return RespBody.error(ResultCode.UNAUTHORIZED);
-    }
+  @ApiOperation("要求登录")
+  @RequestMapping(value = "/needLogin", method = RequestMethod.GET)
+  public RespBody needLogin() {
+    return RespBody.error(ResultCode.UNAUTHORIZED);
+  }
 
 }

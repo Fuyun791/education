@@ -14,39 +14,41 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
-    * 学生与课程的连接 服务实现类
-    * </p>
+ * 学生与课程的连接 服务实现类
+ * </p>
  *
  * @author dell
  * @since 2020-05-23
  */
 @Service
-public class StudentCourseServiceImpl extends ServiceImpl<StudentCourseMapper, StudentCourse> implements IStudentCourseService {
+public class StudentCourseServiceImpl extends
+    ServiceImpl<StudentCourseMapper, StudentCourse> implements IStudentCourseService {
 
-    @Autowired
-    private StudentCourseMapper studentCourseMapper;
+  @Autowired
+  private StudentCourseMapper studentCourseMapper;
 
-    @Override
-    public List<StudentCourse> findStudentCourse(StudentCourse studentCourse, Integer pageStart, Integer pageSize) {
-        //这里根据具体的条件进行扩充
-        QueryWrapper<StudentCourse> queryWrapper=new QueryWrapper<>(studentCourse);
-        PageHelper.startPage(pageStart,pageSize);
-        return studentCourseMapper.selectList(queryWrapper);
-    }
+  @Override
+  public List<StudentCourse> findStudentCourse(StudentCourse studentCourse, Integer pageStart,
+      Integer pageSize) {
+    //这里根据具体的条件进行扩充
+    QueryWrapper<StudentCourse> queryWrapper = new QueryWrapper<>(studentCourse);
+    PageHelper.startPage(pageStart, pageSize);
+    return studentCourseMapper.selectList(queryWrapper);
+  }
 
-    @Override
-    public int insertStudentCourse(StudentCourse studentCourse) {
-        return studentCourseMapper.insert(studentCourse);
-    }
+  @Override
+  public int insertStudentCourse(StudentCourse studentCourse) {
+    return studentCourseMapper.insert(studentCourse);
+  }
 
-    @Override
-    public int updateStudentCourse(StudentCourse studentCourse) {
-        return studentCourseMapper.updateById(studentCourse);
-    }
+  @Override
+  public int updateStudentCourse(StudentCourse studentCourse) {
+    return studentCourseMapper.updateById(studentCourse);
+  }
 
-    @Override
-    public int deleteStudentCourse(int id) {
-        return studentCourseMapper.deleteById(id);
-    }
+  @Override
+  public int deleteStudentCourse(int id) {
+    return studentCourseMapper.deleteById(id);
+  }
 
 }

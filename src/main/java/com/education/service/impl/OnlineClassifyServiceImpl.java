@@ -14,39 +14,41 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
-    *  服务实现类
-    * </p>
+ * 服务实现类
+ * </p>
  *
  * @author dell
  * @since 2020-06-11
  */
 @Service
-public class OnlineClassifyServiceImpl extends ServiceImpl<OnlineClassifyMapper, OnlineClassify> implements IOnlineClassifyService {
+public class OnlineClassifyServiceImpl extends
+    ServiceImpl<OnlineClassifyMapper, OnlineClassify> implements IOnlineClassifyService {
 
-    @Autowired
-    private OnlineClassifyMapper onlineClassifyMapper;
+  @Autowired
+  private OnlineClassifyMapper onlineClassifyMapper;
 
-    @Override
-    public List<OnlineClassify> findOnlineClassify(OnlineClassify onlineClassify, Integer pageStart, Integer pageSize) {
-        //这里根据具体的条件进行扩充
-        QueryWrapper<OnlineClassify> queryWrapper=new QueryWrapper<>(onlineClassify);
-        PageHelper.startPage(pageStart,pageSize);
-        return onlineClassifyMapper.selectList(queryWrapper);
-    }
+  @Override
+  public List<OnlineClassify> findOnlineClassify(OnlineClassify onlineClassify, Integer pageStart,
+      Integer pageSize) {
+    //这里根据具体的条件进行扩充
+    QueryWrapper<OnlineClassify> queryWrapper = new QueryWrapper<>(onlineClassify);
+    PageHelper.startPage(pageStart, pageSize);
+    return onlineClassifyMapper.selectList(queryWrapper);
+  }
 
-    @Override
-    public int insertOnlineClassify(OnlineClassify onlineClassify) {
-        return onlineClassifyMapper.insert(onlineClassify);
-    }
+  @Override
+  public int insertOnlineClassify(OnlineClassify onlineClassify) {
+    return onlineClassifyMapper.insert(onlineClassify);
+  }
 
-    @Override
-    public int updateOnlineClassify(OnlineClassify onlineClassify) {
-        return onlineClassifyMapper.updateById(onlineClassify);
-    }
+  @Override
+  public int updateOnlineClassify(OnlineClassify onlineClassify) {
+    return onlineClassifyMapper.updateById(onlineClassify);
+  }
 
-    @Override
-    public int deleteOnlineClassify(int id) {
-        return onlineClassifyMapper.deleteById(id);
-    }
+  @Override
+  public int deleteOnlineClassify(int id) {
+    return onlineClassifyMapper.deleteById(id);
+  }
 
 }

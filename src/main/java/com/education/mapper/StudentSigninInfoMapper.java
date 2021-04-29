@@ -18,8 +18,9 @@ import java.util.List;
 @Repository
 public interface StudentSigninInfoMapper extends BaseMapper<StudentSigninInfo> {
 
-    List<StudentSigninInfo> findStudentSignin(@Param("studentSigninInfo") StudentSigninInfo studentSigninInfo,
-                                              @Param("collegeId") Long collegeId,
-                                              @Param("teacherNumber") Long teacherNumber);
+  List<StudentSigninInfo> findStudentSignin(
+      @Param("studentSigninInfo") StudentSigninInfo studentSigninInfo,
+      @Param("collegeId") Long collegeId,
+      @Param("teacherNumber") Long teacherNumber);
 
 }

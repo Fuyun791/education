@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dell
@@ -21,32 +21,32 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="OnlineClassify对象", description="")
+@ApiModel(value = "OnlineClassify对象", description = "")
 public class OnlineClassify implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "文本格式不超过200字")
-    private String catalogBrief;
+  @ApiModelProperty(value = "文本格式不超过200字")
+  private String catalogBrief;
 
-    @ApiModelProperty(value = "分类名称")
-    private String levelName;
+  @ApiModelProperty(value = "分类名称")
+  private String levelName;
 
-    @ApiModelProperty(value = "等级,1级，2级", example = "0")
-    private Integer level;
+  @ApiModelProperty(value = "等级,1级，2级", example = "0")
+  private Integer level;
 
-    @ApiModelProperty(value = "父级分类,0代表顶层，没有父级分类", example = "0")
-    private Long levelParent;
+  @ApiModelProperty(value = "父级分类,0代表顶层，没有父级分类", example = "0")
+  private Long levelParent;
 
-    @ApiModelProperty(value = "子级分类,0代表没有子级分类", example = "0")
-    private Long levelChild;
+  @ApiModelProperty(value = "子级分类,0代表没有子级分类", example = "0")
+  private Long levelChild;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
 
 }

@@ -8,8 +8,8 @@ import java.util.List;
 
 /**
  * <p>
-    *  Mapper 接口
-    * </p>
+ * Mapper 接口
+ * </p>
  *
  * @author dell
  * @since 2020-06-02
@@ -17,9 +17,9 @@ import java.util.List;
 @Repository
 public interface TopicInfoMapper extends BaseMapper<TopicInfo> {
 
-    //返回文章题目、简介、图片列表
-    List<TopicInfo> findTopicInfoList(TopicInfo topicInfo);
+  //返回文章题目、简介、图片列表
+  List<TopicInfo> findTopicInfoList(TopicInfo topicInfo);
 
-    //返回文章题目、内容列表
-    List<TopicInfo> findTopicContentList(TopicInfo topicInfo);
+  //返回文章题目、内容列表
+  List<TopicInfo> findTopicContentList(TopicInfo topicInfo);
 }

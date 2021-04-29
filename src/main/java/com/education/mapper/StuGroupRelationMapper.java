@@ -10,8 +10,8 @@ import java.util.List;
 
 /**
  * <p>
-    *  Mapper 接口
-    * </p>
+ * Mapper 接口
+ * </p>
  *
  * @author dell
  * @since 2020-06-05
@@ -19,13 +19,14 @@ import java.util.List;
 @Repository
 public interface StuGroupRelationMapper extends BaseMapper<StuGroupRelation> {
 
-    //关注一个小组
-    int insertMyGroup(@Param("studentNum") int studentNum,
-                      @Param("groupId") int groupId,
-                      @Param("joinTime") String joinTime,
-                      @Param("dataCreate") String dataCreate,
-                      @Param("dataModified") String dataModified);
+  //关注一个小组
+  int insertMyGroup(@Param("studentNum") int studentNum,
+      @Param("groupId") int groupId,
+      @Param("joinTime") String joinTime,
+      @Param("dataCreate") String dataCreate,
+      @Param("dataModified") String dataModified);
 
-    // 查询是否有关注过这个小组
-    List<StuGroupRelation> findTheGroup(@Param("studentNum") int studentNum,@Param("groupId") int groupId);
+  // 查询是否有关注过这个小组
+  List<StuGroupRelation> findTheGroup(@Param("studentNum") int studentNum,
+      @Param("groupId") int groupId);
 }

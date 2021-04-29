@@ -25,38 +25,42 @@ import java.util.ArrayList;
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private AdminInfoServiceImpl adminInfoService;
+  @Autowired
+  private AdminInfoServiceImpl adminInfoService;
 
-    @Autowired
-    private IRedisService redisService;
+  @Autowired
+  private IRedisService redisService;
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws IOException, ServletException {
-        String authHeader = httpServletRequest.getHeader("Authorization");
+  @Override
+  protected void doFilterInternal(HttpServletRequest httpServletRequest,
+      HttpServletResponse httpServletResponse, FilterChain filterChain)
+      throws IOException, ServletException {
+    String authHeader = httpServletRequest.getHeader("Authorization");
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String username = null;
-            if (authHeader.startsWith("Bearer WX_")) {
-                final String authToken = authHeader.substring("Bearer WX_".length());
-                username = redisService.getByKey("Authorization:" + authToken);
-            } else {
-                final String authToken = authHeader.substring("Bearer ".length());
-                username = JwtTokenUtil.parseToken(authToken);
-            }
+    if (authHeader != null && authHeader.startsWith("Bearer ")) {
+      String username = null;
+      if (authHeader.startsWith("Bearer WX_")) {
+        final String authToken = authHeader.substring("Bearer WX_".length());
+        username = redisService.getByKey("Authorization:" + authToken);
+      } else {
+        final String authToken = authHeader.substring("Bearer ".length());
+        username = JwtTokenUtil.parseToken(authToken);
+      }
 
-            if (username != null) {
-                UserDetails userDetails = adminInfoService.loadUserByUsername(username);
-                SecurityUserDetails securityUserDetails = (SecurityUserDetails) userDetails;
-                if (securityUserDetails.getRoleId() == 4L) {
+      if (username != null) {
+        UserDetails userDetails = adminInfoService.loadUserByUsername(username);
+        SecurityUserDetails securityUserDetails = (SecurityUserDetails) userDetails;
+        if (securityUserDetails.getRoleId() == 4L) {
 
-                }
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
         }
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
+        UsernamePasswordAuthenticationToken authentication =
+            new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null,
+                userDetails.getAuthorities());
+        authentication
+            .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+      }
     }
+    filterChain.doFilter(httpServletRequest, httpServletResponse);
+  }
 }

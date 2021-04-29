@@ -22,33 +22,33 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="ClassInfo对象", description="班级表")
+@ApiModel(value = "ClassInfo对象", description = "班级表")
 public class ClassInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "基于specialty_info里的专业号080901+班级01")
-    private String classNumber;
+  @ApiModelProperty(value = "基于specialty_info里的专业号080901+班级01")
+  private String classNumber;
 
-    @ApiModelProperty(value = "外键（院系表）", example = "0")
-    private Long facultyId;
+  @ApiModelProperty(value = "外键（院系表）", example = "0")
+  private Long facultyId;
 
-    @ApiModelProperty(value = "外键(专业表)", example = "0")
-    private Long specialtyId;
+  @ApiModelProperty(value = "外键(专业表)", example = "0")
+  private Long specialtyId;
 
-    private Integer count;
+  private Integer count;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
-    @TableField(exist = false)
-    private FacultyInfo facultyInfo;
+  @TableField(exist = false)
+  private FacultyInfo facultyInfo;
 
-    @TableField(exist = false)
-    private SpecialtyInfo specialtyInfo;
+  @TableField(exist = false)
+  private SpecialtyInfo specialtyInfo;
 
 }

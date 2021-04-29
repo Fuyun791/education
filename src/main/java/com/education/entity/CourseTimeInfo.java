@@ -21,30 +21,30 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="CourseTimeInfo对象", description="课程时间联系表")
+@ApiModel(value = "CourseTimeInfo对象", description = "课程时间联系表")
 public class CourseTimeInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "外键(course_info)", example = "0")
-    private Long courseId;
+  @ApiModelProperty(value = "外键(course_info)", example = "0")
+  private Long courseId;
 
-    @ApiModelProperty(value = "第几周到第几周")
-    private String weekly;
+  @ApiModelProperty(value = "第几周到第几周")
+  private String weekly;
 
-    @ApiModelProperty(value = "周几上课")
-    private String dayly;
+  @ApiModelProperty(value = "周几上课")
+  private String dayly;
 
-    private LocalDateTime startTime;
+  private LocalDateTime startTime;
 
-    private LocalDateTime endTime;
+  private LocalDateTime endTime;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
 
 }

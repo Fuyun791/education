@@ -30,53 +30,54 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/education/signin-info")
 public class SigninInfoController {
 
-    private final ISigninInfoService signinInfoService;
+  private final ISigninInfoService signinInfoService;
 
-    @Autowired
-    public SigninInfoController(ISigninInfoService signinInfoService) {
-        this.signinInfoService = signinInfoService;
-    }
+  @Autowired
+  public SigninInfoController(ISigninInfoService signinInfoService) {
+    this.signinInfoService = signinInfoService;
+  }
 
-    @ApiOperation("查询班次管理")
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public RespBody findSigninInfo(SigninInfo signinInfo,
-                                   @RequestParam(value = "collegeId") Long collegeId,
-                                   @RequestParam(value = "teacherNumber") Long teacherNumber,
-                                   @RequestParam(value = "pageStart", defaultValue = "1") Integer pageStart,
-                                   @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        List<SigninInfo> signinInfoList = signinInfoService.findSigninInfo(signinInfo, collegeId, teacherNumber, pageStart, pageSize);
-        PageInfo<SigninInfo> pageInfo = new PageInfo<>(signinInfoList);
-        return RespBody.ok(pageInfo);
-    }
+  @ApiOperation("查询班次管理")
+  @RequestMapping(value = "/list", method = RequestMethod.GET)
+  public RespBody findSigninInfo(SigninInfo signinInfo,
+      @RequestParam(value = "collegeId") Long collegeId,
+      @RequestParam(value = "teacherNumber") Long teacherNumber,
+      @RequestParam(value = "pageStart", defaultValue = "1") Integer pageStart,
+      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+    List<SigninInfo> signinInfoList = signinInfoService
+        .findSigninInfo(signinInfo, collegeId, teacherNumber, pageStart, pageSize);
+    PageInfo<SigninInfo> pageInfo = new PageInfo<>(signinInfoList);
+    return RespBody.ok(pageInfo);
+  }
 
-    @ApiOperation("添加班次管理")
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public RespBody insertSigninInfo(SigninInfo signinInfo) {
-        int result = signinInfoService.insertSigninInfo(signinInfo);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+  @ApiOperation("添加班次管理")
+  @RequestMapping(value = "/insert", method = RequestMethod.POST)
+  public RespBody insertSigninInfo(SigninInfo signinInfo) {
+    int result = signinInfoService.insertSigninInfo(signinInfo);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
-    @ApiOperation("修改班次管理")
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public RespBody updateSigninInfo(SigninInfo signinInfo) {
-        int result = signinInfoService.updateSigninInfo(signinInfo);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+  @ApiOperation("修改班次管理")
+  @RequestMapping(value = "/update", method = RequestMethod.POST)
+  public RespBody updateSigninInfo(SigninInfo signinInfo) {
+    int result = signinInfoService.updateSigninInfo(signinInfo);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
-    @ApiOperation("删除班次管理")
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public RespBody deleteSigninInfo(@RequestParam("id") int id) {
-        int result = signinInfoService.deleteSigninInfo(id);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+  @ApiOperation("删除班次管理")
+  @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+  public RespBody deleteSigninInfo(@RequestParam("id") int id) {
+    int result = signinInfoService.deleteSigninInfo(id);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
 }

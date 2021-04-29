@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
-    * 班级表 前端控制器
-    * </p>
+ * 班级表 前端控制器
+ * </p>
  *
  * @author dell
  * @since 2020-05-16
@@ -31,65 +31,66 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/education/class-info")
 public class ClassInfoController {
 
-    private final IClassInfoService classInfoService;
+  private final IClassInfoService classInfoService;
 
-    @Autowired
-    public ClassInfoController(IClassInfoService classInfoService) {
-        this.classInfoService = classInfoService;
-    }
+  @Autowired
+  public ClassInfoController(IClassInfoService classInfoService) {
+    this.classInfoService = classInfoService;
+  }
 
-    @ApiOperation("查询班级")
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public RespBody findClassInfo(ClassInfo classInfo,
-                                 @RequestParam(value = "pageStart",defaultValue = "1")Integer pageStart,
-                                 @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize){
-        List<ClassInfo> classInfoList = classInfoService.findClassInfo(classInfo, pageStart, pageSize);
-        PageInfo<ClassInfo> pageInfo = new PageInfo<>(classInfoList);
-        return RespBody.ok(pageInfo);
-    }
+  @ApiOperation("查询班级")
+  @RequestMapping(value = "/list", method = RequestMethod.GET)
+  public RespBody findClassInfo(ClassInfo classInfo,
+      @RequestParam(value = "pageStart", defaultValue = "1") Integer pageStart,
+      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+    List<ClassInfo> classInfoList = classInfoService.findClassInfo(classInfo, pageStart, pageSize);
+    PageInfo<ClassInfo> pageInfo = new PageInfo<>(classInfoList);
+    return RespBody.ok(pageInfo);
+  }
 
-    @ApiOperation("查询班级包含院系")
-    @RequestMapping(value = "/list-class", method = RequestMethod.GET)
-    public RespBody findClassInfoList(ClassInfo classInfo,
-                                  @RequestParam(value = "collegeId")Integer collegeId,
-                                  @RequestParam(value = "pageStart",defaultValue = "1")Integer pageStart,
-                                  @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize){
-        List<ClassInfo> classInfoList = classInfoService.findClassInfoList(classInfo,collegeId, pageStart, pageSize);
-        PageInfo<ClassInfo> pageInfo = new PageInfo<>(classInfoList);
-        return RespBody.ok(pageInfo);
-    }
+  @ApiOperation("查询班级包含院系")
+  @RequestMapping(value = "/list-class", method = RequestMethod.GET)
+  public RespBody findClassInfoList(ClassInfo classInfo,
+      @RequestParam(value = "collegeId") Integer collegeId,
+      @RequestParam(value = "pageStart", defaultValue = "1") Integer pageStart,
+      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+    List<ClassInfo> classInfoList = classInfoService
+        .findClassInfoList(classInfo, collegeId, pageStart, pageSize);
+    PageInfo<ClassInfo> pageInfo = new PageInfo<>(classInfoList);
+    return RespBody.ok(pageInfo);
+  }
 
-    @ApiOperation("添加班级")
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public RespBody insertClassInfo(ClassInfo classInfo) {
-        classInfo.setDataCreate(LocalDateTime.now());
-        classInfo.setDataModified(LocalDateTime.now());
-        int result = classInfoService.insertClassInfo(classInfo);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+  @ApiOperation("添加班级")
+  @RequestMapping(value = "/insert", method = RequestMethod.POST)
+  public RespBody insertClassInfo(ClassInfo classInfo) {
+    classInfo.setDataCreate(LocalDateTime.now());
+    classInfo.setDataModified(LocalDateTime.now());
+    int result = classInfoService.insertClassInfo(classInfo);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
-    @ApiOperation("修改班级")
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public RespBody updateClassInfo(ClassInfo classInfo) {
-        classInfo.setDataModified(LocalDateTime.now());
-        int result = classInfoService.updateClassInfo(classInfo);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+  @ApiOperation("修改班级")
+  @RequestMapping(value = "/update", method = RequestMethod.POST)
+  public RespBody updateClassInfo(ClassInfo classInfo) {
+    classInfo.setDataModified(LocalDateTime.now());
+    int result = classInfoService.updateClassInfo(classInfo);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
-    @ApiOperation("删除班级")
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public RespBody deleteClassInfo(@RequestParam("id")int id) {
-        int result = classInfoService.deleteClassInfo(id);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+  @ApiOperation("删除班级")
+  @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+  public RespBody deleteClassInfo(@RequestParam("id") int id) {
+    int result = classInfoService.deleteClassInfo(id);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
 }

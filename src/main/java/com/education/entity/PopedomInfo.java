@@ -24,40 +24,40 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="PopedomInfo对象", description="访问权限表")
+@ApiModel(value = "PopedomInfo对象", description = "访问权限表")
 public class PopedomInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "如1级，2级，3级")
-    private String popedomName;
+  @ApiModelProperty(value = "如1级，2级，3级")
+  private String popedomName;
 
-    @ApiModelProperty(value = "router的英文名")
-    private String popedomEname;
+  @ApiModelProperty(value = "router的英文名")
+  private String popedomEname;
 
-    @ApiModelProperty(value = "路径")
-    private String popedomUrl;
+  @ApiModelProperty(value = "路径")
+  private String popedomUrl;
 
-    @ApiModelProperty(value = "1级目录有icon，2无")
-    private String popedomIcon;
+  @ApiModelProperty(value = "1级目录有icon，2无")
+  private String popedomIcon;
 
-    @ApiModelProperty(value = "父菜单", example = "1")
-    private Long popedomParent;
+  @ApiModelProperty(value = "父菜单", example = "1")
+  private Long popedomParent;
 
-    @ApiModelProperty(value = "子菜单，没有为0" ,example = "1")
-    private Long popedomChild;
+  @ApiModelProperty(value = "子菜单，没有为0", example = "1")
+  private Long popedomChild;
 
-    private Integer sort;
+  private Integer sort;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
-    @TableField(exist = false)
-    private List<PopedomInfo> popedomInfoList;
+  @TableField(exist = false)
+  private List<PopedomInfo> popedomInfoList;
 
 
 }

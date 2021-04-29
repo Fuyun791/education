@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dell
@@ -21,28 +21,28 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="CollegeInfo对象", description="")
+@ApiModel(value = "CollegeInfo对象", description = "")
 public class CollegeInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    private String collegeName;
+  private String collegeName;
 
-    @ApiModelProperty(value = "如浙江省xxx")
-    private String collegeAddr;
+  @ApiModelProperty(value = "如浙江省xxx")
+  private String collegeAddr;
 
-    @ApiModelProperty(value = "不超过300字的简介")
-    private String collegeCon;
+  @ApiModelProperty(value = "不超过300字的简介")
+  private String collegeCon;
 
-    @ApiModelProperty(value = "学校图片路径")
-    private String collegePic;
+  @ApiModelProperty(value = "学校图片路径")
+  private String collegePic;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
 
 }

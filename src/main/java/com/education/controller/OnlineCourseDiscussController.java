@@ -33,76 +33,82 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/education/online-course-discuss")
 public class OnlineCourseDiscussController {
 
-    private final IOnlineCourseDiscussService onlineCourseDiscussService;
+  private final IOnlineCourseDiscussService onlineCourseDiscussService;
 
-    private final OnlineCourseStarServiceImpl onlineCourseStarService;
+  private final OnlineCourseStarServiceImpl onlineCourseStarService;
 
-    @Autowired
-    public OnlineCourseDiscussController(IOnlineCourseDiscussService onlineCourseDiscussService, OnlineCourseStarServiceImpl onlineCourseStarService) {
-        this.onlineCourseDiscussService = onlineCourseDiscussService;
-        this.onlineCourseStarService = onlineCourseStarService;
+  @Autowired
+  public OnlineCourseDiscussController(IOnlineCourseDiscussService onlineCourseDiscussService,
+      OnlineCourseStarServiceImpl onlineCourseStarService) {
+    this.onlineCourseDiscussService = onlineCourseDiscussService;
+    this.onlineCourseStarService = onlineCourseStarService;
+  }
+
+  @ApiOperation("根据在线课表id返回其评论区")
+  @RequestMapping(value = "/list-discuss", method = RequestMethod.GET)
+  public RespBody findOnlineCourseInfo(@RequestParam("onlineCourseId") Long onlineCourseId,
+      @RequestParam(value = "pageStart", defaultValue = "1") Integer pageStart,
+      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+      @RequestParam(value = "model", defaultValue = "time") String model) {
+    List<OnlineCourseDiscuss> onlineCourseDiscussList = onlineCourseDiscussService
+        .findDiscussByCourseId(onlineCourseId, pageStart, pageSize, model);
+    return RespBody.ok(onlineCourseDiscussList);
+  }
+
+  @ApiOperation("根据课程号获取用户点赞的set")
+  @RequestMapping(value = "/list-star", method = RequestMethod.GET)
+  public RespBody getOnlineCourseStar(String discussPerson, Long onlineCourseId) {
+    Set<String> onlineCourseStarList = onlineCourseStarService
+        .getOnlineCourseStar(discussPerson, onlineCourseId);
+    return RespBody.ok(onlineCourseStarList);
+  }
+
+  @ApiOperation("添加评论,discussToPerson代表在此person下评论，此参数不代表内部的回复")
+  @RequestMapping(value = "/add-discuss", method = RequestMethod.POST)
+  public RespBody insertCourseDiscuss(OnlineCourseDiscuss onlineCourseDiscuss,
+      @RequestParam(value = "discussToPersonId", required = false) Integer discussToPersonId) {
+    int result = onlineCourseDiscussService
+        .insertOnlineCourseDiscuss(onlineCourseDiscuss, discussToPersonId);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
-    @ApiOperation("根据在线课表id返回其评论区")
-    @RequestMapping(value = "/list-discuss", method = RequestMethod.GET)
-    public RespBody findOnlineCourseInfo(@RequestParam("onlineCourseId") Long onlineCourseId,
-                                         @RequestParam(value = "pageStart", defaultValue = "1") Integer pageStart,
-                                         @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-                                         @RequestParam(value = "model", defaultValue = "time") String model) {
-        List<OnlineCourseDiscuss> onlineCourseDiscussList = onlineCourseDiscussService.findDiscussByCourseId(onlineCourseId, pageStart, pageSize, model);
-        return RespBody.ok(onlineCourseDiscussList);
+  @ApiOperation("修改在线课程讨论")
+  @RequestMapping(value = "/update", method = RequestMethod.POST)
+  public RespBody updateOnlineCourseDiscuss(OnlineCourseDiscuss onlineCourseDiscuss) {
+    int result = onlineCourseDiscussService.updateOnlineCourseDiscuss(onlineCourseDiscuss);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
-    @ApiOperation("根据课程号获取用户点赞的set")
-    @RequestMapping(value = "/list-star", method = RequestMethod.GET)
-    public RespBody getOnlineCourseStar(String discussPerson, Long onlineCourseId) {
-        Set<String> onlineCourseStarList = onlineCourseStarService.getOnlineCourseStar(discussPerson, onlineCourseId);
-        return RespBody.ok(onlineCourseStarList);
+  @ApiOperation("进行用户点赞")
+  @RequestMapping(value = "/click-star", method = RequestMethod.POST)
+  public RespBody insertOnlineCourseStar(OnlineCourseStar onlineCourseStar,
+      @RequestParam("discussParent") Long discussParent,
+      @RequestParam(value = "discussPerson", required = false, defaultValue = "0") Integer discussPerson,
+      @RequestParam("onlineCourseId") Long onlineCourseId,
+      @RequestParam("discussToPerson") Integer discussToPerson) throws Exception {
+    int result = onlineCourseStarService
+        .insertOnlineCourseStar(onlineCourseStar, discussParent, discussPerson, onlineCourseId,
+            discussToPerson);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
-    @ApiOperation("添加评论,discussToPerson代表在此person下评论，此参数不代表内部的回复")
-    @RequestMapping(value = "/add-discuss", method = RequestMethod.POST)
-    public RespBody insertCourseDiscuss(OnlineCourseDiscuss onlineCourseDiscuss,
-                                        @RequestParam(value = "discussToPersonId", required = false) Integer discussToPersonId) {
-        int result = onlineCourseDiscussService.insertOnlineCourseDiscuss(onlineCourseDiscuss, discussToPersonId);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+  @ApiOperation("删除在线课程讨论")
+  @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+  public RespBody deleteOnlineCourseDiscuss(@RequestParam("id") int id) {
+    int result = onlineCourseDiscussService.deleteOnlineCourseDiscuss(id);
+    if (result == 1) {
+      return RespBody.ok();
     }
-
-    @ApiOperation("修改在线课程讨论")
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public RespBody updateOnlineCourseDiscuss(OnlineCourseDiscuss onlineCourseDiscuss) {
-        int result = onlineCourseDiscussService.updateOnlineCourseDiscuss(onlineCourseDiscuss);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
-    }
-
-    @ApiOperation("进行用户点赞")
-    @RequestMapping(value = "/click-star", method = RequestMethod.POST)
-    public RespBody insertOnlineCourseStar(OnlineCourseStar onlineCourseStar,
-                                           @RequestParam("discussParent") Long discussParent,
-                                           @RequestParam(value = "discussPerson", required = false,defaultValue = "0") Integer discussPerson,
-                                           @RequestParam("onlineCourseId") Long onlineCourseId,
-                                           @RequestParam("discussToPerson") Integer discussToPerson) throws Exception {
-        int result = onlineCourseStarService.insertOnlineCourseStar(onlineCourseStar, discussParent, discussPerson, onlineCourseId,discussToPerson);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
-    }
-
-    @ApiOperation("删除在线课程讨论")
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public RespBody deleteOnlineCourseDiscuss(@RequestParam("id") int id) {
-        int result = onlineCourseDiscussService.deleteOnlineCourseDiscuss(id);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
-    }
+    return RespBody.error();
+  }
 
 }

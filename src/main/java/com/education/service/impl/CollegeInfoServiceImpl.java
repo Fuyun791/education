@@ -14,39 +14,41 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
-    *  服务实现类
-    * </p>
+ * 服务实现类
+ * </p>
  *
  * @author dell
  * @since 2020-05-16
  */
 @Service
-public class CollegeInfoServiceImpl extends ServiceImpl<CollegeInfoMapper, CollegeInfo> implements ICollegeInfoService {
+public class CollegeInfoServiceImpl extends ServiceImpl<CollegeInfoMapper, CollegeInfo> implements
+    ICollegeInfoService {
 
-    @Autowired
-    private CollegeInfoMapper collegeInfoMapper;
+  @Autowired
+  private CollegeInfoMapper collegeInfoMapper;
 
-    @Override
-    public List<CollegeInfo> findCollegeInfo(CollegeInfo collegeInfo, Integer pageStart, Integer pageSize) {
-        //这里根据具体的条件进行扩充
-        QueryWrapper<CollegeInfo> queryWrapper=new QueryWrapper<>(collegeInfo);
-        PageHelper.startPage(pageStart,pageSize);
-        return collegeInfoMapper.selectList(queryWrapper);
-    }
+  @Override
+  public List<CollegeInfo> findCollegeInfo(CollegeInfo collegeInfo, Integer pageStart,
+      Integer pageSize) {
+    //这里根据具体的条件进行扩充
+    QueryWrapper<CollegeInfo> queryWrapper = new QueryWrapper<>(collegeInfo);
+    PageHelper.startPage(pageStart, pageSize);
+    return collegeInfoMapper.selectList(queryWrapper);
+  }
 
-    @Override
-    public int insertCollegeInfo(CollegeInfo collegeInfo) {
-        return collegeInfoMapper.insert(collegeInfo);
-    }
+  @Override
+  public int insertCollegeInfo(CollegeInfo collegeInfo) {
+    return collegeInfoMapper.insert(collegeInfo);
+  }
 
-    @Override
-    public int updateCollegeInfo(CollegeInfo collegeInfo) {
-        return collegeInfoMapper.updateById(collegeInfo);
-    }
+  @Override
+  public int updateCollegeInfo(CollegeInfo collegeInfo) {
+    return collegeInfoMapper.updateById(collegeInfo);
+  }
 
-    @Override
-    public int deleteCollegeInfo(int id) {
-        return collegeInfoMapper.deleteById(id);
-    }
+  @Override
+  public int deleteCollegeInfo(int id) {
+    return collegeInfoMapper.deleteById(id);
+  }
 
 }

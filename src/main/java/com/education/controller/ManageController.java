@@ -24,38 +24,38 @@ import java.util.Date;
 @RequestMapping("/education/manage")
 public class ManageController {
 
-    private static final String URL = "http://123.57.57.136/jklimage/";
+  private static final String URL = "http://123.57.57.136/jklimage/";
 
-    @Value("${web.upload-path}")
-    private String path;
+  @Value("${web.upload-path}")
+  private String path;
 
-    private String getMyIdByTime() {
-        Date date = new Date();
-        SimpleDateFormat sfDate = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-        String time = sfDate.format(date);
-        int temp = (int) ((Math.random() * 9 + 1) * 1000);
-        return time + String.valueOf(temp);
+  private String getMyIdByTime() {
+    Date date = new Date();
+    SimpleDateFormat sfDate = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+    String time = sfDate.format(date);
+    int temp = (int) ((Math.random() * 9 + 1) * 1000);
+    return time + String.valueOf(temp);
+  }
+
+  @ApiOperation("添加图片")
+  @RequestMapping(value = "/file", method = RequestMethod.POST)
+  public RespBody uploadAvatar(@RequestParam(required = false) MultipartFile file) {
+    try {
+      File uploadPath = new File(path);
+      String type = file.getOriginalFilename().contains(".jpg") ? ".jpg" : ".png";
+      String filename = getMyIdByTime() + type;
+      File filepath = new File(uploadPath, filename);
+      if (!filepath.getParentFile().exists()) {
+        filepath.getParentFile().mkdirs();
+      }
+      file.transferTo(new File(uploadPath + File.separator + filename));
+      return RespBody.ok(URL + filename);
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-
-    @ApiOperation("添加图片")
-    @RequestMapping(value = "/file",method = RequestMethod.POST)
-    public RespBody uploadAvatar(@RequestParam(required = false) MultipartFile file){
-        try {
-            File uploadPath=new File(path);
-            String type = file.getOriginalFilename().contains(".jpg") ? ".jpg" : ".png";
-            String filename= getMyIdByTime() + type;
-            File filepath=new File(uploadPath,filename);
-            if (!filepath.getParentFile().exists()) {
-                filepath.getParentFile().mkdirs();
-            }
-            file.transferTo(new File(uploadPath+File.separator+filename));
-            return RespBody.ok(URL + filename);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return RespBody.error();
-    }
+    return RespBody.error();
+  }
 
 }

@@ -22,21 +22,21 @@ import java.util.List;
 @RequestMapping("/education/web-log")
 public class WebLogController {
 
-    private final IWebLogService webLogService;
+  private final IWebLogService webLogService;
 
-    @Autowired
-    public WebLogController(IWebLogService webLogService) {
-        this.webLogService = webLogService;
-    }
+  @Autowired
+  public WebLogController(IWebLogService webLogService) {
+    this.webLogService = webLogService;
+  }
 
-    @ApiOperation("查询日志")
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public RespBody findAdminInfo(WebLog webLog,
-                                  @RequestParam(value = "pageStart",defaultValue = "1")Integer pageStart,
-                                  @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize){
-        List<WebLog> adminInfoList = webLogService.selectLog(webLog, pageStart, pageSize);
-        PageInfo<WebLog> pageInfo = new PageInfo<>(adminInfoList);
-        return RespBody.ok(pageInfo);
-    }
+  @ApiOperation("查询日志")
+  @RequestMapping(value = "/list", method = RequestMethod.GET)
+  public RespBody findAdminInfo(WebLog webLog,
+      @RequestParam(value = "pageStart", defaultValue = "1") Integer pageStart,
+      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+    List<WebLog> adminInfoList = webLogService.selectLog(webLog, pageStart, pageSize);
+    PageInfo<WebLog> pageInfo = new PageInfo<>(adminInfoList);
+    return RespBody.ok(pageInfo);
+  }
 
 }

@@ -21,35 +21,35 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="OnlineCourseHour对象", description="在线课程课时表")
+@ApiModel(value = "OnlineCourseHour对象", description = "在线课程课时表")
 public class OnlineCourseHour implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    private Long onlineEpisodesId;
+  private Long onlineEpisodesId;
 
-    @ApiModelProperty(value = "课时名称")
-    private String courseHourName;
+  @ApiModelProperty(value = "课时名称")
+  private String courseHourName;
 
-    @ApiModelProperty(value = "这个课时做什么")
-    private String courseHourBrief;
+  @ApiModelProperty(value = "这个课时做什么")
+  private String courseHourBrief;
 
-    private Integer sort;
+  private Integer sort;
 
-    @ApiModelProperty(value = "课时类型，1文字，2ppt，3.视频", example = "0")
-    private Integer isType;
+  @ApiModelProperty(value = "课时类型，1文字，2ppt，3.视频", example = "0")
+  private Integer isType;
 
-    @ApiModelProperty(value = "资源路径")
-    private String directory;
+  @ApiModelProperty(value = "资源路径")
+  private String directory;
 
-    private String hourTime;
+  private String hourTime;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
 
 }

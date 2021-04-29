@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dell
@@ -24,52 +24,52 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="CourseName对象", description="")
+@ApiModel(value = "CourseName对象", description = "")
 public class CourseName implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    private Long courseNumber;
+  private Long courseNumber;
 
-    private String courseName;
+  private String courseName;
 
-    @ApiModelProperty(value = "课程简介")
-    private String courseContext;
+  @ApiModelProperty(value = "课程简介")
+  private String courseContext;
 
-    private Integer courseCount;
+  private Integer courseCount;
 
-    @ApiModelProperty(value = "0代表停课，1代表正常开课")
-    private Boolean courseStatus;
+  @ApiModelProperty(value = "0代表停课，1代表正常开课")
+  private Boolean courseStatus;
 
-    @ApiModelProperty(value = "开课专业")
-    private String field;
+  @ApiModelProperty(value = "开课专业")
+  private String field;
 
-    @ApiModelProperty(value = "学分", example = "0")
-    private Integer credit;
+  @ApiModelProperty(value = "学分", example = "0")
+  private Integer credit;
 
-    @ApiModelProperty(value = "学年")
-    private String year;
+  @ApiModelProperty(value = "学年")
+  private String year;
 
-    @ApiModelProperty(value = "学期", example = "0")
-    private Integer semester;
+  @ApiModelProperty(value = "学期", example = "0")
+  private Integer semester;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
-    @TableField(exist = false)
-    private ClassRoomInfo classRoomInfo;
+  @TableField(exist = false)
+  private ClassRoomInfo classRoomInfo;
 
-    @TableField(exist = false)
-    private List<CourseTimeInfo> courseTimeInfo;
+  @TableField(exist = false)
+  private List<CourseTimeInfo> courseTimeInfo;
 
-    @TableField(exist = false)
-    private Long courseId;
+  @TableField(exist = false)
+  private Long courseId;
 
-    //我加的
-    private Integer courseType;
+  //我加的
+  private Integer courseType;
 
 }

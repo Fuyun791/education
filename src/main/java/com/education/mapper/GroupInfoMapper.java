@@ -10,8 +10,8 @@ import java.util.List;
 
 /**
  * <p>
-    *  Mapper 接口
-    * </p>
+ * Mapper 接口
+ * </p>
  *
  * @author dell
  * @since 2020-06-02
@@ -19,12 +19,12 @@ import java.util.List;
 @Repository
 public interface GroupInfoMapper extends BaseMapper<GroupInfo> {
 
-    //返回智能推荐小组列表
-    List<StudentInfo> findAdviceGroupList(StudentInfo studentInfo);
+  //返回智能推荐小组列表
+  List<StudentInfo> findAdviceGroupList(StudentInfo studentInfo);
 
-    //返回我的关注小组列表
-    List<StudentInfo> findMyGroupList (StudentInfo studentInfo);
+  //返回我的关注小组列表
+  List<StudentInfo> findMyGroupList(StudentInfo studentInfo);
 
-    //取消关注一个小组
-    int deleteMyGroup(@Param("studentNum") int studentNum,@Param("groupId") int groupId);
+  //取消关注一个小组
+  int deleteMyGroup(@Param("studentNum") int studentNum, @Param("groupId") int groupId);
 }

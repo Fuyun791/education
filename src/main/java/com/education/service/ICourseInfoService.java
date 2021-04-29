@@ -10,63 +10,69 @@ import java.util.List;
 
 /**
  * <p>
-    * 课程表 服务类
-    * </p>
+ * 课程表 服务类
+ * </p>
  *
  * @author dell
  * @since 2020-05-23
  */
 public interface ICourseInfoService extends IService<CourseInfo> {
 
-    /**
-     * 查找 courseInfo
-     * @param courseInfo
-     * @param pageStart
-     * @param pageSize
-     * @return
-     */
-    List<CourseInfo> findCourseInfo(CourseInfo courseInfo, Integer pageStart, Integer pageSize);
+  /**
+   * 查找 courseInfo
+   *
+   * @param courseInfo
+   * @param pageStart
+   * @param pageSize
+   * @return
+   */
+  List<CourseInfo> findCourseInfo(CourseInfo courseInfo, Integer pageStart, Integer pageSize);
 
-    /**
-     * 返回与课程有关的所有信息
-     * @param teacherNumber
-     * @param teacherName
-     * @param courseName
-     * @return
-     */
-    JSONObject findCourseInfoList(Integer teacherNumber,String teacherName,String courseName);
+  /**
+   * 返回与课程有关的所有信息
+   *
+   * @param teacherNumber
+   * @param teacherName
+   * @param courseName
+   * @return
+   */
+  JSONObject findCourseInfoList(Integer teacherNumber, String teacherName, String courseName);
 
-    /**
-     * 返回学生课表
-     * @param studentNum
-     * @param studentName
-     * @param courseName
-     * @return
-     */
-    JSONObject findStudentCourseList(Integer studentNum, String studentName,String courseName);
+  /**
+   * 返回学生课表
+   *
+   * @param studentNum
+   * @param studentName
+   * @param courseName
+   * @return
+   */
+  JSONObject findStudentCourseList(Integer studentNum, String studentName, String courseName);
 
-    /**
-     * 添加 courseInfo
-     * @param courseInfo
-     * @return
-     */
-    int insertCourseInfo(CourseInfo courseInfo);
+  /**
+   * 添加 courseInfo
+   *
+   * @param courseInfo
+   * @return
+   */
+  int insertCourseInfo(CourseInfo courseInfo);
 
-    /**
-     * 修改 courseInfo
-     * @param courseInfo
-     * @return
-     */
-    int updateCourseInfo(CourseInfo courseInfo);
+  /**
+   * 修改 courseInfo
+   *
+   * @param courseInfo
+   * @return
+   */
+  int updateCourseInfo(CourseInfo courseInfo);
 
-    /**
-     * 删除 courseInfo
-     * @param id
-     * @return
-     */
-    int deleteCourseInfo(int id);
+  /**
+   * 删除 courseInfo
+   *
+   * @param id
+   * @return
+   */
+  int deleteCourseInfo(int id);
 
-    //我写的返回全校课表
-    List<TeacherInfo> findAllCourseList(Integer pageStart, Integer pageSize);
+  //我写的返回全校课表
+  List<TeacherInfo> findAllCourseList(Integer pageStart, Integer pageSize);
 
 }

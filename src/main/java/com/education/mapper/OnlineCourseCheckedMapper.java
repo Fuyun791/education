@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 
 /**
  * <p>
-    * 课程审核表 Mapper 接口
-    * </p>
+ * 课程审核表 Mapper 接口
+ * </p>
  *
  * @author dell
  * @since 2020-05-24

@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dell
@@ -22,33 +22,33 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="GroupInfo对象", description="")
+@ApiModel(value = "GroupInfo对象", description = "")
 public class GroupInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "小组简介")
-    private String groupBrief;
+  @ApiModelProperty(value = "小组简介")
+  private String groupBrief;
 
-    @ApiModelProperty(value = "小组名称")
-    private String groupName;
+  @ApiModelProperty(value = "小组名称")
+  private String groupName;
 
-    @ApiModelProperty(value = "小组头像图片")
-    private String groupImg;
+  @ApiModelProperty(value = "小组头像图片")
+  private String groupImg;
 
-    @ApiModelProperty(value = "外键(院校表college_info)")
-    private Long collegeId;
+  @ApiModelProperty(value = "外键(院校表college_info)", example = "0")
+  private Long collegeId;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
-    //为了多表操作加的
-    @TableField(exist = false)
-    private TopicInfo topicInfo;
+  //为了多表操作加的
+  @TableField(exist = false)
+  private TopicInfo topicInfo;
 
 
 }

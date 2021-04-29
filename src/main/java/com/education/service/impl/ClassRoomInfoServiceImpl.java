@@ -14,39 +14,41 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
-    * 教室表 服务实现类
-    * </p>
+ * 教室表 服务实现类
+ * </p>
  *
  * @author dell
  * @since 2020-05-23
  */
 @Service
-public class ClassRoomInfoServiceImpl extends ServiceImpl<ClassRoomInfoMapper, ClassRoomInfo> implements IClassRoomInfoService {
+public class ClassRoomInfoServiceImpl extends
+    ServiceImpl<ClassRoomInfoMapper, ClassRoomInfo> implements IClassRoomInfoService {
 
-    @Autowired
-    private ClassRoomInfoMapper classRoomInfoMapper;
+  @Autowired
+  private ClassRoomInfoMapper classRoomInfoMapper;
 
-    @Override
-    public List<ClassRoomInfo> findClassRoomInfo(ClassRoomInfo classRoomInfo, Integer pageStart, Integer pageSize) {
-        //这里根据具体的条件进行扩充
-        QueryWrapper<ClassRoomInfo> queryWrapper=new QueryWrapper<>(classRoomInfo);
-        PageHelper.startPage(pageStart,pageSize);
-        return classRoomInfoMapper.selectList(queryWrapper);
-    }
+  @Override
+  public List<ClassRoomInfo> findClassRoomInfo(ClassRoomInfo classRoomInfo, Integer pageStart,
+      Integer pageSize) {
+    //这里根据具体的条件进行扩充
+    QueryWrapper<ClassRoomInfo> queryWrapper = new QueryWrapper<>(classRoomInfo);
+    PageHelper.startPage(pageStart, pageSize);
+    return classRoomInfoMapper.selectList(queryWrapper);
+  }
 
-    @Override
-    public int insertClassRoomInfo(ClassRoomInfo classRoomInfo) {
-        return classRoomInfoMapper.insert(classRoomInfo);
-    }
+  @Override
+  public int insertClassRoomInfo(ClassRoomInfo classRoomInfo) {
+    return classRoomInfoMapper.insert(classRoomInfo);
+  }
 
-    @Override
-    public int updateClassRoomInfo(ClassRoomInfo classRoomInfo) {
-        return classRoomInfoMapper.updateById(classRoomInfo);
-    }
+  @Override
+  public int updateClassRoomInfo(ClassRoomInfo classRoomInfo) {
+    return classRoomInfoMapper.updateById(classRoomInfo);
+  }
 
-    @Override
-    public int deleteClassRoomInfo(int id) {
-        return classRoomInfoMapper.deleteById(id);
-    }
+  @Override
+  public int deleteClassRoomInfo(int id) {
+    return classRoomInfoMapper.deleteById(id);
+  }
 
 }

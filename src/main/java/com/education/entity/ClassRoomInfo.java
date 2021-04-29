@@ -21,26 +21,26 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="ClassRoomInfo对象", description="教室表")
+@ApiModel(value = "ClassRoomInfo对象", description = "教室表")
 public class ClassRoomInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    private String roomNumber;
+  private String roomNumber;
 
-    @ApiModelProperty(value = "外键(院系表faculty_info)", example = "0")
-    private Long facultyId;
+  @ApiModelProperty(value = "外键(院系表faculty_info)", example = "0")
+  private Long facultyId;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
-    //我加的
-    private String year;
+  //我加的
+  private String year;
 
-    private Integer semester;
+  private Integer semester;
 
 }

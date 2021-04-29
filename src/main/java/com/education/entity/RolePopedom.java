@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dell
@@ -21,27 +21,27 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="RolePopedom对象", description="")
+@ApiModel(value = "RolePopedom对象", description = "")
 public class RolePopedom implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    private Long roleId;
+  private Long roleId;
 
-    private Long popedomId;
+  private Long popedomId;
 
-    @ApiModelProperty(value = "0为全范围，1为本校，2为院系，3为专业",example = "0")
-    private Integer popedomStatus;
+  @ApiModelProperty(value = "0为全范围，1为本校，2为院系，3为专业", example = "0")
+  private Integer popedomStatus;
 
-    @ApiModelProperty(value = "2为只读,5为可写,7为可读写")
-    private Boolean workAuthorize;
+  @ApiModelProperty(value = "2为只读,5为可写,7为可读写")
+  private Boolean workAuthorize;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
 
 }

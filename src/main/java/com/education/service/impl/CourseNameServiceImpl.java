@@ -16,44 +16,47 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
-    *  服务实现类
-    * </p>
+ * 服务实现类
+ * </p>
  *
  * @author dell
  * @since 2020-05-23
  */
 @Service
-public class CourseNameServiceImpl extends ServiceImpl<CourseNameMapper, CourseName> implements ICourseNameService {
+public class CourseNameServiceImpl extends ServiceImpl<CourseNameMapper, CourseName> implements
+    ICourseNameService {
 
-    @Autowired
-    private CourseNameMapper courseNameMapper;
+  @Autowired
+  private CourseNameMapper courseNameMapper;
 
-    @Override
-    public List<CourseName> findCourseName(CourseName courseName, Integer pageStart, Integer pageSize) {
-        //这里根据具体的条件进行扩充
-        QueryWrapper<CourseName> queryWrapper=new QueryWrapper<>(courseName);
-        PageHelper.startPage(pageStart,pageSize);
-        return courseNameMapper.selectList(queryWrapper);
-    }
+  @Override
+  public List<CourseName> findCourseName(CourseName courseName, Integer pageStart,
+      Integer pageSize) {
+    //这里根据具体的条件进行扩充
+    QueryWrapper<CourseName> queryWrapper = new QueryWrapper<>(courseName);
+    PageHelper.startPage(pageStart, pageSize);
+    return courseNameMapper.selectList(queryWrapper);
+  }
 
-    @Override
-    public List<CourseName> findCourseInfoList(CourseName courseName, Integer teacherNumber, Integer pageStart, Integer pageSize) {
-        return courseNameMapper.findCourseInfoList(courseName,teacherNumber);
-    }
+  @Override
+  public List<CourseName> findCourseInfoList(CourseName courseName, Integer teacherNumber,
+      Integer pageStart, Integer pageSize) {
+    return courseNameMapper.findCourseInfoList(courseName, teacherNumber);
+  }
 
-    @Override
-    public int insertCourseName(CourseName courseName) {
-        return courseNameMapper.insert(courseName);
-    }
+  @Override
+  public int insertCourseName(CourseName courseName) {
+    return courseNameMapper.insert(courseName);
+  }
 
-    @Override
-    public int updateCourseName(CourseName courseName) {
-        return courseNameMapper.updateById(courseName);
-    }
+  @Override
+  public int updateCourseName(CourseName courseName) {
+    return courseNameMapper.updateById(courseName);
+  }
 
-    @Override
-    public int deleteCourseName(int id) {
-        return courseNameMapper.deleteById(id);
-    }
+  @Override
+  public int deleteCourseName(int id) {
+    return courseNameMapper.deleteById(id);
+  }
 
 }

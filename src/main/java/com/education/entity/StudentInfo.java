@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dell
@@ -24,66 +24,66 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="StudentInfo对象", description="")
+@ApiModel(value = "StudentInfo对象", description = "")
 public class StudentInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    private Integer studentNum;
+  private Integer studentNum;
 
-    private String studentName;
+  private String studentName;
 
-    private String studentSex;
+  private String studentSex;
 
-    private String studentPhone;
+  private String studentPhone;
 
-    @ApiModelProperty(value = "外键(学校表college_info)", example = "0")
-    private Long collegeId;
+  @ApiModelProperty(value = "外键(学校表college_info)", example = "0")
+  private Long collegeId;
 
-    @ApiModelProperty(value = "外键(专业表specialty_info)", example = "0")
-    private Long specialtyId;
+  @ApiModelProperty(value = "外键(专业表specialty_info)", example = "0")
+  private Long specialtyId;
 
-    @ApiModelProperty(value = "外键(院系表faculty_info)", example = "0")
-    private Long facultyId;
+  @ApiModelProperty(value = "外键(院系表faculty_info)", example = "0")
+  private Long facultyId;
 
-    @ApiModelProperty(value = "外键(班级表class_info)", example = "0")
-    private Long classId;
+  @ApiModelProperty(value = "外键(班级表class_info)", example = "0")
+  private Long classId;
 
-    private String wechart;
+  private String wechart;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
-    @TableField(exist = false)
-    private CollegeInfo collegeInfo;
+  @TableField(exist = false)
+  private CollegeInfo collegeInfo;
 
-    @TableField(exist = false)
-    private SpecialtyInfo specialtyInfo;
+  @TableField(exist = false)
+  private SpecialtyInfo specialtyInfo;
 
-    @TableField(exist = false)
-    private FacultyInfo facultyInfo;
+  @TableField(exist = false)
+  private FacultyInfo facultyInfo;
 
-    @TableField(exist = false)
-    private ClassInfo classInfo;
+  @TableField(exist = false)
+  private ClassInfo classInfo;
 
-    @TableField(exist = false)
-    private List<CourseInfo> courseInfo;
+  @TableField(exist = false)
+  private List<CourseInfo> courseInfo;
 
-    @TableField(exist = false)
-    private String adminName;
+  @TableField(exist = false)
+  private String adminName;
 
-    @TableField(exist = false)
-    private String adminPic;
+  @TableField(exist = false)
+  private String adminPic;
 
-    //学年和学期
-    @TableField(exist = false)
-    private String year;
+  //学年和学期
+  @TableField(exist = false)
+  private String year;
 
-    @TableField(exist = false)
-    private Integer semester;
+  @TableField(exist = false)
+  private Integer semester;
 
 }

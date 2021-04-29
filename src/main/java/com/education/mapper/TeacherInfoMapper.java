@@ -8,8 +8,8 @@ import java.util.List;
 
 /**
  * <p>
-    *  Mapper 接口
-    * </p>
+ * Mapper 接口
+ * </p>
  *
  * @author dell
  * @since 2020-05-18
@@ -17,11 +17,12 @@ import java.util.List;
 @Repository
 public interface TeacherInfoMapper extends BaseMapper<TeacherInfo> {
 
-    /**
-     * 返回teacher列表，包含学校与院系
-     * @param teacherInfo
-     * @return
-     */
-    List<TeacherInfo> findTeacherInfoList(TeacherInfo teacherInfo);
+  /**
+   * 返回teacher列表，包含学校与院系
+   *
+   * @param teacherInfo
+   * @return
+   */
+  List<TeacherInfo> findTeacherInfoList(TeacherInfo teacherInfo);
 
 }

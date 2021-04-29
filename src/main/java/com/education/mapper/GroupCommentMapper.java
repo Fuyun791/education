@@ -9,8 +9,8 @@ import java.util.List;
 
 /**
  * <p>
-    *  Mapper 接口
-    * </p>
+ * Mapper 接口
+ * </p>
  *
  * @author dell
  * @since 2020-06-04
@@ -18,14 +18,14 @@ import java.util.List;
 @Repository
 public interface GroupCommentMapper extends BaseMapper<GroupComment> {
 
-    //返回话题评论列表
-    List<GroupComment> findGroupCommentList(GroupComment groupComment);
+  //返回话题评论列表
+  List<GroupComment> findGroupCommentList(GroupComment groupComment);
 
-    //插入一条评论
-    int insertGroupComment(@Param("topicId") int topicId,
-                           @Param("studentNum") int studentNum,
-                           @Param("commentContent") String commentContent,
-                           @Param("dataModified") String dataModified,
-                           @Param("dataCreate") String dataCreate
-                           );
+  //插入一条评论
+  int insertGroupComment(@Param("topicId") int topicId,
+      @Param("studentNum") int studentNum,
+      @Param("commentContent") String commentContent,
+      @Param("dataModified") String dataModified,
+      @Param("dataCreate") String dataCreate
+  );
 }

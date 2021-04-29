@@ -22,48 +22,48 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="StudentSigninInfo对象", description="学生考勤表")
+@ApiModel(value = "StudentSigninInfo对象", description = "学生考勤表")
 public class StudentSigninInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "外键(学生表student_info)", example = "0")
-    private Long studentId;
+  @ApiModelProperty(value = "外键(学生表student_info)", example = "0")
+  private Long studentId;
 
-    @ApiModelProperty(value = "外键(考勤表signin_info)", example = "0")
-    private Long signinId;
+  @ApiModelProperty(value = "外键(考勤表signin_info)", example = "0")
+  private Long signinId;
 
-    private LocalDateTime signTime;
+  private LocalDateTime signTime;
 
-    @ApiModelProperty(value = "0为没考勤，1为考勤", example = "0")
-    private Integer status;
+  @ApiModelProperty(value = "0为没考勤，1为考勤", example = "0")
+  private Integer status;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
-    @ApiModelProperty(value = "status=2的总数",example = "0")
-    @TableField(exist = false)
-    private Integer signinAttendance;
+  @ApiModelProperty(value = "status=2的总数", example = "0")
+  @TableField(exist = false)
+  private Integer signinAttendance;
 
-    @ApiModelProperty(value = "status=1的总数",example = "0")
-    @TableField(exist = false)
-    private Integer signinUnAttendance;
+  @ApiModelProperty(value = "status=1的总数", example = "0")
+  @TableField(exist = false)
+  private Integer signinUnAttendance;
 
-    @ApiModelProperty(value = "status=0的总数",example = "0")
-    @TableField(exist = false)
-    private Integer signinNoAttendance;
+  @ApiModelProperty(value = "status=0的总数", example = "0")
+  @TableField(exist = false)
+  private Integer signinNoAttendance;
 
-    @TableField(exist = false)
-    private StudentInfo studentInfo;
+  @TableField(exist = false)
+  private StudentInfo studentInfo;
 
-    @TableField(exist = false)
-    private CourseName courseName;
+  @TableField(exist = false)
+  private CourseName courseName;
 
-    @TableField(exist = false)
-    private String classNumber;
+  @TableField(exist = false)
+  private String classNumber;
 
 }

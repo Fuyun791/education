@@ -27,7 +27,10 @@
         <where>
             (
             <if test="isShare != null">ci.is_share = #{isShare} </if>
-            <if test="collegeId != null">or ci.college_id = #{collegeId} </if>
+            <if test="collegeId != null">
+            <if test="isShare != null">or </if>
+            ci.college_id = #{collegeId}
+            </if>
             )
             <if test="teacherId != null">and ci.teacher_id = #{teacherId} </if>
             <if test="checkedStatus != null">and cc.checked_status = #{checkedStatus} </if>

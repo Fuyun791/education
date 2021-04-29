@@ -10,8 +10,8 @@ import java.util.List;
 
 /**
  * <p>
-    *  Mapper 接口
-    * </p>
+ * Mapper 接口
+ * </p>
  *
  * @author dell
  * @since 2020-05-23
@@ -19,11 +19,13 @@ import java.util.List;
 @Repository
 public interface CourseNameMapper extends BaseMapper<CourseName> {
 
-    /**
-     * 在这里进行一个查询，参照courseInfo
-     * @param course
-     * @return
-     */
-    List<CourseName> findCourseInfoList(@Param("course") CourseName course, @Param("teacherNumber") Integer teacherNumber);
+  /**
+   * 在这里进行一个查询，参照courseInfo
+   *
+   * @param course
+   * @return
+   */
+  List<CourseName> findCourseInfoList(@Param("course") CourseName course,
+      @Param("teacherNumber") Integer teacherNumber);
 
 }

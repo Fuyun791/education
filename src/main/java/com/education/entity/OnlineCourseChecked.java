@@ -21,32 +21,32 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="OnlineCourseChecked对象", description="课程审核表")
+@ApiModel(value = "OnlineCourseChecked对象", description = "课程审核表")
 public class OnlineCourseChecked implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "外键online_course_info", example = "0")
-    private Long onlineCourseId;
+  @ApiModelProperty(value = "外键online_course_info", example = "0")
+  private Long onlineCourseId;
 
-    @ApiModelProperty(value = "外键(后台管理员身份的人)", example = "0")
-    private Long people;
+  @ApiModelProperty(value = "外键(后台管理员身份的人)", example = "0")
+  private Long people;
 
-    @ApiModelProperty(value = "审批时间")
-    private LocalDateTime checkedData;
+  @ApiModelProperty(value = "审批时间")
+  private LocalDateTime checkedData;
 
-    @ApiModelProperty(value = "0待审核，1审核中", example = "0")
-    private Integer checkedStatus;
+  @ApiModelProperty(value = "0待审核，1审核中", example = "0")
+  private Integer checkedStatus;
 
-    @ApiModelProperty(value = "0审核通过，1审核不通过")
-    private Boolean checkedResult;
+  @ApiModelProperty(value = "0审核通过，1审核不通过")
+  private Boolean checkedResult;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
 
 }

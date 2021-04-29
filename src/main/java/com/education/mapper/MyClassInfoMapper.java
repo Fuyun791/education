@@ -10,8 +10,8 @@ import java.util.List;
 
 /**
  * <p>
-    * 班级表 Mapper 接口
-    * </p>
+ * 班级表 Mapper 接口
+ * </p>
  *
  * @author dell
  * @since 2020-05-16
@@ -19,12 +19,14 @@ import java.util.List;
 @Repository
 public interface MyClassInfoMapper extends BaseMapper<ClassInfo> {
 
-    /**
-     * 查找classInfo包含其院系
-     * @param classInfo
-     * @param collegeId
-     * @return
-     */
-    List<ClassInfo> findClassInfoList(@Param("classInfo") ClassInfo classInfo, @Param("collegeId") Integer collegeId);
+  /**
+   * 查找classInfo包含其院系
+   *
+   * @param classInfo
+   * @param collegeId
+   * @return
+   */
+  List<ClassInfo> findClassInfoList(@Param("classInfo") ClassInfo classInfo,
+      @Param("collegeId") Integer collegeId);
 
 }

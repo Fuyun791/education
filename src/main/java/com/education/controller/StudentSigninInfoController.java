@@ -30,53 +30,54 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/education/student-signin-info")
 public class StudentSigninInfoController {
 
-    private final IStudentSigninInfoService studentSigninInfoService;
+  private final IStudentSigninInfoService studentSigninInfoService;
 
-    @Autowired
-    public StudentSigninInfoController(IStudentSigninInfoService studentSigninInfoService) {
-        this.studentSigninInfoService = studentSigninInfoService;
-    }
+  @Autowired
+  public StudentSigninInfoController(IStudentSigninInfoService studentSigninInfoService) {
+    this.studentSigninInfoService = studentSigninInfoService;
+  }
 
-    @ApiOperation("查询考勤详情")
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public RespBody findStudentSigninInfo(StudentSigninInfo studentSigninInfo,
-                                          @RequestParam(value = "collegeId") Long collegeId,
-                                          @RequestParam(value = "teacherNumber") Long teacherNumber,
-                                          @RequestParam(value = "pageStart", defaultValue = "1") Integer pageStart,
-                                          @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        List<StudentSigninInfo> studentSigninInfoList = studentSigninInfoService.findStudentSigninInfo(studentSigninInfo, collegeId, teacherNumber, pageStart, pageSize);
-        PageInfo<StudentSigninInfo> pageInfo = new PageInfo<>(studentSigninInfoList);
-        return RespBody.ok(pageInfo);
-    }
+  @ApiOperation("查询考勤详情")
+  @RequestMapping(value = "/list", method = RequestMethod.GET)
+  public RespBody findStudentSigninInfo(StudentSigninInfo studentSigninInfo,
+      @RequestParam(value = "collegeId") Long collegeId,
+      @RequestParam(value = "teacherNumber") Long teacherNumber,
+      @RequestParam(value = "pageStart", defaultValue = "1") Integer pageStart,
+      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+    List<StudentSigninInfo> studentSigninInfoList = studentSigninInfoService
+        .findStudentSigninInfo(studentSigninInfo, collegeId, teacherNumber, pageStart, pageSize);
+    PageInfo<StudentSigninInfo> pageInfo = new PageInfo<>(studentSigninInfoList);
+    return RespBody.ok(pageInfo);
+  }
 
-    @ApiOperation("添加考勤详情")
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public RespBody insertStudentSigninInfo(StudentSigninInfo studentSigninInfo) {
-        int result = studentSigninInfoService.insertStudentSigninInfo(studentSigninInfo);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+  @ApiOperation("添加考勤详情")
+  @RequestMapping(value = "/insert", method = RequestMethod.POST)
+  public RespBody insertStudentSigninInfo(StudentSigninInfo studentSigninInfo) {
+    int result = studentSigninInfoService.insertStudentSigninInfo(studentSigninInfo);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
-    @ApiOperation("修改考勤详情")
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public RespBody updateStudentSigninInfo(StudentSigninInfo studentSigninInfo) {
-        int result = studentSigninInfoService.updateStudentSigninInfo(studentSigninInfo);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+  @ApiOperation("修改考勤详情")
+  @RequestMapping(value = "/update", method = RequestMethod.POST)
+  public RespBody updateStudentSigninInfo(StudentSigninInfo studentSigninInfo) {
+    int result = studentSigninInfoService.updateStudentSigninInfo(studentSigninInfo);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
-    @ApiOperation("删除考勤详情")
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public RespBody deleteStudentSigninInfo(@RequestParam("id") int id) {
-        int result = studentSigninInfoService.deleteStudentSigninInfo(id);
-        if (result == 1) {
-            return RespBody.ok();
-        }
-        return RespBody.error();
+  @ApiOperation("删除考勤详情")
+  @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+  public RespBody deleteStudentSigninInfo(@RequestParam("id") int id) {
+    int result = studentSigninInfoService.deleteStudentSigninInfo(id);
+    if (result == 1) {
+      return RespBody.ok();
     }
+    return RespBody.error();
+  }
 
 }

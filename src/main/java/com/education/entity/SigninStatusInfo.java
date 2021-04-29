@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dell
@@ -21,32 +21,32 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="SigninStatusInfo对象", description="")
+@ApiModel(value = "SigninStatusInfo对象", description = "")
 public class SigninStatusInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "对应的考勤日期")
-    private LocalDateTime data;
+  @ApiModelProperty(value = "对应的考勤日期")
+  private LocalDateTime data;
 
-    @ApiModelProperty(value = "外键(课表course_info)", example = "0")
-    private Long courseId;
+  @ApiModelProperty(value = "外键(课表course_info)", example = "0")
+  private Long courseId;
 
-    @ApiModelProperty(value = "出勤人数", example = "0")
-    private Integer attendance;
+  @ApiModelProperty(value = "出勤人数", example = "0")
+  private Integer attendance;
 
-    @ApiModelProperty(value = "迟到人数", example = "0")
-    private Integer late;
+  @ApiModelProperty(value = "迟到人数", example = "0")
+  private Integer late;
 
-    @ApiModelProperty(value = "旷课人数", example = "0")
-    private Integer out;
+  @ApiModelProperty(value = "旷课人数", example = "0")
+  private Integer out;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
 
 }

@@ -18,22 +18,22 @@ import java.util.List;
 @Service
 public class WebLogServiceImpl extends ServiceImpl<WebLogMapper, WebLog> implements IWebLogService {
 
-    private final WebLogMapper webLogMapper;
+  private final WebLogMapper webLogMapper;
 
-    @Autowired
-    public WebLogServiceImpl(WebLogMapper webLogMapper) {
-        this.webLogMapper = webLogMapper;
-    }
+  @Autowired
+  public WebLogServiceImpl(WebLogMapper webLogMapper) {
+    this.webLogMapper = webLogMapper;
+  }
 
-    @Override
-    public List<WebLog> selectLog(WebLog webLog, Integer pageStart, Integer pageSize) {
-        QueryWrapper<WebLog> queryWrapper=new QueryWrapper<>(webLog);
-        PageHelper.startPage(pageStart,pageSize);
-        return webLogMapper.selectList(queryWrapper);
-    }
+  @Override
+  public List<WebLog> selectLog(WebLog webLog, Integer pageStart, Integer pageSize) {
+    QueryWrapper<WebLog> queryWrapper = new QueryWrapper<>(webLog);
+    PageHelper.startPage(pageStart, pageSize);
+    return webLogMapper.selectList(queryWrapper);
+  }
 
-    @Override
-    public int insertLog(WebLog webLog) {
-        return webLogMapper.insert(webLog);
-    }
+  @Override
+  public int insertLog(WebLog webLog) {
+    return webLogMapper.insert(webLog);
+  }
 }

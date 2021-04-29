@@ -18,15 +18,16 @@ import java.util.List;
 @Repository
 public interface SigninInfoMapper extends BaseMapper<SigninInfo> {
 
-    /**
-     * 查询signinList和课程名称
-     * @param signinInfo
-     * @param collegeId
-     * @param teacherNumber
-     * @return
-     */
-    List<SigninInfo> selectSigninAndCourseName(@Param("signin") SigninInfo signinInfo,
-                                               @Param("collegeId") Long collegeId,
-                                               @Param("teacherNumber") Long teacherNumber);
+  /**
+   * 查询signinList和课程名称
+   *
+   * @param signinInfo
+   * @param collegeId
+   * @param teacherNumber
+   * @return
+   */
+  List<SigninInfo> selectSigninAndCourseName(@Param("signin") SigninInfo signinInfo,
+      @Param("collegeId") Long collegeId,
+      @Param("teacherNumber") Long teacherNumber);
 
 }

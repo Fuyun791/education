@@ -20,63 +20,67 @@ import org.springframework.util.StringUtils;
 
 /**
  * <p>
-    * 访问权限表 服务实现类
-    * </p>
+ * 访问权限表 服务实现类
+ * </p>
  *
  * @author dell
  * @since 2020-05-10
  */
 @Service
-public class PopedomInfoServiceImpl extends ServiceImpl<PopedomInfoMapper, PopedomInfo> implements IPopedomInfoService {
+public class PopedomInfoServiceImpl extends ServiceImpl<PopedomInfoMapper, PopedomInfo> implements
+    IPopedomInfoService {
 
-    @Autowired
-    private PopedomInfoMapper popedomInfoMapper;
+  @Autowired
+  private PopedomInfoMapper popedomInfoMapper;
 
-    @Override
-    public List<PopedomInfo> findPopedomInfo(PopedomInfo popedomInfo, Integer pageStart, Integer pageSize) {
-        //这里根据具体的条件进行扩充
-        QueryWrapper<PopedomInfo> queryWrapper=new QueryWrapper<>(popedomInfo);
-        PageHelper.startPage(pageStart,pageSize);
-        return popedomInfoMapper.selectList(queryWrapper);
+  @Override
+  public List<PopedomInfo> findPopedomInfo(PopedomInfo popedomInfo, Integer pageStart,
+      Integer pageSize) {
+    //这里根据具体的条件进行扩充
+    QueryWrapper<PopedomInfo> queryWrapper = new QueryWrapper<>(popedomInfo);
+    PageHelper.startPage(pageStart, pageSize);
+    return popedomInfoMapper.selectList(queryWrapper);
+  }
+
+  @Override
+  public List<PopedomInfo> findPopedomMenuByRoleId(Long roleId) {
+    List<PopedomInfo> popedomInfoList = popedomInfoMapper.findPopedomList(roleId, 0L);
+    for (PopedomInfo popedomInfo : popedomInfoList) {
+      if (popedomInfo.getPopedomChild() != 0) {
+        List<PopedomInfo> popedomList = popedomInfoMapper
+            .findPopedomList(roleId, popedomInfo.getId());
+        popedomInfo.setPopedomInfoList(popedomList);
+      }
     }
+    return popedomInfoList;
+  }
 
-    @Override
-    public List<PopedomInfo> findPopedomMenuByRoleId(Long roleId) {
-        List<PopedomInfo> popedomInfoList = popedomInfoMapper.findPopedomList(roleId,0L);
-        for (PopedomInfo popedomInfo : popedomInfoList) {
-            if (popedomInfo.getPopedomChild() != 0) {
-                List<PopedomInfo> popedomList = popedomInfoMapper.findPopedomList(roleId, popedomInfo.getId());
-                popedomInfo.setPopedomInfoList(popedomList);
-            }
-        }
-        return popedomInfoList;
+  @Override
+  public Map<String, ConfigAttribute> findPopedomInfo() {
+    Map<String, ConfigAttribute> map = new ConcurrentHashMap<>();
+    List<PopedomInfo> popedomInfoList = popedomInfoMapper
+        .selectList(new QueryWrapper<PopedomInfo>());
+    for (PopedomInfo popedomInfo : popedomInfoList) {
+      if (!StringUtils.isEmpty(popedomInfo.getPopedomUrl())) {
+        map.put(popedomInfo.getPopedomUrl(), new SecurityConfig(popedomInfo.getPopedomName()));
+      }
     }
+    return map;
+  }
 
-    @Override
-    public Map<String, ConfigAttribute> findPopedomInfo() {
-        Map<String,ConfigAttribute> map = new ConcurrentHashMap<>();
-        List<PopedomInfo> popedomInfoList = popedomInfoMapper.selectList(new QueryWrapper<PopedomInfo>());
-        for (PopedomInfo popedomInfo : popedomInfoList) {
-            if (!StringUtils.isEmpty(popedomInfo.getPopedomUrl())) {
-                map.put(popedomInfo.getPopedomUrl(),new SecurityConfig(popedomInfo.getPopedomName()));
-            }
-        }
-        return map;
-    }
+  @Override
+  public int insertPopedomInfo(PopedomInfo popedomInfo) {
+    return popedomInfoMapper.insert(popedomInfo);
+  }
 
-    @Override
-    public int insertPopedomInfo(PopedomInfo popedomInfo) {
-        return popedomInfoMapper.insert(popedomInfo);
-    }
+  @Override
+  public int updatePopedomInfo(PopedomInfo popedomInfo) {
+    return popedomInfoMapper.updateById(popedomInfo);
+  }
 
-    @Override
-    public int updatePopedomInfo(PopedomInfo popedomInfo) {
-        return popedomInfoMapper.updateById(popedomInfo);
-    }
-
-    @Override
-    public int deletePopedomInfo(int id) {
-        return popedomInfoMapper.deleteById(id);
-    }
+  @Override
+  public int deletePopedomInfo(int id) {
+    return popedomInfoMapper.deleteById(id);
+  }
 
 }

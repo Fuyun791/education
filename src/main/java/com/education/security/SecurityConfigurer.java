@@ -41,81 +41,82 @@ import java.io.PrintWriter;
 @Component
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private AdminInfoServiceImpl adminInfoService;
+  @Autowired
+  private AdminInfoServiceImpl adminInfoService;
 
-    @Autowired
-    private IgnoreUrlsConfig ignoreUrlsConfig;
+  @Autowired
+  private IgnoreUrlsConfig ignoreUrlsConfig;
 
-    @Autowired
-    private AuthenticationSuccess authenticationSuccess;
+  @Autowired
+  private AuthenticationSuccess authenticationSuccess;
 
-    @Autowired
-    private AuthenticationFailure authenticationFailure;
+  @Autowired
+  private AuthenticationFailure authenticationFailure;
 
-    @Autowired
-    private AuthenticationDenied authenticationDenied;
+  @Autowired
+  private AuthenticationDenied authenticationDenied;
 
-    @Autowired
-    private AuthenticationEntry authenticationEntry;
+  @Autowired
+  private AuthenticationEntry authenticationEntry;
 
-    @Autowired
-    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+  @Autowired
+  private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
-    @Autowired
-    private MyFilterSecurity myFilterSecurity;
+  @Autowired
+  private MyFilterSecurity myFilterSecurity;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setHideUserNotFoundExceptions(false);
-        provider.setUserDetailsService(adminInfoService);
-        provider.setPasswordEncoder(new PasswordEncoder() {
-            //密码加密
-            @Override
-            public String encode(CharSequence charSequence) {
-                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-                return passwordEncoder.encode(charSequence);
-            }
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+    provider.setHideUserNotFoundExceptions(false);
+    provider.setUserDetailsService(adminInfoService);
+    provider.setPasswordEncoder(new PasswordEncoder() {
+      //密码加密
+      @Override
+      public String encode(CharSequence charSequence) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(charSequence);
+      }
 
-            //密码匹配
-            @Override
-            public boolean matches(CharSequence charSequence, String s) {
-                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-                boolean res = passwordEncoder.matches(charSequence, s);
-                return res;
-            }
-        });
-        auth.authenticationProvider(provider);
+      //密码匹配
+      @Override
+      public boolean matches(CharSequence charSequence, String s) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        boolean res = passwordEncoder.matches(charSequence, s);
+        return res;
+      }
+    });
+    auth.authenticationProvider(provider);
+  }
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
+        .authorizeRequests();
+    /* 忽略名单添加 */
+    for (String url : ignoreUrlsConfig.getUrls()) {
+      registry.antMatchers(url).permitAll();
     }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http.authorizeRequests();
-        /* 忽略名单添加 */
-        for (String url : ignoreUrlsConfig.getUrls()) {
-            registry.antMatchers(url).permitAll();
-        }
-        registry.and()
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().loginProcessingUrl("/education/login")
-                .usernameParameter("username").passwordParameter("password")
-                .successHandler(authenticationSuccess)
-                .failureHandler(authenticationFailure)
-                .permitAll()
-                .and()
-                .exceptionHandling()
-                .accessDeniedHandler(authenticationDenied)
-                .authenticationEntryPoint(authenticationEntry)
-                .and()
-                .csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .logout()
-                .permitAll()
-                .and()
-                .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(myFilterSecurity, FilterSecurityInterceptor.class);
-    }
+    registry.and()
+        .authorizeRequests()
+        .anyRequest().authenticated()
+        .and()
+        .formLogin().loginProcessingUrl("/education/login")
+        .usernameParameter("username").passwordParameter("password")
+        .successHandler(authenticationSuccess)
+        .failureHandler(authenticationFailure)
+        .permitAll()
+        .and()
+        .exceptionHandling()
+        .accessDeniedHandler(authenticationDenied)
+        .authenticationEntryPoint(authenticationEntry)
+        .and()
+        .csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+        .logout()
+        .permitAll()
+        .and()
+        .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(myFilterSecurity, FilterSecurityInterceptor.class);
+  }
 }

@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dell
@@ -24,31 +24,31 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="OnlineEpisodes对象", description="")
+@ApiModel(value = "OnlineEpisodes对象", description = "")
 public class OnlineEpisodes implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "在线课程号", example = "0")
-    private Long onlineCourseId;
+  @ApiModelProperty(value = "在线课程号", example = "0")
+  private Long onlineCourseId;
 
-    @ApiModelProperty(value = "例章节1：网络层")
-    private String episodesName;
+  @ApiModelProperty(value = "例章节1：网络层")
+  private String episodesName;
 
-    private Integer sort;
+  private Integer sort;
 
-    @ApiModelProperty(value = "章节简介")
-    private String episodesBrief;
+  @ApiModelProperty(value = "章节简介")
+  private String episodesBrief;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
-    @TableField(exist = false)
-    private List<OnlineCourseHour> onlineCourseHourList;
+  @TableField(exist = false)
+  private List<OnlineCourseHour> onlineCourseHourList;
 
 
 }

@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dell
@@ -21,22 +21,22 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="OnlineCourseStar对象", description="")
+@ApiModel(value = "OnlineCourseStar对象", description = "")
 public class OnlineCourseStar implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "外键online_course_discuss的id", example = "0")
-    private Long discussCourseId;
+  @ApiModelProperty(value = "外键online_course_discuss的id", example = "0")
+  private Long discussCourseId;
 
-    private Integer starPerson;
+  private Integer starPerson;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
 
 }

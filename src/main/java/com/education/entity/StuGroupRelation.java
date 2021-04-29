@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dell
@@ -21,26 +21,26 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="StuGroupRelation对象", description="")
+@ApiModel(value = "StuGroupRelation对象", description = "")
 public class StuGroupRelation implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "外键(学生表student_info)")
-    private Long studentId;
+  @ApiModelProperty(value = "外键(学生表student_info)", example = "0")
+  private Long studentId;
 
-    @ApiModelProperty(value = "外键(兴趣小组表group_info)")
-    private Long groupId;
+  @ApiModelProperty(value = "外键(兴趣小组表group_info)", example = "0")
+  private Long groupId;
 
-    @ApiModelProperty(value = "学生加入时间")
-    private LocalDateTime joinTime;
+  @ApiModelProperty(value = "学生加入时间")
+  private LocalDateTime joinTime;
 
-    private LocalDateTime dataCreate;
+  private LocalDateTime dataCreate;
 
-    private LocalDateTime dataModified;
+  private LocalDateTime dataModified;
 
 
 }

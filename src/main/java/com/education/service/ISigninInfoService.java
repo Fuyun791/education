@@ -15,40 +15,41 @@ import java.util.List;
  */
 public interface ISigninInfoService extends IService<SigninInfo> {
 
-    /**
-     * 查找 signinInfo
-     *
-     * @param signinInfo
-     * @param collegeId
-     * @param teacherNumber
-     * @param pageStart
-     * @param pageSize
-     * @return
-     */
-    List<SigninInfo> findSigninInfo(SigninInfo signinInfo, Long collegeId, Long teacherNumber, Integer pageStart, Integer pageSize);
+  /**
+   * 查找 signinInfo
+   *
+   * @param signinInfo
+   * @param collegeId
+   * @param teacherNumber
+   * @param pageStart
+   * @param pageSize
+   * @return
+   */
+  List<SigninInfo> findSigninInfo(SigninInfo signinInfo, Long collegeId, Long teacherNumber,
+      Integer pageStart, Integer pageSize);
 
-    /**
-     * 添加 signinInfo
-     *
-     * @param signinInfo
-     * @return
-     */
-    int insertSigninInfo(SigninInfo signinInfo);
+  /**
+   * 添加 signinInfo
+   *
+   * @param signinInfo
+   * @return
+   */
+  int insertSigninInfo(SigninInfo signinInfo);
 
-    /**
-     * 修改 signinInfo
-     *
-     * @param signinInfo
-     * @return
-     */
-    int updateSigninInfo(SigninInfo signinInfo);
+  /**
+   * 修改 signinInfo
+   *
+   * @param signinInfo
+   * @return
+   */
+  int updateSigninInfo(SigninInfo signinInfo);
 
-    /**
-     * 删除 signinInfo
-     *
-     * @param id
-     * @return
-     */
-    int deleteSigninInfo(int id);
+  /**
+   * 删除 signinInfo
+   *
+   * @param id
+   * @return
+   */
+  int deleteSigninInfo(int id);
 
 }

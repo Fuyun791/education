@@ -17,42 +17,44 @@ import java.io.IOException;
 @Component
 public class MyFilterSecurity extends AbstractSecurityInterceptor implements Filter {
 
-    @Autowired
-    private FilterInvocationSecurityMetadataSource mySecurityMetadataSource;
+  @Autowired
+  private FilterInvocationSecurityMetadataSource mySecurityMetadataSource;
 
-    @Autowired
-    public void setMyAccessDecisionManager(MyAccessDecision myAccessDecisionManager) {
-        super.setAccessDecisionManager(myAccessDecisionManager);
+  @Autowired
+  public void setMyAccessDecisionManager(MyAccessDecision myAccessDecisionManager) {
+    super.setAccessDecisionManager(myAccessDecisionManager);
+  }
+
+  @Override
+  public void init(FilterConfig filterConfig) throws ServletException {
+
+  }
+
+  @Override
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
+      throws IOException, ServletException {
+    FilterInvocation filterInvocation = new FilterInvocation(request, response, filterChain);
+    InterceptorStatusToken token = super.beforeInvocation(filterInvocation);
+    try {
+      filterInvocation.getChain()
+          .doFilter(filterInvocation.getRequest(), filterInvocation.getResponse());
+    } finally {
+      super.afterInvocation(token, null);
     }
+  }
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+  @Override
+  public void destroy() {
 
-    }
+  }
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        FilterInvocation filterInvocation = new FilterInvocation(request,response,filterChain);
-        InterceptorStatusToken token = super.beforeInvocation(filterInvocation);
-        try {
-            filterInvocation.getChain().doFilter(filterInvocation.getRequest(), filterInvocation.getResponse());
-        } finally {
-            super.afterInvocation(token, null);
-        }
-    }
+  @Override
+  public Class<?> getSecureObjectClass() {
+    return FilterInvocation.class;
+  }
 
-    @Override
-    public void destroy() {
-
-    }
-
-    @Override
-    public Class<?> getSecureObjectClass() {
-        return FilterInvocation.class;
-    }
-
-    @Override
-    public SecurityMetadataSource obtainSecurityMetadataSource() {
-        return this.mySecurityMetadataSource;
-    }
+  @Override
+  public SecurityMetadataSource obtainSecurityMetadataSource() {
+    return this.mySecurityMetadataSource;
+  }
 }
